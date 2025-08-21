@@ -647,89 +647,6 @@ def job_group_123():
             # for sub in drop_deployment2:
             delete_by_container_names(drop_deployment2)
             # print('第二步删除容器:', drop_deployment2)
-    
-
-# def job_4():
-#     """每分钟执行第四个任务"""
-#     global ips_pre, ips_next, nfs_drop_local_model_weight_list, local_drop_local_model_weight_list  # 声明所有需要修改的全局变量
-#     # 任务4:获取推出权重的列表
-#     nfs_drop_local_model_weight_list, local_drop_local_model_weight_list = get_drop_weight(tasks_type)
-    
-#     # 查看本地权重的使用情况
-#     pairs = []
-#     for ssub in local_drop_local_model_weight_list:
-#         pairs.append([nodes_ip[ssub['Hostname']], re.sub(r'-\d+$', '', ssub['container'])])
-
-#     for ip in ips_pre:
-#         # print(ips_pre[ip])
-#         for task_type in ips_pre[ip]:
-#             exists = any(task_type in item['pod'] for item in nfs_drop_local_model_weight_list)
-
-#             exists_local = any(task_type in item['pod'] for item in local_drop_local_model_weight_list)
-#             if exists == True:
-#                 for sub_path in ips_pre[ip][task_type]: 
-#                     # print(sub_path)
-#                     remote_weight_path = sub_path
-#                     remote_flag_path =  sub_path + '_transfer_complete.flag'
-#                     r_weight = check_remote_dir_exists(ip, remote_weight_path, ssh_key_path)
-#                     r_flag = check_remote_file_exists(ip, remote_flag_path, ssh_key_path)
-
-#                     if r_weight == True and r_flag == True:
-#                         model_name = os.path.basename(sub_path.rstrip('/'))
-#                         if model_name == 'yz_diffusion':
-#                             model_name = 'stable-diffusion'
-#                         elif model_name == 'CogVideo-1.0':
-#                             model_name == 'CogVideoX-2b-sat'
-#                         model_name = sanitize_container_name(model_name)
-
-#                         if [ip, model_name] in pairs:
-#                             # 保留在用的权重
-#                             ips_next[ip][task_type][sub_path] = 0
-#                         else:
-#                             ips_next[ip][task_type][sub_path] = 1
-#                     else:
-#                         ips_next[ip][task_type][sub_path] = 0
-
-#             elif exists != True and exists_local == True:
-#                 # 该模型除本地权重挂载在用外可以清除
-#                     for sub_path in ips_pre[ip][task_type]: 
-#                         # print(sub_path)
-#                         remote_weight_path = sub_path
-#                         remote_flag_path =  sub_path + '_transfer_complete.flag'
-#                         r_weight = check_remote_dir_exists(ip, remote_weight_path, ssh_key_path)
-#                         r_flag = check_remote_file_exists(ip, remote_flag_path, ssh_key_path)
-
-#                         if r_weight == True and r_flag == True:
-#                             model_name = os.path.basename(sub_path.rstrip('/'))
-#                             if model_name == 'yz_diffusion':
-#                                 model_name = 'stable-diffusion'
-#                             elif "CogVideo" in model_name or "cogvideo" in model_name :
-#                                 model_name == 'CogVideoX-2b-sat'
-#                             model_name = sanitize_container_name(model_name)
-#                             if 'cog' in model_name:
-#                                 model_name = 'cogvideox-2b-sat'
-#                             if [ip, model_name] in pairs:
-#                                 # 保留在用的权重
-#                                 ips_next[ip][task_type][sub_path] = 0
-#                             else:
-#                                 ips_next[ip][task_type][sub_path] = 1
-#                         else:
-#                             ips_next[ip][task_type][sub_path] = 0
-#             else:
-#                 for sub_path in ips_pre[ip][task_type]: 
-#                     ips_next[ip][task_type][sub_path] = 0
-    
-#     # print('ips_next', ips_next)
-#     # 复制前先对比一下ips前后的变化
-#     # 执行对比
-#     common_entries = compare_dicts_for_value_one(ips_pre, ips_next)
-#     print("相同且值为1的条目:", common_entries)
-#     import json
-#     # print(json.dumps(common_entries, indent=4))
-
-#     ips_pre = copy.deepcopy(ips_next)
-            #    celery_task = get_non_success_tasks()
-                # if celery_task == None: 
 def job_4():
     global ips_pre, ips_next, nfs_drop_local_model_weight_list, local_drop_local_model_weight_list  # 声明所有需要修改的全局变量
     ips_pre = copy.deepcopy(ips_next)
@@ -824,22 +741,4 @@ try:
 except (KeyboardInterrupt, SystemExit):
     scheduler.shutdown()
 
-
-
-
-
-
-# # 查看任务完成比例
-# result = calculate_non_pending_percentage(all_data)
-# print('查看任务完成情况', result)
-
-# # redis查询结果
-# low_percent = find_low_percentage_entries(result, 15)
-# # 存在total_tasks占比小于总total_tasks30-40%, 这个模型用完就同时删除这部分权重
-# for category, info in low_percent.items():
-#     print(f"\n分类 {category.upper()}")
-#     print(f"总任务数: {info['total_tasks']}")
-#     print("符合条件条目:")
-#     for entry in info['matched_entries']:
-#         print(f"  - IP: {entry['service_ip']} | 容器: {entry['container']} | 任务数: {entry['total_tasks']} | 占比: {entry['percentage']}%")    
 
