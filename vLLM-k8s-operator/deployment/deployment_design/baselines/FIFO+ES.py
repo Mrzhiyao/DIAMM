@@ -10,7 +10,6 @@ import time
 from test_main import available_ip
 from datetime import datetime
 import random
-from uxcost import UXCostOptimizer
 from collections import defaultdict
 import os 
 import json
@@ -3078,8 +3077,6 @@ if __name__ == "__main__":
         'text2video': None
     }
     
-    optimizer = UXCostOptimizer(init_alpha=1, init_beta=1)
-
     while 1:
         online_tasks = check_and_get_files([save_online_task_dir, save_wait_dir])
         # print('task_length',  len(online_tasks))
