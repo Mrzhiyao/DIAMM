@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Submission Interface</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --success-color: #34d399;
+            --error-color: #ef4444;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --background: #f8fafc;
+            --card-bg: white;
+        }
+    
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--background);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+    
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+    
+        h1 {
+            color: var(--text-dark);
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+    
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+    
+        select, input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.8rem;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: white;
+        }
+    
+        select:focus, input[type="text"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+            outline: none;
+        }
+    
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), #357abd);
+            color: white;
+            border: none;
+            border-radius: 0.8rem;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(74, 144, 226, 0.1);
+        }
+    
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 12px -2px rgba(74, 144, 226, 0.2);
+        }
+    
+        .preview {
+            margin: 1.5rem 0;
+            border: 2px dashed #e5e7eb;
+            border-radius: 1rem;
+            padding: 1rem;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s;
+            display: none; /* 默认隐藏预览区域 */
+        }
+    
+        .preview.active {
+            display: flex; /* 有内容时显示 */
+        }
+    
+        .preview:hover {
+            border-color: var(--primary-color);
+        }
+    
+        img, video {
+            max-width: 100%;
+            border-radius: 0.6rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+    
+        img:hover, video:hover {
+            transform: translateY(-2px);
+        }
+    
+        #sendResult, #taskResult {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            background: var(--card-bg);
+            border: 2px solid #e5e7eb;
+        }
+    
+        .waiting {
+            color: var(--text-light);
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 0.8rem;
+        }
+    
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+    
+        .loading:after {
+            content: "";
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 3px solid rgba(74, 144, 226, 0.2);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--success-color);
+            color: white;
+            border-radius: 0.6rem;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+    
+        .download-link:hover {
+            transform: translateY(-1px);
+        }
+    
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.5rem;
+                border-radius: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+        /* 新增错误样式 */
+        .error-field input[type="file"] {
+            border-color: var(--error-color);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .error-field label {
+            color: var(--error-color);
+        }
+
+        /* 调整预览区域间距 */
+        .preview {
+            margin-top: 0.5rem;  /* 缩小间距 */
+        }
+        /* 添加过渡效果使重置更自然 */
+        input[type="text"], select, .preview {
+            transition: all 0.3s ease;
+        }
+        
+        /* 强化重置后的空状态提示 */
+        #description:placeholder-shown {
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+        
+        /* 自定义文件上传控件样式 */
+        .file-upload-wrapper {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .file-upload-custom {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .file-input-hidden {
+            opacity: 0;
+            position: absolute;
+            width: 0.1px;
+            height: 0.1px;
+            overflow: hidden;
+        }
+        .custom-button {
+            padding: 0.8rem 1.5rem;
+            background: #f0f0f0;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.8rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            text-align: center;
+            width: auto; /* 按钮宽度自适应内容 */
+        }
+        .custom-button:hover {
+            background: #e0e0e0;
+        }
+        .file-name {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex-grow: 1;
+        }
+        .error-field .custom-button {
+            border-color: var(--error-color);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        /* 统一所有输入框宽度 */
+        .container input[type="text"],
+        .container select,
+        .file-upload-custom {
+            width: 100%;
+            box-sizing: border-box; /* 确保内边距不影响总宽度 */
+        }
+        
+        /* 特别调整任务描述输入框 */
+        #description {
+            max-width: 100%; /* 确保不超过容器宽度 */
+        }
+        
+        /* 文件上传控件样式调整 */
+        .file-upload-custom {
+            display: flex;
+            padding: 0; /* 移除内边距 */
+            border: none; /* 移除边框 */
+            background: transparent; /* 透明背景 */
+        }
+        
+        .custom-button {
+            /* 保持原有样式，但调整宽度 */
+            width: auto;
+            min-width: 100px; /* 确保按钮有足够宽度 */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">  
+        <h1>Multimodal Service Assistant</h1>  
+        
+        <form id="taskForm">  
+            <label for="taskType">Task Type Selection:</label>  
+            <select id="taskType" name="task_type" required>  
+                <option value="text2text">Text2text</option>  
+                <option value="text2image">Text2image</option>  
+                <option value="image2text">Image2text</option>  
+                <option value="image2image">Image2image</option>  
+                <option value="text2video">Text2video</option> 
+            </select>  
+    
+            <label for="description">Task Description:</label>  
+            <input type="text" id="description" name="description" placeholder="Enter task details" required>  
+    
+            <label for="file">Upload file (Optional):</label>
+            <div class="file-upload-wrapper">
+                <div class="file-upload-custom">
+                    <button type="button" class="custom-button">Browse</button> <!-- 改为更简洁的 "Browse" -->
+                    <div class="file-name">No file selected</div>
+                </div>
+                <input type="file" id="file" name="file" accept="image/*, video/*" class="file-input-hidden">
+            </div>
+    
+            <div class="preview" id="preview">  
+                <!-- Preview area -->  
+            </div>  
+    
+            <button type="submit">Submit your task</button>  
+        </form>  
+    
+        <!-- Display request sending result -->  
+        <div id="sendResult" class="waiting">  
+            <p>Waiting for user input</p>  
+        </div>  
+    
+        <!-- Display task processing result -->  
+        <div id="taskResult" class="waiting" style="display:block;">  
+            <p>No task result, waiting for task submission...</p>  
+        </div>  
+    
+        <div id="fileDownloadContainer" style="display:none;">  
+            <a id="downloadLink" class="download-link" href="#" target="_blank">Download file</a>  
+        </div>  
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const taskType = document.getElementById('taskType');
+            const fileInput = document.getElementById('file');
+            const customButton = document.querySelector('.custom-button');
+            const fileNameDisplay = document.querySelector('.file-name');
+            const previewContainer = document.getElementById('preview');
+            const taskForm = document.getElementById('taskForm');
+            const sendResultDiv = document.getElementById('sendResult');
+            const taskResultDiv = document.getElementById('taskResult');
+            
+            // ===== 自定义文件上传控件 =====
+            // 点击自定义按钮时触发文件选择
+            customButton.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            // 文件选择后的处理
+            fileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                previewContainer.innerHTML = '';
+                
+                if (file) {
+                    // 更新文件名显示（英文）
+                    fileNameDisplay.textContent = file.name;
+                    
+                    // 清除错误状态
+                    this.parentElement.classList.remove('error-field');
+                    const errorMsg = document.querySelector('.error-message');
+                    if (errorMsg) errorMsg.remove();
+                    
+                    // 预览处理
+                    const fileUrl = URL.createObjectURL(file);
+                    if (file.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.src = fileUrl;
+                        img.alt = 'Image Preview';
+                        previewContainer.appendChild(img);
+                    } else if (file.type.startsWith('video/')) {
+                        const video = document.createElement('video');
+                        video.src = fileUrl;
+                        video.controls = true;
+                        previewContainer.appendChild(video);
+                    }
+                    
+                    // 显示预览区域
+                    previewContainer.classList.add('active');
+                } else {
+                    // 如果没有文件，显示默认文本
+                    fileNameDisplay.textContent = 'No file selected';
+                    // 隐藏预览区域
+                    previewContainer.classList.remove('active');
+                }
+            });
+            
+            // 控制文件上传可用性
+            function updateFileInputState() {
+                const selectedType = taskType.value;
+                const isTextTask = ['text2text', 'text2image', 'text2video'].includes(selectedType);
+                // 清除所有输入
+                document.getElementById('description').value = '';          // 清空任务描述
+                fileInput.value = '';               // 清空文件选择
+                fileNameDisplay.textContent = 'No file selected'; // 重置文件名显示
+                previewContainer.innerHTML = '';         // 清空预览
+                previewContainer.classList.remove('active'); // 隐藏预览区域
+                
+                // 设置禁用状态
+                fileInput.disabled = isTextTask;
+                customButton.disabled = isTextTask;
+                
+                // 清除已选文件和预览（如果是被禁用的任务类型）
+                if (isTextTask) {
+                    fileInput.value = '';
+                    previewContainer.innerHTML = '';
+                }
+            }
+
+            // 初始化状态
+            updateFileInputState();
+            // 监听任务类型变化
+            taskType.addEventListener('change', updateFileInputState);
+            
+            // 监听描述输入变化
+            document.getElementById('description').addEventListener('input', function() {
+                // 清空结果区域
+                sendResultDiv.innerHTML = '<p>Waiting for user input</p>';
+                taskResultDiv.innerHTML = '<p>No task result, waiting for task processing...</p>';
+
+                fileInput.parentElement.classList.remove('error-field');
+                const errorMsg = document.querySelector('.error-message');
+                if (errorMsg) errorMsg.remove();
+                
+                // 清空文件预览
+                previewContainer.innerHTML = '';
+                fileInput.value = '';
+                fileNameDisplay.textContent = 'No file selected';
+                previewContainer.classList.remove('active'); // 隐藏预览区域
+                
+                // 隐藏下载链接
+                document.getElementById('fileDownloadContainer').style.display = 'none';
+                
+                // 恢复结果区域初始样式
+                taskResultDiv.className = 'waiting';
+            });
+            
+            // 表单提交处理
+            taskForm.addEventListener('submit', async function(event) {  
+                event.preventDefault();  
+
+                // 获取任务类型和描述以及文件  
+                const formData = new FormData();  
+                const taskTypeValue = taskType.value;
+                const description = document.getElementById('description').value;
+                const file = fileInput.files[0];
+                const requireFileTypes = ['image2text', 'image2image'];
+
+                if (requireFileTypes.includes(taskTypeValue)) {
+                    // 如果文件未选择或预览为空
+                    if (!file || previewContainer.innerHTML.trim() === '') {
+                        // 添加错误样式
+                        fileInput.parentElement.classList.add('error-field');
+                        // 显示错误提示
+                        showError('Please upload a valid image file');
+                        return;
+                    }
+                }
+                // 将字段添加到 FormData，只在有值时添加  
+                if (taskTypeValue) {  
+                    formData.append('task_type', taskTypeValue);  
+                }  
+                
+                if (description) {  
+                    formData.append('description', description);  
+                }  
+                
+                if (file) {  
+                    formData.append('file', file);  
+                }  
+
+                // 显示发送请求后的结果  
+                sendResultDiv.innerHTML = '<p class="loading">Request sent, waiting for server processing...</p>';  
+
+                // 显示任务结果区域，并开始等待任务处理  
+                taskResultDiv.style.display = 'block';  
+                taskResultDiv.innerHTML = '<p class="loading">Waiting for results...</p>';  
+
+                try {  
+                    const response = await fetch('http://mm-backend.bnuai.com/submit_task/', {  
+                        method: 'POST',  
+                        body: formData  
+                    });  
+
+                    if (response.ok) {  
+                        const sendResult = await response.json();  
+                        console.log('Send results:', sendResult);  
+
+                        // 显示任务 ID  
+                        sendResultDiv.innerHTML = `<p>Task request received, task ID: ${sendResult.task_id}</p>`;  
+
+                        // 开始轮询检查任务处理结果  
+                        await pollTaskResult(sendResult.task_id);  
+                    } else {  
+                        throw new Error('Server response error');  
+                    }  
+                } catch (error) {  
+                    console.error('Error:', error);  
+                    sendResultDiv.innerHTML = '<p class="loading">Request failed, please try again</p>';  
+                    taskResultDiv.style.display = 'none'; // 隐藏任务结果区域  
+                }  
+            });  
+            
+            // 错误提示
+            function showError(message) {
+                const existingError = document.querySelector('.error-message');
+                if (existingError) existingError.remove();
+
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.style.color = 'var(--error-color)';
+                errorDiv.style.marginTop = '8px';
+                errorDiv.style.fontSize = '0.9rem';
+                errorDiv.textContent = message;
+
+                fileInput.parentNode.insertBefore(errorDiv, fileInput.nextSibling);
+            }
+            
+            async function pollTaskResult(taskId, retryCount = 0) {
+                // 配置退避参数
+                const BASE_DELAY = 1000;   // 初始延迟1秒
+                const MAX_DELAY = 15000;   // 最大延迟30秒
+                const MAX_RETRIES = 400;     // 最多重试7次（总等待约2分钟）
+
+                try {
+                    // 计算当前退避时间（指数增长，不超过MAX_DELAY）
+                    const currentDelay = Math.min(BASE_DELAY * Math.pow(2, retryCount), MAX_DELAY);
+                    // 显示重试状态
+                    taskResultDiv.innerHTML = `
+                        <p class="loading">Checking task status... (${retryCount + 1}th retry, waiting ${currentDelay/1000} seconds)</p>
+                    `;
+
+                    // 等待退避时间后再请求
+                    await new Promise(resolve => setTimeout(resolve, currentDelay));
+
+                    const response = await fetch(`http://mm-backend.bnuai.com/task_result/${taskId}`);
+                    
+                    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+
+                    const taskResult = await response.json();
+                    console.log('Task results:', taskResult);
+
+                    if (taskResult.business_status === 'Completed') {
+                        // 成功处理结果
+                        taskResultDiv.innerHTML = `
+                            <p><strong>Task ID:</strong> ${taskResult.task_id}</p>
+                            <p><strong>Task status:</strong> ${taskResult.business_status}</p>
+                        `;
+
+                        // 显示结果文件或描述
+                        if (taskResult.result_files?.length > 0) {
+                            taskResult.results.forEach((file, index) => {
+                                let filePath = file.result_file_path;
+
+                                // 确保 filePath 有效
+                                if (!filePath) return;
+
+                                // 创建正则表达式替换规则
+                                const domainMap = {
+                                    '192\.168\.2\.75:12365': 'mm-node1.bnuai.com',
+                                    '192\.168\.2\.78:12365': 'mm-node3.bnuai.com'
+                                };
+
+                                Object.entries(domainMap).forEach(([old, newer]) => {
+                                    const regex = new RegExp(old, 'g');
+                                    filePath = filePath.replace(regex, newer);
+                                });
+
+                                console.log(filePath);
+                                const fileExt = filePath.split('.').pop().toLowerCase();
+                                
+                                let mediaElement = '';
+                                if (['mp4', 'webm', 'ogg'].includes(fileExt)) {
+                                    // 视频文件
+                                    mediaElement = `
+                                        <video controls style="max-width:100%; margin-top:10px;">
+                                            <source src="${filePath}" type="video/${fileExt}">
+                                            Your browser does not support video tags
+                                        </video>
+                                    `;
+                                } else {
+                                    // 默认按图片处理
+                                    mediaElement = `<img src="${filePath}" alt="Result image" style="max-width:100%; margin-top:10px;">`;
+                                }
+                                
+                                taskResultDiv.innerHTML += `
+                                    <p><strong>Result description:</strong> ${taskResult.results[index]?.result_description || 'No description'}</p>
+                                    ${mediaElement}
+                                `;
+                            });
+                        } else if (taskResult.results?.length > 0) {
+                            taskResult.results.forEach(result => {
+                                taskResultDiv.innerHTML += `
+                                    <p><strong>Result description:</strong> ${result.result_description}</p>
+                                `;
+                            });
+                        }
+                    } else if (taskResult.business_status === 'failed') {
+                        // 明确失败状态
+                        taskResultDiv.innerHTML = `
+                            <p class="error"><strong>Task failed:</strong> ${taskResult.message || 'Unknown error'}</p>
+                        `;
+                    } else {
+                        // 继续轮询（状态为processing等）
+                        if (retryCount < MAX_RETRIES) {
+                            pollTaskResult(taskId, retryCount + 1); // 增加重试次数
+                        } else {
+                            taskResultDiv.innerHTML = `
+                                <p class="error">Task timeout (Exceeded ${MAX_RETRIES} retries)</p>
+                            `;
+                        }
+                    }
+                } catch (error) {
+                    console.error('polling error:', error);
+                    
+                    if (retryCount < MAX_RETRIES) {
+                        taskResultDiv.innerHTML = `
+                            <p class="error">Failed to retrieve status: ${error.message} (Retrying in ${Math.min(BASE_DELAY, MAX_DELAY)/1000} seconds)</p>
+                        `;
+                        pollTaskResult(taskId, retryCount + 1); // 错误时继续退避
+                    } else {
+                        taskResultDiv.innerHTML = `
+                            <p class="error">Final failure: Exceeded maximum retry count (${MAX_RETRIES})</p>
+                        `;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
