@@ -1,0 +1,17 @@
+# dcgm-exporter-servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nvidia-dcgm-exporter
+  namespace: gpu-operator
+  annotations:
+    nvidia.com/ignore: "true"  # 标记为忽略，阻止 Operator 删除
+  labels:
+    release: rancher-monitoring
+spec:
+  endpoints:
+  - port: gpu-metrics
+    interval: 15s
+  selector:
+    matchLabels:
+      app: nvidia-dcgm-exporter
