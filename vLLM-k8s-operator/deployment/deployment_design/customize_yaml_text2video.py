@@ -1,0 +1,142 @@
+import yaml
+import random
+import argparse
+
+import re
+
+def sanitize_container_name(model_name: str, suffix: str) -> str:
+    """生成符合 Kubernetes 规范的容器名称"""
+    # Step 1: 转换全小写
+    cleaned = model_name.lower()
+    
+    # Step 2: 替换非法字符为连字符
+    cleaned = re.sub(r'[^a-z0-9-]', '-', cleaned)
+    
+    # Step 3: 合并连续连字符
+    cleaned = re.sub(r'-+', '-', cleaned)
+    
+    # Step 4: 去除首尾连字符
+    cleaned = cleaned.strip('-')
+    
+    # Step 5: 限制长度并拼接后缀
+    max_base_length = 30  # 保留后缀空间
+    final_name = f"{cleaned[:max_base_length]}-{suffix}"
+    
+    # 最终再次清理
+    final_name = re.sub(r'[^a-z0-9-]', '', final_name)[:63]
+    return final_name
+
+def modify_text2video_yaml_template(
+    input_file,
+    output_file,
+    model_name="CogVideoX-2b-sat",
+    node_name="b410-4090d-2",
+    x=None
+):
+    """修改YAML模板的核心函数"""
+    
+    # 读取YAML文件
+    with open(input_file, 'r', encoding='utf-8') as f:
+        docs = list(yaml.safe_load_all(f))  # 支持多文档YAML
+
+    # 生成随机数x（如果未提供）
+    x = x if x is not None else random.randint(0, 100)
+    
+    # 替换 Deployment 相关字段
+    deployment = docs[0]
+    deployment["metadata"]["name"] = f"text2video-{x}"
+    # deployment["metadata"]["labels"]["app"] = f"text2video-{x}"
+    deployment["spec"]["selector"]["matchLabels"]["app"] = f"text2video-{x}"
+    deployment["spec"]["template"]["metadata"]["labels"]["app"] = f"text2video-{x}"
+    for container in deployment['spec']['template']['spec']['containers']:
+        if container['name'] == 'text2video-x':
+            container['name'] = sanitize_container_name(model_name, x)
+            break
+    
+    
+    # 替换节点名称
+    deployment["spec"]["template"]["spec"]["nodeName"] = node_name
+    
+    # 替换 Service 相关字段
+    service = docs[1]
+    service["metadata"]["name"] = f"text2video-{x}-service"
+    service["spec"]["selector"]["app"] = f"text2video-{x}"
+    
+    # 生成新的NodePort（保持前三位不变，替换最后两位）
+    original_port = service["spec"]["ports"][0]["nodePort"]
+    new_port = (original_port // 100) * 100 + x  # 例如 31113 -> 31100 + x
+    service["spec"]["ports"][0]["nodePort"] = new_port
+
+    # 保存修改后的YAML
+    with open(output_file, 'w') as f:
+        yaml.dump_all(docs, f, default_flow_style=False, sort_keys=False)
+    
+    print(f"Generated config: {output_file} (x={x}, node_port={new_port})")
+
+
+def local_modify_text2video_yaml_template(
+    input_file,
+    output_file,
+    model_name="CogVideoX-2b-sat",
+    node_name="b410-4090d-2",
+    x=None
+):
+    """修改YAML模板的核心函数"""
+    
+    # 读取YAML文件
+    with open(input_file, 'r', encoding='utf-8') as f:
+        docs = list(yaml.safe_load_all(f))  # 支持多文档YAML
+
+    # 生成随机数x（如果未提供）
+    x = x if x is not None else random.randint(0, 100)
+    
+    # 替换 Deployment 相关字段
+    deployment = docs[0]
+    deployment["metadata"]["name"] = f"text2video-{x}"
+    # deployment["metadata"]["labels"]["app"] = f"text2video-{x}"
+    deployment["spec"]["selector"]["matchLabels"]["app"] = f"text2video-{x}"
+    deployment["spec"]["template"]["metadata"]["labels"]["app"] = f"text2video-{x}"
+    for container in deployment['spec']['template']['spec']['containers']:
+        if container['name'] == 'text2video-x':
+            container['name'] = sanitize_container_name(model_name, x)
+            break
+    
+    
+    # 替换节点名称
+    deployment["spec"]["template"]["spec"]["nodeName"] = node_name
+    
+    # 替换 Service 相关字段
+    service = docs[1]
+    service["metadata"]["name"] = f"text2video-{x}-service"
+    service["spec"]["selector"]["app"] = f"text2video-{x}"
+    
+    # 生成新的NodePort（保持前三位不变，替换最后两位）
+    original_port = service["spec"]["ports"][0]["nodePort"]
+    new_port = (original_port // 100) * 100 + x  # 例如 31113 -> 31100 + x
+    service["spec"]["ports"][0]["nodePort"] = new_port
+
+    # 保存修改后的YAML
+    with open(output_file, 'w') as f:
+        yaml.dump_all(docs, f, default_flow_style=False, sort_keys=False)
+    
+    print(f"Generated config: {output_file} (x={x}, node_port={new_port})")
+
+if __name__ == "__main__":
+    # 命令行参数配置
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--input", default="local-text2video-x.yaml", help="输入模板文件路径")
+    parser.add_argument("--output", default="local-text2video-x-development.yaml", help="输出文件路径")
+    parser.add_argument("--model", default="CogVideoX-2b-sat", help="自定义模型名称")
+    parser.add_argument("--node", default="b410-4090d-2", help="自定义节点名称")
+    parser.add_argument("--x", type=int, help="手动指定x值（可选）")
+    args = parser.parse_args()
+    print('args.input', args.input)
+    # 执行修改
+    modify_text2video_yaml_template(
+        input_file=args.input,
+        output_file=args.output,
+        # model_name=args.model,
+        node_name=args.node,
+        x=args.x
+    )
