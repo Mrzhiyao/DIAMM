@@ -1,0 +1,1154 @@
+{
+  "192.168.2.75|/home/yaozhi/images/Qwen2.5-3B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:01.397652",
+    "query_time": 0.5800416469573975,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2.5-3B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:02.006386",
+    "query_time": 0.6071288585662842,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2.5-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:02.569483",
+    "query_time": 0.5615458488464355,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2.5-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:03.149709",
+    "query_time": 0.5785853862762451,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:03.699863",
+    "query_time": 0.5487008094787598,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:04.279720",
+    "query_time": 0.5780506134033203,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/glm-4-9b-chat|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:04.858578",
+    "query_time": 0.5773580074310303,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/glm-4-9b-chat_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:05.423445",
+    "query_time": 0.563082218170166,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2.5-3B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:06.020831",
+    "query_time": 0.5959324836730957,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2.5-3B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:06.589792",
+    "query_time": 0.5671911239624023,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2.5-7B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:07.139309",
+    "query_time": 0.547868013381958,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2.5-7B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:07.772019",
+    "query_time": 0.6309823989868164,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/llama31-8b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:08.375082",
+    "query_time": 0.6018493175506592,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/llama31-8b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:08.960103",
+    "query_time": 0.5832827091217041,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/glm4-9b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:09.503363",
+    "query_time": 0.541759729385376,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/glm4-9b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:10.081692",
+    "query_time": 0.5765278339385986,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2-VL-2B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:10.669428",
+    "query_time": 0.5862448215484619,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2-VL-2B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:11.284207",
+    "query_time": 0.6132285594940186,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2-VL-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:11.900306",
+    "query_time": 0.6146633625030518,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/Qwen2-VL-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:12.465787",
+    "query_time": 0.5638225078582764,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/yz_diffusion|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:13.016641",
+    "query_time": 0.5493991374969482,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/yz_diffusion_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:13.592012",
+    "query_time": 0.5727908611297607,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2.5-3B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:14.944696",
+    "query_time": 0.21446490287780762,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2.5-3B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:15.157589",
+    "query_time": 0.21127009391784668,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2.5-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:15.373972",
+    "query_time": 0.21480679512023926,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2.5-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:15.589170",
+    "query_time": 0.21354031562805176,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:15.809435",
+    "query_time": 0.2187652587890625,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:16.021608",
+    "query_time": 0.21033477783203125,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/glm-4-9b-chat|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:16.244948",
+    "query_time": 0.22182083129882812,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/glm-4-9b-chat_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:16.453211",
+    "query_time": 0.20654821395874023,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2.5-3B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:16.661899",
+    "query_time": 0.20718169212341309,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2.5-3B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:16.877381",
+    "query_time": 0.21362900733947754,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2.5-7B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:17.109514",
+    "query_time": 0.23064303398132324,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2.5-7B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:17.317150",
+    "query_time": 0.2059488296508789,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/llama31-8b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:17.509225",
+    "query_time": 0.19060254096984863,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/llama31-8b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:17.729128",
+    "query_time": 0.2177438735961914,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/glm4-9b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:17.938799",
+    "query_time": 0.20812320709228516,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/glm4-9b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:18.161431",
+    "query_time": 0.2202005386352539,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2-VL-2B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:18.365995",
+    "query_time": 0.20310306549072266,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2-VL-2B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:18.585662",
+    "query_time": 0.21793603897094727,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2-VL-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:18.797484",
+    "query_time": 0.21037840843200684,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/Qwen2-VL-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:19.001374",
+    "query_time": 0.20226430892944336,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/yz_diffusion|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:19.200686",
+    "query_time": 0.197584867477417,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/yz_diffusion_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:19.421632",
+    "query_time": 0.2192668914794922,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2.5-3B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:20.090619",
+    "query_time": 0.20000076293945312,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2.5-3B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:20.259521",
+    "query_time": 0.1671586036682129,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2.5-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:20.443414",
+    "query_time": 0.18245625495910645,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2.5-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:20.626548",
+    "query_time": 0.18134236335754395,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:20.818292",
+    "query_time": 0.19011545181274414,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:21.022028",
+    "query_time": 0.20189213752746582,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/glm-4-9b-chat|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:21.210402",
+    "query_time": 0.1866285800933838,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/glm-4-9b-chat_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:21.419376",
+    "query_time": 0.20745277404785156,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2.5-3B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:21.658897",
+    "query_time": 0.23841309547424316,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2.5-3B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:21.870614",
+    "query_time": 0.21002745628356934,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2.5-7B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:22.050854",
+    "query_time": 0.1790904998779297,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2.5-7B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:22.272050",
+    "query_time": 0.21933197975158691,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/llama31-8b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:22.489472",
+    "query_time": 0.21597886085510254,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/llama31-8b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:22.691137",
+    "query_time": 0.19991374015808105,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/glm4-9b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:22.877960",
+    "query_time": 0.18533563613891602,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/glm4-9b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:23.077485",
+    "query_time": 0.19760465621948242,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2-VL-2B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:23.280102",
+    "query_time": 0.20105934143066406,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2-VL-2B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:23.475218",
+    "query_time": 0.19338750839233398,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2-VL-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:23.657433",
+    "query_time": 0.18029165267944336,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/Qwen2-VL-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:23.819727",
+    "query_time": 0.16034865379333496,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/yz_diffusion|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:23.987259",
+    "query_time": 0.1659712791442871,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/yz_diffusion_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:24.179552",
+    "query_time": 0.19049811363220215,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2.5-3B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:24.782166",
+    "query_time": 0.18143582344055176,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2.5-3B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:24.965772",
+    "query_time": 0.18189668655395508,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2.5-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:25.142129",
+    "query_time": 0.17489409446716309,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2.5-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:25.318001",
+    "query_time": 0.17408227920532227,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:25.494427",
+    "query_time": 0.17490482330322266,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:25.674112",
+    "query_time": 0.17752480506896973,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/glm-4-9b-chat|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:25.850130",
+    "query_time": 0.17458558082580566,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/glm-4-9b-chat_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:26.030127",
+    "query_time": 0.17830538749694824,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2.5-3B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:26.210128",
+    "query_time": 0.17853569984436035,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2.5-3B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:26.394235",
+    "query_time": 0.18232488632202148,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2.5-7B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:26.577840",
+    "query_time": 0.18212509155273438,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2.5-7B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:26.753896",
+    "query_time": 0.17433476448059082,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/llama31-8b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:26.934060",
+    "query_time": 0.17871856689453125,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/llama31-8b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:27.114214",
+    "query_time": 0.17844581604003906,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/glm4-9b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:27.296761",
+    "query_time": 0.18111300468444824,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/glm4-9b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:27.482134",
+    "query_time": 0.1832594871520996,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2-VL-2B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:27.662021",
+    "query_time": 0.17834186553955078,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2-VL-2B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:27.838098",
+    "query_time": 0.1743793487548828,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2-VL-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:28.014320",
+    "query_time": 0.1747286319732666,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/Qwen2-VL-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:28.194292",
+    "query_time": 0.1782703399658203,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/yz_diffusion|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:28.374036",
+    "query_time": 0.1783897876739502,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/yz_diffusion_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:28.554153",
+    "query_time": 0.17835474014282227,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2.5-3B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:29.050139",
+    "query_time": 0.134049654006958,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2.5-3B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:29.198434",
+    "query_time": 0.14658498764038086,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2.5-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:29.339812",
+    "query_time": 0.1391909122467041,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2.5-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:29.511109",
+    "query_time": 0.16943073272705078,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:29.733020",
+    "query_time": 0.2203989028930664,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:29.892296",
+    "query_time": 0.15755510330200195,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/glm-4-9b-chat|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:30.073360",
+    "query_time": 0.17951297760009766,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/glm-4-9b-chat_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:30.205802",
+    "query_time": 0.13065481185913086,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2.5-3B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:30.378839",
+    "query_time": 0.17153716087341309,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2.5-3B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:30.606996",
+    "query_time": 0.22594952583312988,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2.5-7B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:30.828974",
+    "query_time": 0.2204897403717041,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2.5-7B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:31.042173",
+    "query_time": 0.21144914627075195,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/llama31-8b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:31.229405",
+    "query_time": 0.18578028678894043,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/llama31-8b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:31.357227",
+    "query_time": 0.1260662078857422,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/glm4-9b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:31.503528",
+    "query_time": 0.14476609230041504,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/glm4-9b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:31.647873",
+    "query_time": 0.1425027847290039,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2-VL-2B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:31.884860",
+    "query_time": 0.2355189323425293,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2-VL-2B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:32.082723",
+    "query_time": 0.19620299339294434,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2-VL-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:32.268212",
+    "query_time": 0.18398761749267578,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/Qwen2-VL-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:32.421358",
+    "query_time": 0.1514759063720703,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/yz_diffusion|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:32.553163",
+    "query_time": 0.13034844398498535,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/yz_diffusion_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:32.731152",
+    "query_time": 0.17624807357788086,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2.5-3B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:33.289806",
+    "query_time": 0.20554089546203613,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2.5-3B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:33.497465",
+    "query_time": 0.2058870792388916,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2.5-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:33.649175",
+    "query_time": 0.15021157264709473,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2.5-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:33.805767",
+    "query_time": 0.1547715663909912,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:33.949606",
+    "query_time": 0.14223861694335938,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:34.166478",
+    "query_time": 0.21504640579223633,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/glm-4-9b-chat|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:34.381326",
+    "query_time": 0.21334433555603027,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/glm-4-9b-chat_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:34.545434",
+    "query_time": 0.1624302864074707,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2.5-3B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:34.697832",
+    "query_time": 0.15091252326965332,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2.5-3B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:34.982782",
+    "query_time": 0.28316569328308105,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2.5-7B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:35.165503",
+    "query_time": 0.18089652061462402,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2.5-7B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:35.362638",
+    "query_time": 0.19540047645568848,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/llama31-8b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:35.613226",
+    "query_time": 0.2490711212158203,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/llama31-8b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:35.781267",
+    "query_time": 0.1662919521331787,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/glm4-9b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:35.986719",
+    "query_time": 0.20397591590881348,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/glm4-9b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:36.170597",
+    "query_time": 0.18208837509155273,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2-VL-2B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:36.325315",
+    "query_time": 0.1534874439239502,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2-VL-2B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:36.497345",
+    "query_time": 0.1702432632446289,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2-VL-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:36.777914",
+    "query_time": 0.2794785499572754,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/Qwen2-VL-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:36.961318",
+    "query_time": 0.1816847324371338,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/yz_diffusion|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:37.165463",
+    "query_time": 0.20261859893798828,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/yz_diffusion_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:37.365991",
+    "query_time": 0.1987171173095703,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2.5-3B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:37.889873",
+    "query_time": 0.1545395851135254,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2.5-3B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:38.049325",
+    "query_time": 0.15754246711730957,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2.5-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:38.255060",
+    "query_time": 0.2040865421295166,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2.5-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:38.438151",
+    "query_time": 0.18086671829223633,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:38.649399",
+    "query_time": 0.2097465991973877,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:38.805355",
+    "query_time": 0.15425562858581543,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/glm-4-9b-chat|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:38.953226",
+    "query_time": 0.1459498405456543,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/glm-4-9b-chat_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:39.157477",
+    "query_time": 0.20256829261779785,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2.5-3B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:39.353323",
+    "query_time": 0.19439029693603516,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2.5-3B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:39.569984",
+    "query_time": 0.21496129035949707,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2.5-7B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:39.737333",
+    "query_time": 0.16593074798583984,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2.5-7B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:39.957320",
+    "query_time": 0.21809887886047363,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/llama31-8b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:40.133540",
+    "query_time": 0.17473888397216797,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/llama31-8b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:40.285798",
+    "query_time": 0.15041637420654297,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/glm4-9b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:40.533548",
+    "query_time": 0.24632024765014648,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/glm4-9b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:40.729321",
+    "query_time": 0.19444489479064941,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2-VL-2B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:40.901900",
+    "query_time": 0.1710493564605713,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2-VL-2B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:41.053262",
+    "query_time": 0.14988327026367188,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2-VL-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:41.273577",
+    "query_time": 0.21860599517822266,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/Qwen2-VL-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:41.446500",
+    "query_time": 0.17142963409423828,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/yz_diffusion|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:41.613899",
+    "query_time": 0.16562867164611816,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/yz_diffusion_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:41.785843",
+    "query_time": 0.17050862312316895,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2.5-3B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:42.441643",
+    "query_time": 0.15486741065979004,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2.5-3B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:42.577790",
+    "query_time": 0.1347181797027588,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2.5-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:42.739845",
+    "query_time": 0.16050982475280762,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2.5-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:42.914485",
+    "query_time": 0.17307209968566895,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:43.111186",
+    "query_time": 0.19522643089294434,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:43.248934",
+    "query_time": 0.13565874099731445,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/glm-4-9b-chat|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:43.425672",
+    "query_time": 0.1752004623413086,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/glm-4-9b-chat_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:43.606452",
+    "query_time": 0.1791691780090332,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2.5-3B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:43.755645",
+    "query_time": 0.14769625663757324,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2.5-3B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:43.913037",
+    "query_time": 0.15538263320922852,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2.5-7B-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:44.083818",
+    "query_time": 0.16925573348999023,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2.5-7B-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:44.226675",
+    "query_time": 0.1411881446838379,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/llama31-8b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:44.391373",
+    "query_time": 0.16317296028137207,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/llama31-8b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:44.541902",
+    "query_time": 0.14877939224243164,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/glm4-9b-ollama|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:44.682184",
+    "query_time": 0.1386888027191162,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/glm4-9b-ollama_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:44.859807",
+    "query_time": 0.1761775016784668,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2-VL-2B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:45.020462",
+    "query_time": 0.15867209434509277,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2-VL-2B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:45.188795",
+    "query_time": 0.1666426658630371,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2-VL-7B-Instruct|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:45.409192",
+    "query_time": 0.21873879432678223,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/Qwen2-VL-7B-Instruct_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:45.584137",
+    "query_time": 0.17325615882873535,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/yz_diffusion|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:45.804599",
+    "query_time": 0.21900725364685059,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/yz_diffusion_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:45.997646",
+    "query_time": 0.19130659103393555,
+    "path_type": "file"
+  },
+  "192.168.2.75|/home/yaozhi/images/CogVideo-1.0|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:14.173973",
+    "query_time": 0.5794000625610352,
+    "path_type": "dir"
+  },
+  "192.168.2.75|/home/yaozhi/images/CogVideo-1.0_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:14.728748",
+    "query_time": 0.5526809692382812,
+    "path_type": "file"
+  },
+  "192.168.2.190|/home/yaozhi/images/CogVideo-1.0|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:19.677245",
+    "query_time": 0.25328826904296875,
+    "path_type": "dir"
+  },
+  "192.168.2.190|/home/yaozhi/images/CogVideo-1.0_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:19.889138",
+    "query_time": 0.21007108688354492,
+    "path_type": "file"
+  },
+  "192.168.2.78|/home/yaozhi/images/CogVideo-1.0|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:24.391089",
+    "query_time": 0.2091526985168457,
+    "path_type": "dir"
+  },
+  "192.168.2.78|/home/yaozhi/images/CogVideo-1.0_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:24.599229",
+    "query_time": 0.2064831256866455,
+    "path_type": "file"
+  },
+  "192.168.2.80|/home/yaozhi/images/CogVideo-1.0|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:28.734390",
+    "query_time": 0.17787480354309082,
+    "path_type": "dir"
+  },
+  "192.168.2.80|/home/yaozhi/images/CogVideo-1.0_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:28.914259",
+    "query_time": 0.17856955528259277,
+    "path_type": "file"
+  },
+  "192.168.2.5|/home/yaozhi/images/CogVideo-1.0|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:32.883175",
+    "query_time": 0.14899563789367676,
+    "path_type": "dir"
+  },
+  "192.168.2.5|/home/yaozhi/images/CogVideo-1.0_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:33.082791",
+    "query_time": 0.19801878929138184,
+    "path_type": "file"
+  },
+  "192.168.2.6|/home/yaozhi/images/CogVideo-1.0|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:37.573550",
+    "query_time": 0.20467853546142578,
+    "path_type": "dir"
+  },
+  "192.168.2.6|/home/yaozhi/images/CogVideo-1.0_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:37.733823",
+    "query_time": 0.15856075286865234,
+    "path_type": "file"
+  },
+  "192.168.2.7|/home/yaozhi/images/CogVideo-1.0|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:41.994290",
+    "query_time": 0.20566153526306152,
+    "path_type": "dir"
+  },
+  "192.168.2.7|/home/yaozhi/images/CogVideo-1.0_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:42.285303",
+    "query_time": 0.2896261215209961,
+    "path_type": "file"
+  },
+  "192.168.2.133|/home/yaozhi/images/CogVideo-1.0|dir": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:46.170646",
+    "query_time": 0.1708829402923584,
+    "path_type": "dir"
+  },
+  "192.168.2.133|/home/yaozhi/images/CogVideo-1.0_transfer_complete.flag|file": {
+    "result": false,
+    "timestamp": "2025-08-11T16:53:46.365720",
+    "query_time": 0.19356656074523926,
+    "path_type": "file"
+  }
+}
