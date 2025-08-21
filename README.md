@@ -100,6 +100,7 @@ stdout_logfile=/vLLM-k8s-operator/log/celery/flower.log
 ```
 
 Celery start ：
+
 sudo supervisorctl reread
 
 sudo supervisorctl update
