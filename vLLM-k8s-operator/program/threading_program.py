@@ -1,11 +1,8 @@
 import threading
 import time
 import subprocess
-import requests
-from openai import OpenAI
 import webuiapi  
 from PIL import Image
-import psycopg2
 from .embedding import get_embedding
 import numpy as np
 import os
@@ -130,44 +127,6 @@ async def async_get_task(task_id: str):
     await redis.close()
     return json.loads(data) if data else None
 
-# import aioredis
-# import json
-
-# Redis 配置（复用之前的连接池）
-# REDIS_CONFIG = {
-#     "address": ("192.168.2.75", 6379),
-#     "db": 1,
-#     "password": "123456",
-#     "encoding": None,  # 保持二进制格式
-#     "max_connections": 1000
-# }
-
-# async def get_redis_pool():
-#     """获取异步 Redis 连接池"""
-#     return await aioredis.create_redis_pool(**REDIS_CONFIG)
-
-# async def async_get_task(task_id: str) -> dict:
-#     """
-#     异步查询单个任务数据
-#     :param task_id: 任务ID，如 '4045d042-a771-43bc-bc4c-35badb138d72'
-#     :return: 反序列化后的字典或 None（若不存在）
-#     """
-#     redis_pool = await get_redis_pool()
-#     try:
-#         # 异步查询
-#         data_bytes = await redis_pool.get(f"task:{task_id}")
-#         if data_bytes:
-#             return json.loads(data_bytes.decode('utf-8'))
-#         return None
-#     except (aioredis.RedisError, json.JSONDecodeError) as e:
-#         print(f"查询失败（{task_id}）: {str(e)}")
-#         return None
-#     finally:
-#         redis_pool.close()
-#         await redis_pool.wait_closed()
-
-
-
 SAVE_DIR = "/yaozhi/vLLM-k8s-operator/deployment/deployment_design/tasks_ip"  # 可根据需求修改路径
 async_logger = AsyncTaskLogger()
 async def generate_context_prompt(question: str, knowledge_base: list) -> str:
@@ -246,18 +205,6 @@ async def check_rag_relevance(text1: str, text2: str, api_url: str = "http://192
         except Exception as e:
             print(f"处理API响应时出错: {str(e)}")
             return 0.0
-
-# # 使用示例
-# knowledge_data = [
-#     ('D1497-0', '系统配置参数验证通过', 0.1241, '2023-01-15'),
-#     ('D992-0', '硬件兼容性测试结果正常', 0.1241),
-#     ('Music_Angry', '"Angry All the Time" 是布鲁斯·罗宾逊创作的乡村歌曲', 0.1526),
-#     ('Band_DC', 'DC Talk 曾三次获得格莱美最佳福音专辑奖', 0.1825)
-# ]
-
-# question = "如何验证系统硬件配置的兼容性？"
-# print(generate_context_prompt(question, knowledge_data))
-
 
 async def search_vectordatabase(db, task, dbname, process_text, top_n=3):
     query_tables = """
@@ -440,29 +387,7 @@ async def download_image(url, save_dir):
     :param save_dir: 保存目录路径
     :return: 保存后的完整文件路径
     """
-    # try:
-    #     # 创建目标目录（如果不存在）
-    #     os.makedirs(save_dir, exist_ok=True)
-        
-    #     # 发起HTTP GET请求
-    #     response = requests.get(url, timeout=10)
-    #     response.raise_for_status()  # 检查HTTP错误
-
-    #     # 从URL提取文件名
-    #     filename = url.split('/')[-1]
-    #     save_path = os.path.join(save_dir, filename)
-
-    #     # 保存文件
-    #     with open(save_path, 'wb') as f:
-    #         f.write(response.content)
-            
-    #     print(f"图片已成功保存至：{save_path}")
-    #     return save_path
-
-    # except requests.exceptions.RequestException as e:
-    #     print(f"下载失败：{str(e)}")
-    # except Exception as e:
-    #     print(f"发生未知错误：{str(e)}")
+    
     try:
         # 创建目标目录（如果不存在）
         os.makedirs(save_dir, exist_ok=True)
@@ -552,16 +477,6 @@ async def find_task_by_id(data, target_task_id):
     :param target_task_id: 要查找的task_id字符串
     :return: 找到的任务字典或None
     """
-    # for category in data:
-    #     for task_type, tasks in category.items():
-    #         for task in tasks:
-    #             try:
-    #                 if task['task_id'] == target_task_id:
-    #                     return task
-    #             except KeyError:
-    #                 continue  # 跳过缺失task_id的异常条目
-    # return None
-    # for category in data:  # 遍历外层列表（尽管只有1个元素）
     for task_type, task_lists in data.items():  # 遍历字典键值对
         # print('task_lists', task_lists)
         for task in task_lists:  # 直接遍历任务列表中的每个任务字典
@@ -657,50 +572,11 @@ async def wait_for_service(container_result, task_id, db, base_url, container_na
         await asyncio.sleep(interval)  # 替换 time.sleep
     raise TimeoutError(f"服务在 {timeout} 秒内未就绪")
 
-
-
 async def execute_task(task_function, *args):
     """创建并启动线程以异步执行任务."""
     thread = threading.Thread(target=task_function, args=args)
     thread.start()
     return thread
-
-# async def async_chat_completion(input_text, base_url, timeout=60):
-#     """
-#     异步调用 OpenAI 风格的 API
-#     :param input_text: 用户输入文本
-#     :param base_url: API 基础地址（如 "http://localhost:8000/v1"）
-#     :param timeout: 超时时间（秒）
-#     :return: 模型生成的文本
-#     """
-#     url = f"{base_url}/chat/completions"
-#     print(f"[DEBUG] 请求 URL: {url}")
-#     headers = {
-#         "Content-Type": "application/json",
-#         "Authorization": "Bearer EMPTY"  # 根据实际 API 调整
-#     }
-#     payload = {
-#         "messages": [
-#             {
-#                 "role": "user",
-#                 "content": await generate_prompt(input_text)  # 假设 generate_prompt 已定义
-#             }
-#         ],
-#         "model": "qwen15-7b"
-#     }
-
-#     try:
-#         async with httpx.AsyncClient(timeout=timeout) as client:
-#             response = await client.post(url, json=payload, headers=headers)
-#             response.raise_for_status()  # 检查 HTTP 错误
-#             result = response.json()
-#             return result['choices'][0]['message']['content']
-#     except httpx.HTTPStatusError as e:
-#         print(f"API 请求错误: {e.response.status_code} - {e.response.text}")
-#         raise
-#     except Exception as e:
-#         print(f"未知错误: {str(e)}")
-#         raise
 
 async def async_chat_completion(input_text: str, model_name: str, base_url: str):
     print('t2t', base_url)
@@ -778,20 +654,14 @@ async def text2text_model(task_id, db, base_url, container_name, id, input, proc
     dbname = "coco"
     results_all = await search_vectordatabase(db, input, dbname, process_text)
     await async_logger.log(task_id, 'process, vector search')
-    # print('results_all', results_all)
     # 将嵌套列表展开为所有元组的列表
     all_items = [item for sublist in results_all for item in sublist]
     # 按距离值排序并取前三个最小
     sorted_items = sorted(all_items, key=lambda x: x[-1])[:3]
-    # print('sorted_items', sorted_items)
     # 使用缓存机制
     t2t_results_augment = sorted_items[0][1]
     check_score = await check_rag_relevance(input, t2t_results_augment)
-    print('check811', sorted_items[0][2], check_score)
-    print(sorted_items[0][2] <= 0.3)
-    print(sorted_items[0][2] <= 0.3 and check_score >= 0.8)
     if sorted_items[0][2] < 0.1 and check_score>1.35:
-        print('cache', input)
         t2t_results = sorted_items[0][1]
 
     elif sorted_items[0][2] <= 0.3 and check_score >= 0.8:
@@ -799,44 +669,27 @@ async def text2text_model(task_id, db, base_url, container_name, id, input, proc
         await async_logger.log(task_id, 'process, prompt generation')
         elapsed_time = time.time()-text2text_st_time
         log_entry = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] 程序耗时: {elapsed_time:.4f} 秒\n"
-        # print(log_entry.strip())
         async with aiofiles.open("text2text_vector_times.txt", "a", encoding="utf-8") as f:
             await f.write(log_entry)
-        print('t2t_results_augment', t2t_results_augment, 'input', input)
         text2text_llm_st_time = time.time()
         t2t_results = await async_chat_completion_rag(t2t_results_augment, input, model_name, base_url)
         await async_logger.log(task_id, 'process, text2text LLM')
         elapsed_llm_time = time.time()-text2text_llm_st_time
         log_entry = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] LLM程序耗时: {elapsed_llm_time:.4f} 秒\n"
-        # print(log_entry.strip())
         async with aiofiles.open("text2text_llm_times.txt", "a", encoding="utf-8") as f:
             await f.write(log_entry)
     
     else:
-        print('direct', input)
         final_question = await generate_context_prompt(input, sorted_items)
-        # print('final_question', final_question)
         await async_logger.log(task_id, 'process, prompt generation')
         elapsed_time = time.time()-text2text_st_time
         log_entry = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] 程序耗时: {elapsed_time:.4f} 秒\n"
-        # print(log_entry.strip())
         async with aiofiles.open("text2text_vector_times.txt", "a", encoding="utf-8") as f:
             await f.write(log_entry)
 
         text2text_llm_st_time = time.time()
         t2t_results = await async_chat_completion(input, model_name, base_url)
         await async_logger.log(task_id, 'process, text2text LLM')
-        # client = OpenAI(api_key="EMPTY", base_url=base_url)
-        # chat_completion = client.chat.completions.create(
-        #     messages=[
-        #         {
-        #             "role": "user",
-        #             "content": generate_prompt(input),
-        #         }
-        #     ],
-        #     model="qwen15-7b",
-        # )
-
         elapsed_llm_time = time.time()-text2text_llm_st_time
         log_entry = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] LLM程序耗时: {elapsed_llm_time:.4f} 秒\n"
         # print(log_entry.strip())
@@ -844,30 +697,12 @@ async def text2text_model(task_id, db, base_url, container_name, id, input, proc
             await f.write(log_entry)
 
     return t2t_results
-    # return(chat_completion.choices[0].message.content)
 
 async def image2text_model(task_id, db, base_url, container_name, id, input, process_text, img_url):
     base_url = base_url + "/v1/"
     result = await multimodal_generation(input, img_url, base_url)
     await async_logger.log(task_id, 'process, img2text LLM')
     return result
-    # client = OpenAI(api_key="sk-123", base_url=base_url)
-    # url = img_url
-    # output = client.chat.completions.create(
-    #     model="qwen2-vl-2b",
-    #     messages=[
-    #         {
-    #             "role": "user",
-    #             "content": [
-    #                 {"type": "text", "text": input},
-    #                 {"type": "image_url", "image_url": {"url": url}},
-    #             ],
-    #         }
-    #     ],
-    #     stream=False,
-    # )
-    # return(output.choices[0].message.content)
-
 
 async def async_txt2img(url: str, prompt: str, output_path: str, steps: int = 5):
     async with aiohttp.ClientSession() as session:
@@ -890,10 +725,6 @@ async def async_txt2img(url: str, prompt: str, output_path: str, steps: int = 5)
                     await f.write(base64.b64decode(data['images'][0]))
                 # print(f"图片已保存至: {output_path}")
 
-        # except aiohttp.ClientError as e:
-        #     print(f"请求失败: {str(e)}")
-        # except Exception as e:
-        #     print(f"发生错误: {str(e)}")
         except aiohttp.ClientConnectionError as e:
             print(f"连接失败: {str(e)}")
             random_number = random.uniform(0.5, 2)
@@ -1082,16 +913,6 @@ async def image2image_model(task_id, db, base_url, container_name, id, input, pr
     new_path = await convert_path(img_url)
     print('input_image', new_path)
     output_path = '/yaozhi/vLLM-k8s-operator/outputs/'+ 'answer_' + str(id) + '.png'
-    # try:
-    # 使用示例
-    print('imag2image_base_url3:', new_path)
-    # output_path = await async_img2img(
-    #     url=base_url,
-    #     image_path=new_path,
-    #     prompt=input,
-    #     output_path = output_path,
-    #     steps=30
-    # )
     try:
         # 调用模型生成图片
         output_path = await async_img2img(
@@ -1276,20 +1097,16 @@ async def is_mp4_available_async(
             await session.close()
 
 
-
 async def text2video_model(task_id, db, base_url, container_name, id, input, process_text, img_url):
     api_url = base_url + '/generate_video'
     prompt = input
-
     results_all_text2img = await search_vector_text2video(db, input, process_text)
     
     video_text = results_all_text2img[0][0][3]
     video_path = results_all_text2img[0][0][2]
     check_score = await check_rag_relevance(input, video_text)
 
-    print('results_all_text2img', results_all_text2img)
-    print('check_t2v', results_all_text2img[0][0][-1], check_score)
-    # /nfs/ai/datasets/processed_videos/video_segments/gQ8Pg7hLT3Y_seg0.mp4
+
     if results_all_text2img[0][0][-1] <= 0.75  and check_score > 1:
         video_text = results_all_text2img[0][0][3]
         video_path = results_all_text2img[0][0][2]
@@ -1301,24 +1118,17 @@ async def text2video_model(task_id, db, base_url, container_name, id, input, pro
             video_path = video_path.replace("/nfs/ai/datasets/processed_videos/video_segments/", "http://192.168.2.78:12365/data_video/") 
 
         filename = video_path
-        # target_directory = "/yaozhi/vLLM-k8s-operator/user_tasks_vec"  # 修改为你的目标目录
         target_directory = "/yaozhi/vLLM-k8s-operator/outputs"
         await download_image(video_path, target_directory)
         await async_logger.log(task_id, 'process, download dataset video')
         video_path2 = video_path.replace("http://192.168.2.78:12365/data_video", target_directory) 
-        print('filename', filename)
-        print('return_video:', video_path2)
+
         return_name = video_path2
     else:
-        # print(api_url, prompt)
         result = await async_generate_video(api_url, prompt)
         result_id = result['task_id']
-        # print('result_id', result_id)
         filename = f'http://192.168.2.78:12365/video_outputs/output_{result_id}.mp4'
-
         result = await async_check_mp4_until_available(filename)
-        print('video_check', result)
-
         target_directory = "/yaozhi/vLLM-k8s-operator/outputs"
         await download_image(filename, target_directory)
         return_name = filename.replace("http://192.168.2.78:12365/video_outputs", target_directory) 
@@ -1331,71 +1141,35 @@ async def text2video_model(task_id, db, base_url, container_name, id, input, pro
 
 async def text2text_task(container_result, task_id, db, task, process_text):
     """执行文生文任务."""
-    # 向量数据库主要参与
-    # await execute_yaml("tsc-qwen7b-3.yaml")
-    # base_url = "http://192.168.2.78:31113/v1/"
-
     base_url = "http://192.168.2.80:31112/v1/"
     container_name = "default"
-    # 使用示例
-    # container_name = "stable-diffusion-35"
-    # base_url = "http://192.168.2.75:10431/v1/"
     results = await wait_for_service(container_result, task_id, db, base_url, container_name, task, text2text_model, process_text,img_url=None,)  # 等待服务启动
-    # print('completion results:', results)
-    # task_thread = execute_task(run_openai_task)
-    # task_thread.join()  # 等待线程完成
     return results
 
 async def image2text_task(container_result, task_id, db, task, img_url,process_text):
     """执行图生文任务."""
-    # 向量数据库不参与？！
-    # execute_yaml("test-qwen2-vl-2b-1.yaml")
     base_url = "http://192.168.2.75:31011/v1/"
     container_name = "default"
     results = await wait_for_service(container_result, task_id, db, base_url, container_name, task, image2text_model, process_text,img_url)  # 等待服务启动
-    # print('completion results:', results)
-    # task_thread = execute_task(run_openai_task)
-    # task_thread.join()  # 等待线程完成
     return results
 
 async def text2image_task(container_result, task_id, db, task, img_url, process_text):
     """执行文生图任务."""
-    # 继承生成？
-    # execute_yaml("test-diffusion-3.yaml")
-    # base_url = "http://192.168.2.78:31213"
     base_url = "http://192.168.2.75:30011"
     container_name = "default"
     results = await wait_for_service(container_result, task_id, db, base_url, container_name, task, text2image_model, process_text,img_url)  # 等待服务启动
-    # print('text2image_completion results:', results)
-    # task_thread = execute_task(run_openai_task)
-    # task_thread.join()  # 等待线程完成
     return results
 
 async def image2image_task(container_result, task_id, db, task, img_url, process_text):
     """执行图生图任务."""
-    # 向量数据库不参与
-    # execute_yaml("test-diffusion-3.yaml")
-    # base_url = "http://192.168.2.78:31213"
-    # execute_yaml("test-diffusion-1.yaml")
     base_url = "http://192.168.2.75:30011"
     container_name = "default"
     results = await wait_for_service(container_result, task_id, db, base_url, container_name, task, image2image_model, process_text, img_url)  # 等待服务启动
-    # print('image2image_completion results:', results)
-    # task_thread = execute_task(run_openai_task)
-    # task_thread.join()  # 等待线程完成
     return results
 
 async def text2video_task(container_result, task_id, db, task, process_text):
-    """执行图生图任务."""
-    # 向量数据库不参与
-    # execute_yaml("test-cogvideo-2b-4.yaml")
-    # base_url = "http://192.168.2.190:31304"
+    """执行文生视频任务."""
     base_url = "http://192.168.2.78:31306"
     container_name = "default"
-    # execute_yaml("test-diffusion-1.yaml")
-    # base_url = "http://192.168.2.75:31211"
     results = await wait_for_service(container_result, task_id, db, base_url, container_name, task, text2video_model, process_text, img_url=None)  # 等待服务启动
-    # print('text2video_completion results:', results)
-    # task_thread = execute_task(run_openai_task)
-    # task_thread.join()  # 等待线程完成
     return results
