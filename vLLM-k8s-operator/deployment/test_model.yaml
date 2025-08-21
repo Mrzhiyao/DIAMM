@@ -1,1 +1,22 @@
+apiVersion: core.vllmoperator.org/v1alpha1
+kind: VllmDeployment
+metadata:
+  name: janus-13b
+spec:
+  replicas: 1
+  model:
+    name: "Janus-1.3B"
+    hf_url: "https://huggingface.co/deepseek-ai/Janus-1.3B"
+  vLLMConfig:
+    port: 8072
+    gpu-memory-utilization: "0.75"
+    log-level: "info"
+    block-size: 16
+    max-model-len: 2000
+    enforce-eager: true
+  containers:
+    - name: vllm
+      image: vllm/vllm-openai:v0.6.2
+      ports:
+        - containerPort: 8072
 
