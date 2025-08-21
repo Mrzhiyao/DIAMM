@@ -90,43 +90,6 @@ async def async_get_task(task_id: str):
     await redis.close()
     return json.loads(data) if data else None
 
-# import aioredis
-# import json
-
-# Redis 配置（复用之前的连接池）
-# REDIS_CONFIG = {
-#     "address": ("192.168.2.75", 6379),
-#     "db": 1,
-#     "password": "123456",
-#     "encoding": None,  # 保持二进制格式
-#     "max_connections": 1000
-# }
-
-# async def get_redis_pool():
-#     """获取异步 Redis 连接池"""
-#     return await aioredis.create_redis_pool(**REDIS_CONFIG)
-
-# async def async_get_task(task_id: str) -> dict:
-#     """
-#     异步查询单个任务数据
-#     :param task_id: 任务ID，如 '4045d042-a771-43bc-bc4c-35badb138d72'
-#     :return: 反序列化后的字典或 None（若不存在）
-#     """
-#     redis_pool = await get_redis_pool()
-#     try:
-#         # 异步查询
-#         data_bytes = await redis_pool.get(f"task:{task_id}")
-#         if data_bytes:
-#             return json.loads(data_bytes.decode('utf-8'))
-#         return None
-#     except (aioredis.RedisError, json.JSONDecodeError) as e:
-#         print(f"查询失败（{task_id}）: {str(e)}")
-#         return None
-#     finally:
-#         redis_pool.close()
-#         await redis_pool.wait_closed()
-
-
 
 SAVE_DIR = "/yaozhi/vLLM-k8s-operator/deployment/deployment_design/tasks_ip"  # 可根据需求修改路径
 async_logger = AsyncTaskLogger()
@@ -173,17 +136,6 @@ async def generate_context_prompt(question: str, knowledge_base: list) -> str:
 """
 
     return prompt
-
-# # 使用示例
-# knowledge_data = [
-#     ('D1497-0', '系统配置参数验证通过', 0.1241, '2023-01-15'),
-#     ('D992-0', '硬件兼容性测试结果正常', 0.1241),
-#     ('Music_Angry', '"Angry All the Time" 是布鲁斯·罗宾逊创作的乡村歌曲', 0.1526),
-#     ('Band_DC', 'DC Talk 曾三次获得格莱美最佳福音专辑奖', 0.1825)
-# ]
-
-# question = "如何验证系统硬件配置的兼容性？"
-# print(generate_context_prompt(question, knowledge_data))
 
 
 async def search_vectordatabase(db, task, dbname, process_text, top_n=3):
@@ -367,29 +319,7 @@ async def download_image(url, save_dir):
     :param save_dir: 保存目录路径
     :return: 保存后的完整文件路径
     """
-    # try:
-    #     # 创建目标目录（如果不存在）
-    #     os.makedirs(save_dir, exist_ok=True)
-        
-    #     # 发起HTTP GET请求
-    #     response = requests.get(url, timeout=10)
-    #     response.raise_for_status()  # 检查HTTP错误
-
-    #     # 从URL提取文件名
-    #     filename = url.split('/')[-1]
-    #     save_path = os.path.join(save_dir, filename)
-
-    #     # 保存文件
-    #     with open(save_path, 'wb') as f:
-    #         f.write(response.content)
-            
-    #     print(f"图片已成功保存至：{save_path}")
-    #     return save_path
-
-    # except requests.exceptions.RequestException as e:
-    #     print(f"下载失败：{str(e)}")
-    # except Exception as e:
-    #     print(f"发生未知错误：{str(e)}")
+    
     try:
         # 创建目标目录（如果不存在）
         os.makedirs(save_dir, exist_ok=True)
@@ -471,16 +401,7 @@ async def find_task_by_id(data, target_task_id):
     :param target_task_id: 要查找的task_id字符串
     :return: 找到的任务字典或None
     """
-    # for category in data:
-    #     for task_type, tasks in category.items():
-    #         for task in tasks:
-    #             try:
-    #                 if task['task_id'] == target_task_id:
-    #                     return task
-    #             except KeyError:
-    #                 continue  # 跳过缺失task_id的异常条目
-    # return None
-    # for category in data:  # 遍历外层列表（尽管只有1个元素）
+
     for task_type, task_lists in data.items():  # 遍历字典键值对
         # print('task_lists', task_lists)
         for task in task_lists:  # 直接遍历任务列表中的每个任务字典
@@ -584,43 +505,6 @@ async def execute_task(task_function, *args):
     thread.start()
     return thread
 
-# async def async_chat_completion(input_text, base_url, timeout=60):
-#     """
-#     异步调用 OpenAI 风格的 API
-#     :param input_text: 用户输入文本
-#     :param base_url: API 基础地址（如 "http://localhost:8000/v1"）
-#     :param timeout: 超时时间（秒）
-#     :return: 模型生成的文本
-#     """
-#     url = f"{base_url}/chat/completions"
-#     print(f"[DEBUG] 请求 URL: {url}")
-#     headers = {
-#         "Content-Type": "application/json",
-#         "Authorization": "Bearer EMPTY"  # 根据实际 API 调整
-#     }
-#     payload = {
-#         "messages": [
-#             {
-#                 "role": "user",
-#                 "content": await generate_prompt(input_text)  # 假设 generate_prompt 已定义
-#             }
-#         ],
-#         "model": "qwen15-7b"
-#     }
-
-#     try:
-#         async with httpx.AsyncClient(timeout=timeout) as client:
-#             response = await client.post(url, json=payload, headers=headers)
-#             response.raise_for_status()  # 检查 HTTP 错误
-#             result = response.json()
-#             return result['choices'][0]['message']['content']
-#     except httpx.HTTPStatusError as e:
-#         print(f"API 请求错误: {e.response.status_code} - {e.response.text}")
-#         raise
-#     except Exception as e:
-#         print(f"未知错误: {str(e)}")
-#         raise
-
 async def async_chat_completion(input_text: str, model_name: str, base_url: str):
     print('t2t', base_url)
     text = await generate_prompt(input_text)
@@ -677,21 +561,7 @@ async def text2text_model(task_id, db, base_url, container_name, id, input, proc
         # 找一下参数对应
     base_url = base_url + "/v1/"
     text2text_st_time = time.time()
-    # dbname = "coco"
-    # results_all = await search_vectordatabase(db, input, dbname, process_text)
-    # await async_logger.log(task_id, 'process, vector search')
-    # # print('results_all', results_all)
-    # # 将嵌套列表展开为所有元组的列表
-    # all_items = [item for sublist in results_all for item in sublist]
-    # # 按距离值排序并取前三个最小
-    # sorted_items = sorted(all_items, key=lambda x: x[-1])[:3]
-    # print('sorted_items', sorted_items)
-    # 使用缓存机制
-    # if sorted_items[0][2] < 0.1:
-    #     t2t_results = sorted_items[0][1]
-    # else:
-
-    # print('final_question', final_question)
+    
     await async_logger.log(task_id, 'process, prompt generation')
     elapsed_time = time.time()-text2text_st_time
     log_entry = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] 程序耗时: {elapsed_time:.4f} 秒\n"
@@ -737,10 +607,6 @@ async def async_txt2img(url: str, prompt: str, output_path: str, steps: int = 5)
                     await f.write(base64.b64decode(data['images'][0]))
                 # print(f"图片已保存至: {output_path}")
 
-        # except aiohttp.ClientError as e:
-        #     print(f"请求失败: {str(e)}")
-        # except Exception as e:
-        #     print(f"发生错误: {str(e)}")
         except aiohttp.ClientConnectionError as e:
             print(f"连接失败: {str(e)}")
             random_number = random.uniform(0.5, 2)
@@ -830,84 +696,10 @@ async def text2image_model(task_id, db, base_url, container_name, id, input, pro
 
     # 如果需要认证，设置用户名和密码  
     api.set_auth('username', 'password')  
-    # dbname = "coco"
-    # results_all_text2text, results_all_text2img = await search_vector_text2img(db, input, dbname, process_text)
-    # await async_logger.log(task_id, 'process, vector search')
-
-    # elapsed_time = time.time()-text2img_st_time
-    # log_entry = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] 程序耗时: {elapsed_time:.4f} 秒\n"    
-    # # 控制台输出
-    # # print(log_entry.strip())  # 去除换行符打印
-    # async with aiofiles.open("text2img_vector_times.txt", "a", encoding="utf-8") as f:
-    #     await f.write(log_entry)
 
     text2img_llm_st_time = time.time()
     output_path = '/yaozhi/vLLM-k8s-operator/outputs/'+ 'answer_' + str(id) + '.png'
-    # if results_all_text2text[0][0][-1]<=0.3:
-    #     try:
-
-    #         # 使用示例
-    #         input_img_path = results_all_text2text[0][0][1]
-    #         print('input_img_path_show', input_img_path)
-    #         if input_img_path.startswith("I:/train2017"):  
-    #             input_img_path = input_img_path.replace("I:/train2017/train2017/", "http://192.168.2.78:12365/train2017/")  
-    #         elif input_img_path.startswith("G:/train2017"):  
-    #             input_img_path = input_img_path.replace("G:/train2017/train2017/", "http://192.168.2.78:12365/train2017/") 
-        
-    #         target_directory = "/yaozhi/vLLM-k8s-operator/user_tasks_vec"  # 修改为你的目标目录
-    #         await download_image(input_img_path, target_directory)
-    #         await async_logger.log(task_id, 'process, download search img')
-    #         input_img_path2 = input_img_path.replace("http://192.168.2.78:12365/train2017", target_directory) 
-    #         print('imag2image_base_url1:', input_img_path2)
-    #         output_path = await async_img2img(
-    #             url=base_url,
-    #             image_path=input_img_path2,
-    #             prompt=input,
-    #             output_path = output_path,
-    #             steps=15
-    #         )
-    #         await async_logger.log(task_id, 'process, download search img')
-    #     except Exception as e:
-    #         print(f"first Error occurred: {e}")
-    #         traceback.print_exc()  # 打印完整堆栈跟踪
-    # elif results_all_text2img != [[]] and []:
-    #     try:
-    #         if results_all_text2img[0][0][-1]<=0.6:
-    #             try:
-    #                 # 使用示例
-    #                 input_img_path = results_all_text2img[0][0][1]
-    #                 if input_img_path.startswith("I:/train2017"):  
-    #                     input_img_path = input_img_path.replace("I:/train2017/train2017/", "http://192.168.2.78:12365/train2017/")  
-    #                 elif input_img_path.startswith("G:/train2017"):  
-    #                     input_img_path = input_img_path.replace("G:/train2017/train2017/", "http://192.168.2.78:12365/train2017/") 
-                        
-    #                 target_directory = "/yaozhi/vLLM-k8s-operator/user_tasks_vec"  # 修改为你的目标目录
-    #                 await download_image(input_img_path, target_directory)
-    #                 await async_logger.log(task_id, 'process, download search img')
-    #                 input_img_path2 = input_img_path.replace("http://192.168.2.78:12365/train2017", target_directory) 
-    #                 print('imag2image_base_url2:', input_img_path2)
-    #                 output_path = await async_img2img(
-    #                     url=base_url,
-    #                     image_path=input_img_path2,
-    #                     prompt=input,
-    #                     output_path = output_path,
-    #                     steps=15
-    #                 )
-    #                 await async_logger.log(task_id, 'process, text2img LLM 1')
-    #             except Exception as e:
-    #                 print(f"Second1 Error occurred: {e}")
-    #                 traceback.print_exc()  # 打印完整堆栈跟踪
-    #         else:
-    #             try:
-    #                 await async_txt2img(url=base_url, prompt=input, output_path=output_path,steps=30)
-    #                 await async_logger.log(task_id, 'process, text2img LLM 2')
-    #             except Exception as e:
-    #                 print(f"Second2 Error occurred: {e}")
-    #                 traceback.print_exc()  # 打印完整堆栈跟踪
-    #     except:
-    #         await async_txt2img(url=base_url, prompt=input, output_path=output_path,steps=30)
-    #         await async_logger.log(task_id, 'process, text2img LLM 3')
-    # else:
+  
     await async_txt2img(url=base_url, prompt=input, output_path=output_path,steps=30)
     await async_logger.log(task_id, 'process, text2img LLM 4')
 
