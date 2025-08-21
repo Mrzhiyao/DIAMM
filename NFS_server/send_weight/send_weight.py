@@ -120,13 +120,6 @@ def scp_to_servers(ips: list, local_path: str, remote_base_path: str):
 
 if __name__ == "__main__":
     target_ips = ["192.168.2.80"]
-    # local_folder = "/nfs/ai/ai-model/yz_diffusion"
-    # local_folder = "/nfs/ai/ai-model/glm-4-9b-chat"
     local_folder = "/nfs/ai/ai-model/Qwen2.5-3B-ollama"
-    # local_folder = "/nfs/ai/ai-model/Qwen2.5-2B-Instruct"
-    # local_folder = "/nfs/ai/ai-model/Qwen2-VL-2B-Instruct"
-    # local_folder = "/nfs/ai/ai-model/CogVideo-1.0"
-
-
     remote_base_dir = "/home/yaozhi/images"
     scp_to_servers(target_ips, local_folder, remote_base_dir)
