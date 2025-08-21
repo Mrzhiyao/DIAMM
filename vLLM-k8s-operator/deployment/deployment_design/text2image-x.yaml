@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: text2image-x
+  namespace: vllm-k8s-operator-system  # 指定命名空间
+  labels:
+    app: text2image-x
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: text2image-x
+  template:
+    metadata:
+      labels:
+        app: text2image-x
+    spec:
+      containers:
+        - name: text2image-x
+          # 添加存活探针和就绪探针
+          readinessProbe:
+            httpGet:
+              path: /sdapi/v1/options  # 真实反映服务状态的接口
+              port: 7860
+            initialDelaySeconds: 0  # 覆盖模型加载时间（根据实际启动耗时调整）
+            periodSeconds: 3
+            successThreshold: 1       # 连续3次成功才标记为就绪
+            failureThreshold: 20       # 总等待时间 = 180 + 10 * 6 = 240秒
+
+          image: docker.io/aoirint/sd_webui:0.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 7860
+          resources:
+            requests:
+              memory: "4Gi"
+            limits:
+              memory: "16Gi"
+          args:
+            - "--api"  # 添加 API 支持
+          volumeMounts:
+            - name: sd-volume
+              mountPath: /data
+              subPath: data
+            - name: sd-model-volume
+              mountPath: /code/stable-diffusion-webui/log
+              subPath: yz_diffusion/log
+            - name: sd-model-volume
+              mountPath: /home/user/.cache/huggingface
+              subPath: yz_diffusion/cache/huggingface
+    
+      dnsPolicy: ClusterFirst
+      nodeName: b410-4090d-1  # 指定节点名称
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      volumes:
+        - name: sd-volume
+          persistentVolumeClaim:
+            claimName: diffpvc  # PVC 名称
+        - name: sd-model-volume
+          persistentVolumeClaim:
+            claimName: model-pvc  # PVC 名称
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: text2image-x-service
+  namespace: vllm-k8s-operator-system  # 指定命名空间
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 7860
+      nodePort: 31311  # 根据需要调整 NodePort
+  selector:
+    app: text2image-x
+
