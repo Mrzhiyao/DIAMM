@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: text2text-x
+  namespace: vllm-k8s-operator-system  # 保持与原有服务相同命名空间
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: text2text-x
+  template:
+    metadata:
+      labels:
+        app: text2text-x
+    spec:
+      containers:
+      - name: text2text-x
+        image: docker.io/ollama/ollama:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: OLLAMA_KEEP_ALIVE
+          value: "-1"
+        - name: OLLAMA_NUM_PARALLEL
+          value: "8"
+        - name: OLLAMA_MAX_LOADED_MODELS
+          value: "1"
+        ports:
+        - containerPort: 11434
+        volumeMounts:
+          - name: local-model-volume  # 卷名称
+            mountPath: /root/.ollama  # 容器内挂载路径
+        lifecycle:
+          postStart:  # 在容器启动后触发模型加载
+            exec:
+              command: ["/bin/sh", "-c", "ollama run llama3.1:8b"]
+        # command: ["/bin/bash", "-c", "ollama run llama3.1:8b"]
+      dnsPolicy: ClusterFirst
+      nodeName: b410-4090d-2
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      volumes:
+        - name: local-model-volume
+          hostPath:
+            path: /home/yaozhi/images/   # 宿主机本地路径
+            type: DirectoryOrCreate   # 自动创建目录
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: text2text-x-service
+  namespace: vllm-k8s-operator-system
+spec:
+  type: NodePort
+  ports:
+  - port: 11434
+    targetPort: 11434
+    nodePort: 32113  # 保持与 Docker 相同的端口映射
+  selector:
+    app: text2text-x
