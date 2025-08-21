@@ -1,0 +1,53 @@
+apiVersion: apps/v1  
+kind: Deployment  
+metadata:  
+  name: text2text-x
+  namespace: vllm-k8s-operator-system  # 指定命名空间   
+  
+spec:  
+  replicas: 1  
+  selector:  
+    matchLabels:  
+      app: text2text-x
+  template:  
+    metadata:  
+      labels:  
+        app: text2text-x
+    spec:  
+      containers:  
+      - name: text2text-x
+        image: lmdeploy-new:v0.6.4-cu11
+        imagePullPolicy: IfNotPresent 
+        ports:  
+        - containerPort: 23333  
+        # resources:  
+        #   limits:  
+        #     nvidia.com/gpu: 1 # 根据需要调整 GPU 数量  
+        volumeMounts:
+          - name: local-model-volume
+            mountPath: /root/.cache/modelscope/Qwen2.5-7B-Instruct  # 容器内挂载路径
+        command: ["/bin/bash", "-c", "lmdeploy serve api_server /root/.cache/modelscope/Qwen2.5-7B-Instruct --model-name=\"qwen15-7b\" --tp=1 --cache-max-entry-count=0.1"]
+        # command: ["/bin/bash", "-c", "python /workspace/code/api/server.py"] # 保持容器运行 
+      dnsPolicy: ClusterFirst
+      nodeName: b410-3090-1
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      volumes:
+        - name: local-model-volume
+          hostPath:
+            path: /home/yaozhi/images/  # 宿主机本地路径
+            type: DirectoryOrCreate
+---  
+apiVersion: v1  
+kind: Service  
+metadata:  
+  name: text2text-x-service
+  namespace: vllm-k8s-operator-system  # 指定命名空间  
+spec:  
+  type: NodePort  
+  ports:  
+  - port: 23333  
+    targetPort: 23333  
+    nodePort: 31113 # 可以根据需要调整 NodePort  
+  selector:  
+    app: text2text-x
