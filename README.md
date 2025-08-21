@@ -6,9 +6,11 @@
 
 We recommend deploying PostgreSQL and Redis using the official images via Docker or Kubernetes. Considering the resource pool size, the recommended parameter configurations are as follows.
 
-Image：
+**PGVector Image**
 
 [docker.io/ankane/pgvector:v0.5.1](http://docker.io/ankane/pgvector:v0.5.1)
+
+**Redis Image**
 
 [docker.io/library/redis:7.2-alpine](http://docker.io/library/redis:7.2-alpine)
 
@@ -31,80 +33,78 @@ protected-mode no
 requirepass "123456"
 ```
 
-2.Start process:
+**Multimodal models**
+
+We deploy multimodal models on Kubernetes. To complete the test cases, your work nodes should ensure that each node has the following images available.
+
+[docker.io/library/lmdeploy-new:v0.6.4-cu11](http://docker.io/library/lmdeploy-new:v0.6.4-cu11)
+
+[docker.io/ollama/ollama:latest](http://docker.io/ollama/ollama:latest)
+
+[docker.io/library/cogvideox2b:0.1](http://docker.io/library/cogvideox2b:0.1)
+
+[docker.io/aoirint/sd_webui:0.2](http://docker.io/aoirint/sd_webui:0.2)
+
+The Dockerfiles for the latter two images can be found in the Multimodal_files folder; they originate from the official model and an Xformer-optimized variant, respectively.
+
+**Prometheus**
+
+We query container status through Prometheus, which requires dgcm plugin to obtain GPU usage. The YAML file can be found in the folder /prometheus and needs to be loaded into the cluster.
+
+**Runtime environment**
+
+environment.yml
+
+2.Start running process:
 
 Master node:
 
-**Task result show process：**/vLLM-k8s-operator/user_tasks$   show.py
+```markdown
+**Task result show process：
+**/vLLM-k8s-operator/user_tasks$   show.py
 
-**Embedding process：**/vLLM-k8s-operator/models/embedding main.py
+**Embedding process：
+**/vLLM-k8s-operator/models/embedding main.py
 
-**Fastapi process：**/vLLM-k8s-operator python -m program.fastapi_app
+**Fastapi process：
+**/vLLM-k8s-operator python -m program.fastapi_app
 
-**QMSD algorithm process：** /vLLM-k8s-operator/deployment/deployment_design$ algorithm_proposed.py
+**QMSD algorithm process：
+** /vLLM-k8s-operator/deployment/deployment_design$ algorithm_proposed.py
 
-**DIAMM multimodal warm-up process：**/vLLM-k8s-operator/deployment/service_drop/main.py  
+**DIAMM multimodal warm-up process：
+**/vLLM-k8s-operator/deployment/service_drop/main.py  
 
-**Weight integrity check process：**/vLLM-k8s-operator/check_weight$ main.py
+**Weight integrity check process：
+**/vLLM-k8s-operator/check_weight$ main.py
 
-**Prometheus-DGCM check process：**/vLLM-k8s-operator/check_weight/Prometheus_start.py
+**Prometheus-DGCM check process：
+**/vLLM-k8s-operator/check_weight/Prometheus_start.py
 
-**Web start** web-end.py
+**Web start** 
+web-end.py
+```
 
 NFS:
 
-**Weight send process： /NFS_server**/send_weight#  main_drop.py
+```markdown
+**Weight send process： 
+/NFS_server**/send_weight#  main_drop.py
 
-**File service process：/NFS_server**/show_url.py
+**File service process：
+/NFS_server**/show_url.py
+```
 
-Celry config
+**Celery start** 
+
+Please run celery.conf in your path:
 
 /etc/supervisor/conf.d/celery.conf
 
 ```markdown
-
-[program:celery_worker]
-
-command=/bin/bash -c "source ~/.bashrc && conda activate video_vector && celery -A program.celery_app worker --concurrency=40 -Q celery --loglevel=debug -E --without-mingle -n worker_%(process_num)02d@%%h"
-
-directory=/vLLM-k8s-operator; 
-user=root
-environment=
-    PYTHONPATH="/vLLM-k8s-operator",
-    CELERY_CONFIG_MODULE="program.celery_app"
-autostart=true
-autorestart=true
-startretries=3
-numprocs=4                        
-process_name=%(program_name)s_%(process_num)02d
-stopwaitsecs=30
-killasgroup=true
-priority=1000
-redirect_stderr=true
-stdout_logfile=/vLLM-k8s-operator/log/celery/worker_%(process_num)02d.log
-stdout_logfile_maxbytes=50MB
-stdout_logfile_backups=10
-
-[program:celery_flower]
-command=/bin/bash -c "source ~/.bashrc && conda activate video_vector && export FLOWER_UNAUTHENTICATED_API=1 && celery -A program.celery_app flower --broker=redis://:123456@192.168.2.75:6379/0 --address=0.0.0.0 --port=9802"
-    
-directory=/vLLM-k8s-operator
-user=root
-autostart=true
-autorestart=true
-startretries=3
-stopwaitsecs=30
-redirect_stderr=true
-stdout_logfile=/vLLM-k8s-operator/log/celery/flower.log
-
-```
-
-Celery start ：
-
 sudo supervisorctl reread
-
 sudo supervisorctl update
-
 sudo supervisorctl restart all
+```
 
 # **Examples**
