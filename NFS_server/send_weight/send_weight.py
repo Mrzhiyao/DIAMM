@@ -3,8 +3,6 @@ from scp import SCPClient
 import os
 import time
 from tqdm import tqdm
-from query_pods import query_pods_info
-
 
 class ProgressTracker:
     def __init__(self, total_size):
