@@ -110,7 +110,7 @@ def monitor_resources(folder_path, log_file="monitor_log.csv", interval=1):
         print("\n监控已停止")
 
 if __name__ == "__main__":
-    target_folder = "/home/yaozhi/images"
+    target_folder = "/home/images"
     
     if not os.path.isdir(target_folder):
         raise ValueError(f"无效的文件夹路径: {target_folder}")
