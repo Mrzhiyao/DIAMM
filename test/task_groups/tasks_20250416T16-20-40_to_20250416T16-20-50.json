@@ -1,0 +1,178 @@
+[
+  {
+    "batch_id": 20,
+    "task_id": "20_162050057823",
+    "task_type": "image2text",
+    "create_time": "2025-04-16T16:20:50.057823",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050130103",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.130103",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050160481",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.160481",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050218504",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.218504",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050259145",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.259145",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050270343",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:20:50.270343",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050314466",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.314466",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050331543",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.331543",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050350457",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:20:50.350457",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050378085",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.378085",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050466223",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:20:50.466223",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050466328",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.466328",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050476199",
+    "task_type": "image2text",
+    "create_time": "2025-04-16T16:20:50.476199",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050653985",
+    "task_type": "image2text",
+    "create_time": "2025-04-16T16:20:50.653985",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050697992",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:20:50.697992",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050756768",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.756768",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050785596",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:20:50.785596",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050826029",
+    "task_type": "image2text",
+    "create_time": "2025-04-16T16:20:50.826029",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050832053",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:20:50.832053",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050841443",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:20:50.841443",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050873416",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.873416",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 20,
+    "task_id": "20_162050900177",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:20:50.900177",
+    "status": "Pending",
+    "processing_time": null
+  }
+]

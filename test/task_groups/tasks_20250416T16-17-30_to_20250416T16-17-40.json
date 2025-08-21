@@ -1,0 +1,450 @@
+[
+  {
+    "batch_id": 1020,
+    "task_id": "MANUAL_1_161731000000",
+    "task_type": "text2video",
+    "create_time": "2025-04-16T16:17:31",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740023499",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.023499",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740044034",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.044034",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740064280",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.064280",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740082455",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.082455",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740106042",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.106042",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740158328",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.158328",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740184076",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.184076",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740201413",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.201413",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740246217",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.246217",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740251479",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.251479",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740254010",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.254010",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740260852",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.260852",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740307798",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.307798",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740325770",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.325770",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740368158",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.368158",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740371589",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.371589",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740381163",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.381163",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740383246",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.383246",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740397447",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.397447",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740419632",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.419632",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740453524",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.453524",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740457769",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.457769",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740457844",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.457844",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740474623",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.474623",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740498186",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.498186",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740501304",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.501304",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740505804",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.505804",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740522445",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.522445",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740536785",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.536785",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740561828",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.561828",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740566207",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.566207",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740592092",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.592092",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740594502",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.594502",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740604440",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.604440",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740614370",
+    "task_type": "image2text",
+    "create_time": "2025-04-16T16:17:40.614370",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740615040",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.615040",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740646495",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.646495",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740677516",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.677516",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740679469",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.679469",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740682060",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.682060",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740698661",
+    "task_type": "image2text",
+    "create_time": "2025-04-16T16:17:40.698661",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740701570",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.701570",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740711954",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.711954",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740722855",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.722855",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740729498",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.729498",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740770015",
+    "task_type": "image2text",
+    "create_time": "2025-04-16T16:17:40.770015",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740777952",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.777952",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740788842",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.788842",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740808457",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.808457",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740817650",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.817650",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740835812",
+    "task_type": "text2image",
+    "create_time": "2025-04-16T16:17:40.835812",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740842375",
+    "task_type": "image2image",
+    "create_time": "2025-04-16T16:17:40.842375",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740898597",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.898597",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740907852",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.907852",
+    "status": "Pending",
+    "processing_time": null
+  },
+  {
+    "batch_id": 14,
+    "task_id": "14_161740914145",
+    "task_type": "text2text",
+    "create_time": "2025-04-16T16:17:40.914145",
+    "status": "Pending",
+    "processing_time": null
+  }
+]
