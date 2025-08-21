@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Column, String, Text, TIMESTAMP, Enum, UUID, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, joinedload, relationship
-# from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from pgvector.sqlalchemy import Vector  # pgvector 扩展的类型
 from kubernetes import client, config
@@ -20,19 +19,12 @@ db_st_time = time.time()
 from .database.insert_result import insert_task_record, insert_result_by_cache
 from .database.update import update_task_status_and_pod_ip
 import aiofiles
-# import requests
 import re
 from .threading_program import text2text_task, image2text_task, text2image_task, image2image_task, text2video_task
-# from .threading_program_rag_new import text2text_task, image2text_task, text2image_task, image2image_task, text2video_task
-# from .threading_without import text2text_task, image2text_task, text2image_task, image2image_task, text2video_task
-
 import asyncio
 from sqlalchemy import select
 from celery import Celery, signals
-# from celery.contrib.asyncio import AsyncTask  # 关键异步支持
-# from .models.task_search import task_embedding_search
 from .models.embedding import process_text, process_image
-# 异步
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 import logging
 from sqlalchemy import text
@@ -59,25 +51,7 @@ AsyncSessionLocal = sessionmaker(
 )
 
 # 初始化数据库
-# DATABASE_URL = "postgresql+psycopg2://username:password@localhost/dbname"
-# DATABASE_URL = "postgresql+psycopg2://postgres:TaskingAI321@192.168.2.75:5432/coco"
-
-# engine = create_engine(DATABASE_URL, echo=True)
-# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-# Base = declarative_base()
 Base = declarative_base()
-
-# from typing import AsyncGenerator
-# async def get_db() -> AsyncGenerator[AsyncSession, None]:
-#     async with AsyncSessionLocal() as session:
-#         yield session
-
-# async def init_db_async():
-#     async with async_engine.begin() as conn:
-#         await conn.run_sync(Base.metadata.create_all)
-#     print("Tables created successfully")
 
 class TaskStatus(PyEnum): 
     in_progress = "In Progress"
@@ -132,9 +106,6 @@ class TaskResultFile(Base):
 
     # 定义与 Task 的关系  
     task = relationship("Task",  viewonly=True)  
-# 创建表
-# Base.metadata.create_all(bind=engine)
-# asyncio.run(initialize_database())
 
 print('databse_time', time.time()-db_st_time)
 
@@ -180,19 +151,6 @@ async def save_upload_file(file: UploadFile, file_path: str):
 
 
 from contextlib import contextmanager, asynccontextmanager
-
-# @contextmanager
-# def db_session():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#         db.commit()  # 成功时提交
-#     except Exception as e:
-#         # db.rollback()  # 异常时回滚
-#         print('again')
-#         raise
-#     finally:
-#         db.close()  # 确保关闭
 
 @asynccontextmanager
 async def async_db_session():
@@ -560,48 +518,6 @@ async def query_status(task_id: str):
         return {"task_id": str(task.task_id), "status": task.status.value}
 
 
-# def analyze_task_features(task):
-#     # 根据任务类型决定 Kubernetes 部署配置
-#     print(f"Analyzing task features for file: {task.file_path}")
-#     print(task.description, task.file_path)
-#     search_results_texts, search_results_images = task_embedding_search(task.description, task.file_path)
-#     if task.file_path == None:
-#         print('search_result', search_results_texts[3])
-#     else:
-#         print('search_result', search_results_texts[3], search_results_images[3])
-
-#     try:
-#         if float(search_results_images[3][0]) > 0.9 and search_results_images != []:
-#             # 通过缓存直接返回
-#             db = SessionLocal()
-#             description = '根据数据库内容直接返回结果如下，是否满足您的需求？'
-#             qag_cache = 'None'
-#             insert_result_by_cache(db, task.task_id, search_results_images[1][0], search_results_images[2][0], description, qag_cache)
-#             update_task_status_and_pod_ip(db, task.task_id, new_pod_ip='RAG Return', result_description='The task has been completed', new_status='completed')
-#     except:
-#         print('no high similar content')
-    
-#     if task.task_type == 'text':
-#         return {
-#             "name": f"text-task-{task.task_id}",
-#             "image": "your-text-processing-image",  # 替换为实际的 Docker 镜像
-#             "replicas": 1
-#         }
-#     elif task.task_type == 'image':
-#         return {
-#             "name": f"image-task-{task.task_id}",
-#             "image": "your-image-processing-image",
-#             "replicas": 2
-#         }
-#     elif task.task_type == 'video':
-#         return {
-#             "name": f"video-task-{task.task_id}",
-#             "image": "your-video-processing-image",
-#             "replicas": 1
-#         }
-#     else:
-#         raise ValueError("Unsupported task type")
-
 def create_deployment(deployment, task_id):
     # 创建 Kubernetes 部署
     apps_v1 = client.AppsV1Api()
@@ -649,8 +565,4 @@ def create_deployment(deployment, task_id):
         yaml.dump(deployment_body, file)
     print(f"Deployment YAML 文件已保存为 {yaml_file_path}")
 
-    # 假设创建了 Deployment 并且任务开始执行
-    # 模拟任务状态的更新：实际中可以通过监控 Kubernetes 集群的 pod 状态来决定任务是否完成
-    # task_statuses[task_id] = "Completed"
-    # task_results[task_id] = f"Task {task_id} has been completed successfully."
 
