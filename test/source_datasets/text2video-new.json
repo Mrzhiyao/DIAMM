@@ -1,0 +1,974 @@
+[
+  {
+    "video_id": "-2yHu5qgTzM",
+    "segment": "video_segments/-2yHu5qgTzM_seg0.mp4",
+    "frame": "key_frames/-2yHu5qgTzM_frame0.jpg",
+    "start": "0:01:20.880",
+    "end": "0:01:23.983",
+    "caption": "A neuron in a black background.",
+    "score": 0.451416015625
+  },
+  {
+    "video_id": "-2yHu5qgTzM",
+    "segment": "video_segments/-2yHu5qgTzM_seg1.mp4",
+    "frame": "key_frames/-2yHu5qgTzM_frame1.jpg",
+    "start": "0:02:31.151",
+    "end": "0:02:34.320",
+    "caption": "A woman is standing on a black background and talking to the camera.",
+    "score": 0.4990234375
+  },
+  {
+    "video_id": "-2yHu5qgTzM",
+    "segment": "video_segments/-2yHu5qgTzM_seg2.mp4",
+    "frame": "key_frames/-2yHu5qgTzM_frame2.jpg",
+    "start": "0:03:28.841",
+    "end": "0:03:33.680",
+    "caption": "There is a whiteboard with equations on it, and a man and a woman are standing in front of it.",
+    "score": 0.434814453125
+  },
+  {
+    "video_id": "-6DJRy5VOfg",
+    "segment": "video_segments/-6DJRy5VOfg_seg0.mp4",
+    "frame": "key_frames/-6DJRy5VOfg_frame0.jpg",
+    "start": "0:00:08.850",
+    "end": "0:00:12.850",
+    "caption": "A video game title screen with the words waro blast.",
+    "score": 0.449462890625
+  },
+  {
+    "video_id": "-6DJRy5VOfg",
+    "segment": "video_segments/-6DJRy5VOfg_seg1.mp4",
+    "frame": "key_frames/-6DJRy5VOfg_frame1.jpg",
+    "start": "0:00:18.866",
+    "end": "0:00:23.050",
+    "caption": "A pixelated image of a mario character.",
+    "score": 0.44921875
+  },
+  {
+    "video_id": "-6DJRy5VOfg",
+    "segment": "video_segments/-6DJRy5VOfg_seg2.mp4",
+    "frame": "key_frames/-6DJRy5VOfg_frame2.jpg",
+    "start": "0:04:23.133",
+    "end": "0:04:31.283",
+    "caption": "A pixel art game over screen with the words game over.",
+    "score": 0.46240234375
+  },
+  {
+    "video_id": "-6r04gCLMWw",
+    "segment": "video_segments/-6r04gCLMWw_seg0.mp4",
+    "frame": "key_frames/-6r04gCLMWw_frame0.jpg",
+    "start": "0:00:05.560",
+    "end": "0:00:09.680",
+    "caption": "A wall with a screen that shows the names of phones and tablets.",
+    "score": 0.44482421875
+  },
+  {
+    "video_id": "-6r04gCLMWw",
+    "segment": "video_segments/-6r04gCLMWw_seg1.mp4",
+    "frame": "key_frames/-6r04gCLMWw_frame1.jpg",
+    "start": "0:01:00.640",
+    "end": "0:01:27.120",
+    "caption": "A person is demonstrating how to put a card into a usb micro usb slot on a device.",
+    "score": 0.43994140625
+  },
+  {
+    "video_id": "-6r04gCLMWw",
+    "segment": "video_segments/-6r04gCLMWw_seg2.mp4",
+    "frame": "key_frames/-6r04gCLMWw_frame2.jpg",
+    "start": "0:01:31.600",
+    "end": "0:01:41.560",
+    "caption": "The person is holding a flip wallet case for the samsung galaxy s5 mini, and they are reviewing it in a vlog.",
+    "score": 0.440185546875
+  },
+  {
+    "video_id": "-BA_ifeRHxs",
+    "segment": "video_segments/-BA_ifeRHxs_seg0.mp4",
+    "frame": "key_frames/-BA_ifeRHxs_frame0.jpg",
+    "start": "0:00:06.000",
+    "end": "0:00:54.000",
+    "caption": "A black plate with sausage, eggs, and cheese.",
+    "score": 0.437255859375
+  },
+  {
+    "video_id": "-BA_ifeRHxs",
+    "segment": "video_segments/-BA_ifeRHxs_seg1.mp4",
+    "frame": "key_frames/-BA_ifeRHxs_frame1.jpg",
+    "start": "0:01:01.933",
+    "end": "0:01:17.666",
+    "caption": "There is a dish of lasagna in a rectangular baking dish with tomato sauce and cheese.",
+    "score": 0.45068359375
+  },
+  {
+    "video_id": "-BA_ifeRHxs",
+    "segment": "video_segments/-BA_ifeRHxs_seg2.mp4",
+    "frame": "key_frames/-BA_ifeRHxs_frame2.jpg",
+    "start": "0:01:20.000",
+    "end": "0:01:23.366",
+    "caption": "A lasagna is sitting in a glass baking dish.",
+    "score": 0.4814453125
+  },
+  {
+    "video_id": "2qrAcoaQzDg",
+    "segment": "video_segments/2qrAcoaQzDg_seg0.mp4",
+    "frame": "key_frames/2qrAcoaQzDg_frame0.jpg",
+    "start": "0:00:37.537",
+    "end": "0:00:39.873",
+    "caption": "A man pushing a red lawn mower in front of a house.",
+    "score": 0.45068359375
+  },
+  {
+    "video_id": "2qrAcoaQzDg",
+    "segment": "video_segments/2qrAcoaQzDg_seg1.mp4",
+    "frame": "key_frames/2qrAcoaQzDg_frame1.jpg",
+    "start": "0:00:56.181",
+    "end": "0:01:13.198",
+    "caption": "A man is mowing his lawn in the driveway of his home.",
+    "score": 0.4326171875
+  },
+  {
+    "video_id": "2qrAcoaQzDg",
+    "segment": "video_segments/2qrAcoaQzDg_seg2.mp4",
+    "frame": "key_frames/2qrAcoaQzDg_frame2.jpg",
+    "start": "0:02:13.842",
+    "end": "0:02:17.178",
+    "caption": "A man is standing in a garage and talking to the camera.",
+    "score": 0.485595703125
+  },
+  {
+    "video_id": "4TyAefa9E8o",
+    "segment": "video_segments/4TyAefa9E8o_seg0.mp4",
+    "frame": "key_frames/4TyAefa9E8o_frame0.jpg",
+    "start": "0:00:26.593",
+    "end": "0:00:28.762",
+    "caption": "A woman holding a child while standing next to a bunch of shopping carts.",
+    "score": 0.437255859375
+  },
+  {
+    "video_id": "4TyAefa9E8o",
+    "segment": "video_segments/4TyAefa9E8o_seg1.mp4",
+    "frame": "key_frames/4TyAefa9E8o_frame1.jpg",
+    "start": "0:00:52.786",
+    "end": "0:00:55.155",
+    "caption": "Person gaga is surrounded by a large group of people who are taking pictures with her.",
+    "score": 0.465087890625
+  },
+  {
+    "video_id": "4TyAefa9E8o",
+    "segment": "video_segments/4TyAefa9E8o_seg2.mp4",
+    "frame": "key_frames/4TyAefa9E8o_frame2.jpg",
+    "start": "0:01:02.796",
+    "end": "0:01:06.099",
+    "caption": "A woman is being greeted by a man in the street.",
+    "score": 0.4541015625
+  },
+  {
+    "video_id": "64qFcUVGusk",
+    "segment": "video_segments/64qFcUVGusk_seg0.mp4",
+    "frame": "key_frames/64qFcUVGusk_frame0.jpg",
+    "start": "0:00:00.667",
+    "end": "0:00:06.131",
+    "caption": "A picture of a letter a on a black background.",
+    "score": 0.44775390625
+  },
+  {
+    "video_id": "64qFcUVGusk",
+    "segment": "video_segments/64qFcUVGusk_seg1.mp4",
+    "frame": "key_frames/64qFcUVGusk_frame1.jpg",
+    "start": "0:00:12.762",
+    "end": "0:01:00.810",
+    "caption": "A young man is playing an acoustic guitar while sitting on the floor in front of a brick wall.",
+    "score": 0.4638671875
+  },
+  {
+    "video_id": "64qFcUVGusk",
+    "segment": "video_segments/64qFcUVGusk_seg2.mp4",
+    "frame": "key_frames/64qFcUVGusk_frame2.jpg",
+    "start": "0:09:24.272",
+    "end": "0:09:26.649",
+    "caption": "A black chair sitting in front of a brick wall.",
+    "score": 0.4345703125
+  },
+  {
+    "video_id": "69Iq0zcG00w",
+    "segment": "video_segments/69Iq0zcG00w_seg0.mp4",
+    "frame": "key_frames/69Iq0zcG00w_frame0.jpg",
+    "start": "0:00:26.493",
+    "end": "0:00:33.633",
+    "caption": "A man wearing red sunglasses sitting in a car.",
+    "score": 0.45556640625
+  },
+  {
+    "video_id": "69Iq0zcG00w",
+    "segment": "video_segments/69Iq0zcG00w_seg1.mp4",
+    "frame": "key_frames/69Iq0zcG00w_frame1.jpg",
+    "start": "0:01:05.598",
+    "end": "0:01:08.868",
+    "caption": "A close up of the logo for guitar magadon z1.",
+    "score": 0.451416015625
+  },
+  {
+    "video_id": "69Iq0zcG00w",
+    "segment": "video_segments/69Iq0zcG00w_seg2.mp4",
+    "frame": "key_frames/69Iq0zcG00w_frame2.jpg",
+    "start": "0:03:34.180",
+    "end": "0:03:38.218",
+    "caption": "A man wearing red sunglasses is talking to the camera while standing in front of a car.",
+    "score": 0.479248046875
+  },
+  {
+    "video_id": "AI8bUvql_3o",
+    "segment": "video_segments/AI8bUvql_3o_seg0.mp4",
+    "frame": "key_frames/AI8bUvql_3o_frame0.jpg",
+    "start": "0:00:18.251",
+    "end": "0:01:06.299",
+    "caption": "A person is using their fingers to fill balloons with leftover at the end, starting with a balloon for the stem. they then twist their design at the nozzle end of the balloon and push the nozzle inside the balloon with their index finger.",
+    "score": 0.475341796875
+  },
+  {
+    "video_id": "AI8bUvql_3o",
+    "segment": "video_segments/AI8bUvql_3o_seg1.mp4",
+    "frame": "key_frames/AI8bUvql_3o_frame1.jpg",
+    "start": "0:01:31.324",
+    "end": "0:01:39.265",
+    "caption": "A person is holding a blue balloon and twisting it into a loop.",
+    "score": 0.48876953125
+  },
+  {
+    "video_id": "AI8bUvql_3o",
+    "segment": "video_segments/AI8bUvql_3o_seg2.mp4",
+    "frame": "key_frames/AI8bUvql_3o_frame2.jpg",
+    "start": "0:01:50.477",
+    "end": "0:02:31.851",
+    "caption": "A person is twisting a blue balloon.",
+    "score": 0.465087890625
+  },
+  {
+    "video_id": "BeNwloO546Y",
+    "segment": "video_segments/BeNwloO546Y_seg0.mp4",
+    "frame": "key_frames/BeNwloO546Y_frame0.jpg",
+    "start": "0:01:05.965",
+    "end": "0:01:08.535",
+    "caption": "A couple of people standing on a ladder on top of an adobe building.",
+    "score": 0.44384765625
+  },
+  {
+    "video_id": "BeNwloO546Y",
+    "segment": "video_segments/BeNwloO546Y_seg1.mp4",
+    "frame": "key_frames/BeNwloO546Y_frame1.jpg",
+    "start": "0:01:33.760",
+    "end": "0:01:38.331",
+    "caption": "A table set up in front of an adobe building.",
+    "score": 0.484375
+  },
+  {
+    "video_id": "BeNwloO546Y",
+    "segment": "video_segments/BeNwloO546Y_seg2.mp4",
+    "frame": "key_frames/BeNwloO546Y_frame2.jpg",
+    "start": "0:02:41.594",
+    "end": "0:03:09.088",
+    "caption": "A man with glasses is talking to another man in front of a wall.",
+    "score": 0.462646484375
+  },
+  {
+    "video_id": "EGfFRJNn2p4",
+    "segment": "video_segments/EGfFRJNn2p4_seg0.mp4",
+    "frame": "key_frames/EGfFRJNn2p4_frame0.jpg",
+    "start": "0:00:41.741",
+    "end": "0:00:57.690",
+    "caption": "A bottle of olive oil and a bottle of body lotion on a bathroom counter.",
+    "score": 0.457763671875
+  },
+  {
+    "video_id": "EGfFRJNn2p4",
+    "segment": "video_segments/EGfFRJNn2p4_seg1.mp4",
+    "frame": "key_frames/EGfFRJNn2p4_frame1.jpg",
+    "start": "0:01:05.165",
+    "end": "0:01:09.702",
+    "caption": "A person is using a blue cleaning glove to clean a bathroom sink.",
+    "score": 0.463623046875
+  },
+  {
+    "video_id": "EGfFRJNn2p4",
+    "segment": "video_segments/EGfFRJNn2p4_seg2.mp4",
+    "frame": "key_frames/EGfFRJNn2p4_frame2.jpg",
+    "start": "0:03:23.269",
+    "end": "0:04:11.317",
+    "caption": "A woman is cleaning the sink with a blue rubber glove.",
+    "score": 0.4677734375
+  },
+  {
+    "video_id": "EJm2J0WqRcY",
+    "segment": "video_segments/EJm2J0WqRcY_seg0.mp4",
+    "frame": "key_frames/EJm2J0WqRcY_frame0.jpg",
+    "start": "0:00:12.720",
+    "end": "0:00:16.240",
+    "caption": "A close up of a pasta dish with parsley.",
+    "score": 0.466796875
+  },
+  {
+    "video_id": "EJm2J0WqRcY",
+    "segment": "video_segments/EJm2J0WqRcY_seg1.mp4",
+    "frame": "key_frames/EJm2J0WqRcY_frame1.jpg",
+    "start": "0:01:41.560",
+    "end": "0:01:47.640",
+    "caption": "A man is cooking a dish in a pan and adding tomato puree to it.",
+    "score": 0.43408203125
+  },
+  {
+    "video_id": "EJm2J0WqRcY",
+    "segment": "video_segments/EJm2J0WqRcY_seg2.mp4",
+    "frame": "key_frames/EJm2J0WqRcY_frame2.jpg",
+    "start": "0:03:23.200",
+    "end": "0:03:25.640",
+    "caption": "A person is cooking pasta with sauce and flowers in the background.",
+    "score": 0.442138671875
+  },
+  {
+    "video_id": "EKe7kvN3rQI",
+    "segment": "video_segments/EKe7kvN3rQI_seg0.mp4",
+    "frame": "key_frames/EKe7kvN3rQI_frame0.jpg",
+    "start": "0:02:02.555",
+    "end": "0:02:06.292",
+    "caption": "A man wearing a face mask is talking to another man.",
+    "score": 0.462158203125
+  },
+  {
+    "video_id": "EKe7kvN3rQI",
+    "segment": "video_segments/EKe7kvN3rQI_seg1.mp4",
+    "frame": "key_frames/EKe7kvN3rQI_frame1.jpg",
+    "start": "0:04:10.416",
+    "end": "0:04:13.086",
+    "caption": "Two people wearing face masks standing next to each other.",
+    "score": 0.46044921875
+  },
+  {
+    "video_id": "EKe7kvN3rQI",
+    "segment": "video_segments/EKe7kvN3rQI_seg2.mp4",
+    "frame": "key_frames/EKe7kvN3rQI_frame2.jpg",
+    "start": "0:05:43.242",
+    "end": "0:05:49.949",
+    "caption": "An asian man with glasses on.",
+    "score": 0.44091796875
+  },
+  {
+    "video_id": "J0KhC1GpLSQ",
+    "segment": "video_segments/J0KhC1GpLSQ_seg0.mp4",
+    "frame": "key_frames/J0KhC1GpLSQ_frame0.jpg",
+    "start": "0:03:09.556",
+    "end": "0:03:13.126",
+    "caption": "The user is interacting with a touch screen display by tapping and swiping their finger.",
+    "score": 0.455810546875
+  },
+  {
+    "video_id": "J0KhC1GpLSQ",
+    "segment": "video_segments/J0KhC1GpLSQ_seg1.mp4",
+    "frame": "key_frames/J0KhC1GpLSQ_frame1.jpg",
+    "start": "0:03:13.860",
+    "end": "0:03:16.396",
+    "caption": "A cartoon of a skeleton typing on a computer.",
+    "score": 0.478515625
+  },
+  {
+    "video_id": "J0KhC1GpLSQ",
+    "segment": "video_segments/J0KhC1GpLSQ_seg2.mp4",
+    "frame": "key_frames/J0KhC1GpLSQ_frame2.jpg",
+    "start": "0:11:54.747",
+    "end": "0:12:42.795",
+    "caption": "A robotic arm is using a computer to paint a picture.",
+    "score": 0.439697265625
+  },
+  {
+    "video_id": "MSMouessbTU",
+    "segment": "video_segments/MSMouessbTU_seg0.mp4",
+    "frame": "key_frames/MSMouessbTU_frame0.jpg",
+    "start": "0:00:18.360",
+    "end": "0:01:06.360",
+    "caption": "A view of snow covered mountains from an airplane.",
+    "score": 0.4833984375
+  },
+  {
+    "video_id": "MSMouessbTU",
+    "segment": "video_segments/MSMouessbTU_seg1.mp4",
+    "frame": "key_frames/MSMouessbTU_frame1.jpg",
+    "start": "0:05:08.240",
+    "end": "0:05:17.560",
+    "caption": "The wing of an airplane flying over a city and mountains in the sky.",
+    "score": 0.467529296875
+  },
+  {
+    "video_id": "MSMouessbTU",
+    "segment": "video_segments/MSMouessbTU_seg2.mp4",
+    "frame": "key_frames/MSMouessbTU_frame2.jpg",
+    "start": "0:20:58.760",
+    "end": "0:21:01.360",
+    "caption": "A young boy is standing in front of a light bulb and smiling.",
+    "score": 0.4453125
+  },
+  {
+    "video_id": "MqwTwyQFotQ",
+    "segment": "video_segments/MqwTwyQFotQ_seg0.mp4",
+    "frame": "key_frames/MqwTwyQFotQ_frame0.jpg",
+    "start": "0:00:22.200",
+    "end": "0:00:42.033",
+    "caption": "The player is playing a first-person shooter game in a post-apocalyptic setting.",
+    "score": 0.460693359375
+  },
+  {
+    "video_id": "MqwTwyQFotQ",
+    "segment": "video_segments/MqwTwyQFotQ_seg1.mp4",
+    "frame": "key_frames/MqwTwyQFotQ_frame1.jpg",
+    "start": "0:05:27.433",
+    "end": "0:05:34.366",
+    "caption": "Two professional gamers are competing in an esports tournament.",
+    "score": 0.437255859375
+  },
+  {
+    "video_id": "MqwTwyQFotQ",
+    "segment": "video_segments/MqwTwyQFotQ_seg2.mp4",
+    "frame": "key_frames/MqwTwyQFotQ_frame2.jpg",
+    "start": "0:05:35.566",
+    "end": "0:05:38.600",
+    "caption": "The player is playing a first-person shooter game and shooting at enemies with a gun.",
+    "score": 0.47216796875
+  },
+  {
+    "video_id": "NFfK0Ak6X7k",
+    "segment": "video_segments/NFfK0Ak6X7k_seg0.mp4",
+    "frame": "key_frames/NFfK0Ak6X7k_frame0.jpg",
+    "start": "0:00:35.218",
+    "end": "0:00:48.314",
+    "caption": "A man jumping over a long jump in front of a crowd.",
+    "score": 0.459716796875
+  },
+  {
+    "video_id": "NFfK0Ak6X7k",
+    "segment": "video_segments/NFfK0Ak6X7k_seg1.mp4",
+    "frame": "key_frames/NFfK0Ak6X7k_frame1.jpg",
+    "start": "0:02:03.323",
+    "end": "0:02:14.267",
+    "caption": "A man holding a microphone in front of a running track.",
+    "score": 0.462646484375
+  },
+  {
+    "video_id": "NFfK0Ak6X7k",
+    "segment": "video_segments/NFfK0Ak6X7k_seg2.mp4",
+    "frame": "key_frames/NFfK0Ak6X7k_frame2.jpg",
+    "start": "0:02:16.119",
+    "end": "0:02:18.154",
+    "caption": "The camera is moving through a futuristic stadium with a soccer ball in the center.",
+    "score": 0.446044921875
+  },
+  {
+    "video_id": "Q22xIbfoBK8",
+    "segment": "video_segments/Q22xIbfoBK8_seg0.mp4",
+    "frame": "key_frames/Q22xIbfoBK8_frame0.jpg",
+    "start": "0:00:00.500",
+    "end": "0:00:04.500",
+    "caption": "The two cavemen are standing in front of a cave entrance holding torches.",
+    "score": 0.4541015625
+  },
+  {
+    "video_id": "Q22xIbfoBK8",
+    "segment": "video_segments/Q22xIbfoBK8_seg1.mp4",
+    "frame": "key_frames/Q22xIbfoBK8_frame1.jpg",
+    "start": "0:01:06.400",
+    "end": "0:01:35.066",
+    "caption": "A black and white drawing of a device that is connected to a wall.",
+    "score": 0.4365234375
+  },
+  {
+    "video_id": "Q22xIbfoBK8",
+    "segment": "video_segments/Q22xIbfoBK8_seg2.mp4",
+    "frame": "key_frames/Q22xIbfoBK8_frame2.jpg",
+    "start": "0:02:08.833",
+    "end": "0:02:16.800",
+    "caption": "A man in a blue shirt is sitting in front of a yellow and black portable generator.",
+    "score": 0.47509765625
+  },
+  {
+    "video_id": "ShGGJ0ACKXs",
+    "segment": "video_segments/ShGGJ0ACKXs_seg0.mp4",
+    "frame": "key_frames/ShGGJ0ACKXs_frame0.jpg",
+    "start": "0:01:10.500",
+    "end": "0:01:14.500",
+    "caption": "The cover of a magazine with a picture of prince harry and meghan markle.",
+    "score": 0.457275390625
+  },
+  {
+    "video_id": "ShGGJ0ACKXs",
+    "segment": "video_segments/ShGGJ0ACKXs_seg1.mp4",
+    "frame": "key_frames/ShGGJ0ACKXs_frame1.jpg",
+    "start": "0:01:30.500",
+    "end": "0:01:34.500",
+    "caption": "The royal couple, prince harry and meghan markle, are attending a wedding ceremony.",
+    "score": 0.446533203125
+  },
+  {
+    "video_id": "ShGGJ0ACKXs",
+    "segment": "video_segments/ShGGJ0ACKXs_seg2.mp4",
+    "frame": "key_frames/ShGGJ0ACKXs_frame2.jpg",
+    "start": "0:02:05.233",
+    "end": "0:02:25.233",
+    "caption": "A collage of pictures of the queen and prince charles.",
+    "score": 0.475830078125
+  },
+  {
+    "video_id": "SxSku6-R7HY",
+    "segment": "video_segments/SxSku6-R7HY_seg0.mp4",
+    "frame": "key_frames/SxSku6-R7HY_frame0.jpg",
+    "start": "0:00:00.366",
+    "end": "0:00:03.600",
+    "caption": "A man is talking into a microphone during an interview with the media.",
+    "score": 0.4697265625
+  },
+  {
+    "video_id": "SxSku6-R7HY",
+    "segment": "video_segments/SxSku6-R7HY_seg1.mp4",
+    "frame": "key_frames/SxSku6-R7HY_frame1.jpg",
+    "start": "0:00:09.966",
+    "end": "0:00:57.966",
+    "caption": "A man in a white shirt on a tv screen.",
+    "score": 0.4423828125
+  },
+  {
+    "video_id": "SxSku6-R7HY",
+    "segment": "video_segments/SxSku6-R7HY_seg2.mp4",
+    "frame": "key_frames/SxSku6-R7HY_frame2.jpg",
+    "start": "0:01:10.266",
+    "end": "0:01:16.466",
+    "caption": "A man is sitting on a couch and talking to the camera.",
+    "score": 0.444580078125
+  },
+  {
+    "video_id": "TD8QzvIj8Ws",
+    "segment": "video_segments/TD8QzvIj8Ws_seg0.mp4",
+    "frame": "key_frames/TD8QzvIj8Ws_frame0.jpg",
+    "start": "0:03:05.366",
+    "end": "0:03:14.266",
+    "caption": "A group of fish swimming in a body of water.",
+    "score": 0.44921875
+  },
+  {
+    "video_id": "TD8QzvIj8Ws",
+    "segment": "video_segments/TD8QzvIj8Ws_seg1.mp4",
+    "frame": "key_frames/TD8QzvIj8Ws_frame1.jpg",
+    "start": "0:06:20.366",
+    "end": "0:06:24.066",
+    "caption": "A person is petting a dog and the dog is wagging its tail.",
+    "score": 0.44189453125
+  },
+  {
+    "video_id": "TD8QzvIj8Ws",
+    "segment": "video_segments/TD8QzvIj8Ws_seg2.mp4",
+    "frame": "key_frames/TD8QzvIj8Ws_frame2.jpg",
+    "start": "0:08:29.666",
+    "end": "0:08:53.466",
+    "caption": "A person is trying to shoo away a turtle from feeding on fish in an aquarium.",
+    "score": 0.443603515625
+  },
+  {
+    "video_id": "UdxoV0iqobo",
+    "segment": "video_segments/UdxoV0iqobo_seg0.mp4",
+    "frame": "key_frames/UdxoV0iqobo_frame0.jpg",
+    "start": "0:00:01.568",
+    "end": "0:00:14.414",
+    "caption": "A man and a woman talking on a news set.",
+    "score": 0.46142578125
+  },
+  {
+    "video_id": "UdxoV0iqobo",
+    "segment": "video_segments/UdxoV0iqobo_seg1.mp4",
+    "frame": "key_frames/UdxoV0iqobo_frame1.jpg",
+    "start": "0:00:57.757",
+    "end": "0:01:22.982",
+    "caption": "An advertisement for frozen mixed vegetables on a television screen.",
+    "score": 0.4990234375
+  },
+  {
+    "video_id": "UdxoV0iqobo",
+    "segment": "video_segments/UdxoV0iqobo_seg2.mp4",
+    "frame": "key_frames/UdxoV0iqobo_frame2.jpg",
+    "start": "0:02:03.556",
+    "end": "0:02:25.712",
+    "caption": "Three people sitting at a news desk talking to each other.",
+    "score": 0.47607421875
+  },
+  {
+    "video_id": "UigEW-5pkOg",
+    "segment": "video_segments/UigEW-5pkOg_seg0.mp4",
+    "frame": "key_frames/UigEW-5pkOg_frame0.jpg",
+    "start": "0:00:13.279",
+    "end": "0:00:24.290",
+    "caption": "A man and a woman standing in front of a news station.",
+    "score": 0.45849609375
+  },
+  {
+    "video_id": "UigEW-5pkOg",
+    "segment": "video_segments/UigEW-5pkOg_seg1.mp4",
+    "frame": "key_frames/UigEW-5pkOg_frame1.jpg",
+    "start": "0:01:01.461",
+    "end": "0:01:05.665",
+    "caption": "A person is lying on the floor with other people around them.",
+    "score": 0.44091796875
+  },
+  {
+    "video_id": "UigEW-5pkOg",
+    "segment": "video_segments/UigEW-5pkOg_seg2.mp4",
+    "frame": "key_frames/UigEW-5pkOg_frame2.jpg",
+    "start": "0:01:11.638",
+    "end": "0:01:17.444",
+    "caption": "A man in a police uniform talking to the camera.",
+    "score": 0.470703125
+  },
+  {
+    "video_id": "Uk7g_on4m08",
+    "segment": "video_segments/Uk7g_on4m08_seg0.mp4",
+    "frame": "key_frames/Uk7g_on4m08_frame0.jpg",
+    "start": "0:00:42.208",
+    "end": "0:00:58.158",
+    "caption": "A young woman is holding a toy in her hand, which appears to be a rubbery ball with bumps on it.",
+    "score": 0.45751953125
+  },
+  {
+    "video_id": "Uk7g_on4m08",
+    "segment": "video_segments/Uk7g_on4m08_seg1.mp4",
+    "frame": "key_frames/Uk7g_on4m08_frame1.jpg",
+    "start": "0:01:05.098",
+    "end": "0:01:44.871",
+    "caption": "A woman holding something in her hands.",
+    "score": 0.43896484375
+  },
+  {
+    "video_id": "Uk7g_on4m08",
+    "segment": "video_segments/Uk7g_on4m08_seg2.mp4",
+    "frame": "key_frames/Uk7g_on4m08_frame2.jpg",
+    "start": "0:04:43.650",
+    "end": "0:04:51.658",
+    "caption": "A young woman is holding a toothbrush in her hand and talking about it.",
+    "score": 0.43115234375
+  },
+  {
+    "video_id": "UsdmTwfScZs",
+    "segment": "video_segments/UsdmTwfScZs_seg0.mp4",
+    "frame": "key_frames/UsdmTwfScZs_frame0.jpg",
+    "start": "0:00:22.155",
+    "end": "0:00:34.000",
+    "caption": "The news anchor is reporting live from the studio.",
+    "score": 0.466796875
+  },
+  {
+    "video_id": "UsdmTwfScZs",
+    "segment": "video_segments/UsdmTwfScZs_seg1.mp4",
+    "frame": "key_frames/UsdmTwfScZs_frame1.jpg",
+    "start": "0:01:12.105",
+    "end": "0:01:15.642",
+    "caption": "A woman in a purple jacket speaking into a microphone.",
+    "score": 0.490234375
+  },
+  {
+    "video_id": "UsdmTwfScZs",
+    "segment": "video_segments/UsdmTwfScZs_seg2.mp4",
+    "frame": "key_frames/UsdmTwfScZs_frame2.jpg",
+    "start": "0:01:17.544",
+    "end": "0:01:29.522",
+    "caption": "A man in green is talking into a microphone.",
+    "score": 0.45068359375
+  },
+  {
+    "video_id": "Z_aCOQi5tm4",
+    "segment": "video_segments/Z_aCOQi5tm4_seg0.mp4",
+    "frame": "key_frames/Z_aCOQi5tm4_frame0.jpg",
+    "start": "0:00:23.773",
+    "end": "0:00:26.818",
+    "caption": "A man is hanging from a helicopter while wearing a black jacket.",
+    "score": 0.471923828125
+  },
+  {
+    "video_id": "Z_aCOQi5tm4",
+    "segment": "video_segments/Z_aCOQi5tm4_seg1.mp4",
+    "frame": "key_frames/Z_aCOQi5tm4_frame1.jpg",
+    "start": "0:01:36.304",
+    "end": "0:01:38.890",
+    "caption": "A man is riding a motorcycle on a street with cars driving.",
+    "score": 0.445068359375
+  },
+  {
+    "video_id": "Z_aCOQi5tm4",
+    "segment": "video_segments/Z_aCOQi5tm4_seg2.mp4",
+    "frame": "key_frames/Z_aCOQi5tm4_frame2.jpg",
+    "start": "0:02:22.350",
+    "end": "0:02:24.894",
+    "caption": "A skydiver is jumping out of an airplane while wearing a gas mask.",
+    "score": 0.44970703125
+  },
+  {
+    "video_id": "d9Mla5IJoPI",
+    "segment": "video_segments/d9Mla5IJoPI_seg0.mp4",
+    "frame": "key_frames/d9Mla5IJoPI_frame0.jpg",
+    "start": "0:03:28.120",
+    "end": "0:03:42.240",
+    "caption": "A woman is standing in her kitchen and talking to the camera.",
+    "score": 0.452392578125
+  },
+  {
+    "video_id": "d9Mla5IJoPI",
+    "segment": "video_segments/d9Mla5IJoPI_seg1.mp4",
+    "frame": "key_frames/d9Mla5IJoPI_frame1.jpg",
+    "start": "0:05:25.840",
+    "end": "0:05:29.880",
+    "caption": "A woman bending over to lift a barbell in a gym.",
+    "score": 0.470458984375
+  },
+  {
+    "video_id": "d9Mla5IJoPI",
+    "segment": "video_segments/d9Mla5IJoPI_seg2.mp4",
+    "frame": "key_frames/d9Mla5IJoPI_frame2.jpg",
+    "start": "0:07:19.200",
+    "end": "0:07:23.760",
+    "caption": "A person is walking on a street with a dog on a leash.",
+    "score": 0.45068359375
+  },
+  {
+    "video_id": "ea0xDNB1QsQ",
+    "segment": "video_segments/ea0xDNB1QsQ_seg0.mp4",
+    "frame": "key_frames/ea0xDNB1QsQ_frame0.jpg",
+    "start": "0:00:06.740",
+    "end": "0:00:10.777",
+    "caption": "A woman is talking on the news.",
+    "score": 0.458251953125
+  },
+  {
+    "video_id": "ea0xDNB1QsQ",
+    "segment": "video_segments/ea0xDNB1QsQ_seg1.mp4",
+    "frame": "key_frames/ea0xDNB1QsQ_frame1.jpg",
+    "start": "0:03:44.691",
+    "end": "0:03:47.560",
+    "caption": "A woman talking on a tv show.",
+    "score": 0.46630859375
+  },
+  {
+    "video_id": "ea0xDNB1QsQ",
+    "segment": "video_segments/ea0xDNB1QsQ_seg2.mp4",
+    "frame": "key_frames/ea0xDNB1QsQ_frame2.jpg",
+    "start": "0:10:36.068",
+    "end": "0:10:46.512",
+    "caption": "A man in black is standing in front of a tv with a show on it.",
+    "score": 0.4443359375
+  },
+  {
+    "video_id": "gQ8Pg7hLT3Y",
+    "segment": "video_segments/gQ8Pg7hLT3Y_seg0.mp4",
+    "frame": "key_frames/gQ8Pg7hLT3Y_frame0.jpg",
+    "start": "0:01:00.960",
+    "end": "0:01:20.880",
+    "caption": "The camera is moving through a kitchen.",
+    "score": 0.446533203125
+  },
+  {
+    "video_id": "gQ8Pg7hLT3Y",
+    "segment": "video_segments/gQ8Pg7hLT3Y_seg1.mp4",
+    "frame": "key_frames/gQ8Pg7hLT3Y_frame1.jpg",
+    "start": "0:01:23.817",
+    "end": "0:01:27.854",
+    "caption": "A bathroom with a light fixture hanging from the ceiling and a mirror on the wall.",
+    "score": 0.454833984375
+  },
+  {
+    "video_id": "gQ8Pg7hLT3Y",
+    "segment": "video_segments/gQ8Pg7hLT3Y_seg2.mp4",
+    "frame": "key_frames/gQ8Pg7hLT3Y_frame2.jpg",
+    "start": "0:02:45.832",
+    "end": "0:03:09.355",
+    "caption": "A view of a house through a window.",
+    "score": 0.442138671875
+  },
+  {
+    "video_id": "hr3uFmoo7rs",
+    "segment": "video_segments/hr3uFmoo7rs_seg0.mp4",
+    "frame": "key_frames/hr3uFmoo7rs_frame0.jpg",
+    "start": "0:00:16.520",
+    "end": "0:00:20.200",
+    "caption": "A man holding his head in a soccer stadium.",
+    "score": 0.4521484375
+  },
+  {
+    "video_id": "hr3uFmoo7rs",
+    "segment": "video_segments/hr3uFmoo7rs_seg1.mp4",
+    "frame": "key_frames/hr3uFmoo7rs_frame1.jpg",
+    "start": "0:00:48.240",
+    "end": "0:00:50.640",
+    "caption": "A soccer player is running on the field and then falls down.",
+    "score": 0.442138671875
+  },
+  {
+    "video_id": "hr3uFmoo7rs",
+    "segment": "video_segments/hr3uFmoo7rs_seg2.mp4",
+    "frame": "key_frames/hr3uFmoo7rs_frame2.jpg",
+    "start": "0:01:24.800",
+    "end": "0:01:33.680",
+    "caption": "There is a soccer game happening in a stadium and the fans are waving flags and cheering.",
+    "score": 0.442138671875
+  },
+  {
+    "video_id": "khp4EIjBD7k",
+    "segment": "video_segments/khp4EIjBD7k_seg0.mp4",
+    "frame": "key_frames/khp4EIjBD7k_frame0.jpg",
+    "start": "0:01:30.033",
+    "end": "0:01:46.033",
+    "caption": "A collage of pictures of prince william and kate middleton.",
+    "score": 0.4541015625
+  },
+  {
+    "video_id": "khp4EIjBD7k",
+    "segment": "video_segments/khp4EIjBD7k_seg1.mp4",
+    "frame": "key_frames/khp4EIjBD7k_frame1.jpg",
+    "start": "0:01:59.033",
+    "end": "0:02:07.033",
+    "caption": "A picture of a man and a woman holding a baby.",
+    "score": 0.441650390625
+  },
+  {
+    "video_id": "khp4EIjBD7k",
+    "segment": "video_segments/khp4EIjBD7k_seg2.mp4",
+    "frame": "key_frames/khp4EIjBD7k_frame2.jpg",
+    "start": "0:02:09.033",
+    "end": "0:02:17.033",
+    "caption": "A picture of the duke and duchess holding a baby.",
+    "score": 0.46630859375
+  },
+  {
+    "video_id": "mZa-1c_i2Kc",
+    "segment": "video_segments/mZa-1c_i2Kc_seg0.mp4",
+    "frame": "key_frames/mZa-1c_i2Kc_frame0.jpg",
+    "start": "0:01:17.208",
+    "end": "0:01:20.208",
+    "caption": "There is a car parked on the side of the road at night with its lights on.",
+    "score": 0.431884765625
+  },
+  {
+    "video_id": "mZa-1c_i2Kc",
+    "segment": "video_segments/mZa-1c_i2Kc_seg1.mp4",
+    "frame": "key_frames/mZa-1c_i2Kc_frame1.jpg",
+    "start": "0:01:41.666",
+    "end": "0:02:02.416",
+    "caption": "A police officer talking to the media.",
+    "score": 0.43798828125
+  },
+  {
+    "video_id": "mZa-1c_i2Kc",
+    "segment": "video_segments/mZa-1c_i2Kc_seg2.mp4",
+    "frame": "key_frames/mZa-1c_i2Kc_frame2.jpg",
+    "start": "0:02:07.250",
+    "end": "0:02:19.750",
+    "caption": "A california license plate on a red background.",
+    "score": 0.46044921875
+  },
+  {
+    "video_id": "mtczg2FZrpY",
+    "segment": "video_segments/mtczg2FZrpY_seg0.mp4",
+    "frame": "key_frames/mtczg2FZrpY_frame0.jpg",
+    "start": "0:01:10.653",
+    "end": "0:01:13.698",
+    "caption": "A close up of the rear end of a motorcycle.",
+    "score": 0.44384765625
+  },
+  {
+    "video_id": "mtczg2FZrpY",
+    "segment": "video_segments/mtczg2FZrpY_seg1.mp4",
+    "frame": "key_frames/mtczg2FZrpY_frame1.jpg",
+    "start": "0:01:46.815",
+    "end": "0:01:50.777",
+    "caption": "A person rides a motorcycle on a track with mountains in the background in a race.",
+    "score": 0.4638671875
+  },
+  {
+    "video_id": "mtczg2FZrpY",
+    "segment": "video_segments/mtczg2FZrpY_seg2.mp4",
+    "frame": "key_frames/mtczg2FZrpY_frame2.jpg",
+    "start": "0:02:36.906",
+    "end": "0:02:40.493",
+    "caption": "A person riding a motorcycle on a track in the desert is leaning into a turn.",
+    "score": 0.46337890625
+  },
+  {
+    "video_id": "pPTjPvYZlFY",
+    "segment": "video_segments/pPTjPvYZlFY_seg0.mp4",
+    "frame": "key_frames/pPTjPvYZlFY_frame0.jpg",
+    "start": "0:00:05.572",
+    "end": "0:00:10.677",
+    "caption": "A person holding a package of clips and small strips.",
+    "score": 0.4619140625
+  },
+  {
+    "video_id": "pPTjPvYZlFY",
+    "segment": "video_segments/pPTjPvYZlFY_seg1.mp4",
+    "frame": "key_frames/pPTjPvYZlFY_frame1.jpg",
+    "start": "0:04:18.925",
+    "end": "0:04:42.815",
+    "caption": "A person is holding a cord to a wall in a room.",
+    "score": 0.451416015625
+  },
+  {
+    "video_id": "pPTjPvYZlFY",
+    "segment": "video_segments/pPTjPvYZlFY_seg2.mp4",
+    "frame": "key_frames/pPTjPvYZlFY_frame2.jpg",
+    "start": "0:04:48.988",
+    "end": "0:05:14.714",
+    "caption": "A person is holding a wire in their hand.",
+    "score": 0.45556640625
+  },
+  {
+    "video_id": "qhYZU5uXmf4",
+    "segment": "video_segments/qhYZU5uXmf4_seg0.mp4",
+    "frame": "key_frames/qhYZU5uXmf4_frame0.jpg",
+    "start": "0:01:32.525",
+    "end": "0:01:35.061",
+    "caption": "A man is sitting in front of a brick wall and giving a like sign with his hand.",
+    "score": 0.46337890625
+  },
+  {
+    "video_id": "qhYZU5uXmf4",
+    "segment": "video_segments/qhYZU5uXmf4_seg1.mp4",
+    "frame": "key_frames/qhYZU5uXmf4_frame1.jpg",
+    "start": "0:01:42.569",
+    "end": "0:01:45.772",
+    "caption": "It is a screenshot of a website with a line of text.",
+    "score": 0.4482421875
+  },
+  {
+    "video_id": "qhYZU5uXmf4",
+    "segment": "video_segments/qhYZU5uXmf4_seg2.mp4",
+    "frame": "key_frames/qhYZU5uXmf4_frame2.jpg",
+    "start": "0:06:45.071",
+    "end": "0:06:49.208",
+    "caption": "A young man is sitting at a table with a black background. he is wearing a white shirt and has his finger pointing towards the camera.",
+    "score": 0.461669921875
+  },
+  {
+    "video_id": "xAl80PnMsRs",
+    "segment": "video_segments/xAl80PnMsRs_seg0.mp4",
+    "frame": "key_frames/xAl80PnMsRs_frame0.jpg",
+    "start": "0:00:24.724",
+    "end": "0:00:27.127",
+    "caption": "A woman is sitting on a couch and talking to the camera.",
+    "score": 0.437255859375
+  },
+  {
+    "video_id": "xAl80PnMsRs",
+    "segment": "video_segments/xAl80PnMsRs_seg1.mp4",
+    "frame": "key_frames/xAl80PnMsRs_frame1.jpg",
+    "start": "0:01:52.278",
+    "end": "0:01:54.447",
+    "caption": "There is a woman in a black dress standing in front of a display case filled with baked goods such as bread, pastries, and cakes.",
+    "score": 0.44580078125
+  },
+  {
+    "video_id": "xAl80PnMsRs",
+    "segment": "video_segments/xAl80PnMsRs_seg2.mp4",
+    "frame": "key_frames/xAl80PnMsRs_frame2.jpg",
+    "start": "0:01:59.652",
+    "end": "0:02:01.788",
+    "caption": "The person is holding a bottle of champagne and pouring it into a glass.",
+    "score": 0.447265625
+  }
+]
