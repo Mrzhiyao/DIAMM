@@ -122,12 +122,12 @@ Note that if you find that executing tasks takes a long time (for infrequent use
 
 # **Examples**
 
-Celery-Flower ：Task execution status query
+Celery-Flower ：Task execution status query (./test/img/celery.jpeg)
 
 ![Task execution status query](./test/img/celery.jpeg)
 
 
-Web UI ：Task execution result
+Web UI ：Task execution result (./test/img/webui.jpg)
 
 ![Task execution result](./test/img/webui.jpg)
 
