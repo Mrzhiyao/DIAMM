@@ -127,7 +127,7 @@ Celery-Flower ：Task execution status query
 <img width="1216" height="908" alt="image" src="https://github.com/user-attachments/assets/26828f26-6aaf-41f0-96a0-25adcb56a9d9" />
 
 
-![Task execution status query](./test/img/celery.jepg)
+![Task execution status query](./test/img/celery.jpeg)
 
 
 Web UI ：Task execution result
