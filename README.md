@@ -124,11 +124,13 @@ Note that if you find that executing tasks takes a long time (for infrequent use
 
 Celery-Flower ：Task execution status query
 
-![image.png](DIAMM%202567ecfc98318008b6c2d78428b1e698/image.png)
+<img width="1216" height="908" alt="image" src="https://github.com/user-attachments/assets/26828f26-6aaf-41f0-96a0-25adcb56a9d9" />
+
 
 Web UI ：Task execution result
 
-[https://www.notion.so](https://www.notion.so)
+![github2](https://github.com/user-attachments/assets/5889cb0f-051e-4f7d-b538-72686a9462ba)
+
 
 # **License**
 
