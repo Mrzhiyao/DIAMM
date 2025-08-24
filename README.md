@@ -107,4 +107,29 @@ sudo supervisorctl update
 sudo supervisorctl restart all
 ```
 
+Afterward, we will containerize the above processes and configure them with shell scripts. Once you start the above processes, you can use the DIAMM multimodal service in two ways:
+
+1. **Concurrency Program Testing**
+    
+    Please visit `/test/send_task.py`, where you can control the concurrency, task types, and ratios.
+    
+2. **Web Access**
+    
+    We have forwarded the frontend through `web-end.py`, and you can access it directly at `localhost:8989`.
+    
+
+Note that if you find that executing tasks takes a long time (for infrequent use), you can save at least one copy of the commonly used models without clearing them.
+
 # **Examples**
+
+Celery-Flower ：Task execution status query
+
+![image.png](DIAMM%202567ecfc98318008b6c2d78428b1e698/image.png)
+
+Web UI ：Task execution result
+
+[https://www.notion.so](https://www.notion.so)
+
+# **License**
+
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/NetX-lab/Ayo/blob/main/LICENSE) file for details.
