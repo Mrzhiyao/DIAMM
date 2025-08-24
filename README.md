@@ -129,7 +129,7 @@ Celery-Flower ：Task execution status query
 
 Web UI ：Task execution result
 
-![Task execution result](./test/img/webui.png)
+![Task execution result](./test/img/webui.jpg)
 
 # **License**
 
