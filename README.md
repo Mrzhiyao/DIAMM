@@ -124,12 +124,8 @@ Note that if you find that executing tasks takes a long time (for infrequent use
 
 Celery-Flower ：Task execution status query (./test/img/celery.jpeg)
 
-![Task execution status query](./test/img/celery.jpeg)
-
-
 Web UI ：Task execution result (./test/img/webui.jpg)
 
-![Task execution result](./test/img/webui.jpg)
 
 # **License**
 
