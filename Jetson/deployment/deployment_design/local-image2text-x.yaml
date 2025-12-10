@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image2text-x
+  namespace: vllm-k8s-operator-system  # 指定命名空间
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image2text-x
+  template:
+    metadata:
+      labels:
+        app: image2text-x
+    spec:
+      containers:
+        - name: image2text-x
+          image: docker.io/library/lmdeploy-jetson-test:v1.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 23333
+          # resources:
+          #   limits:
+          #     nvidia.com/gpu: 1  # 根据需要调整 GPU 数量
+          volumeMounts:
+            - name: local-model-volume
+              mountPath: /root/.cache/modelscope/Qwen2-VL-2B-Instruct  # 挂载路径
+          command: ["/bin/bash", "-c", "lmdeploy serve api_server /root/.cache/modelscope/Qwen2-VL-2B-Instruct --model-name=\"qwen2-vl-2b\" --tp=1 --cache-max-entry-count=0.1"]
+      dnsPolicy: ClusterFirst
+      nodeName: b410-jetson-1
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      volumes:
+        - name: local-model-volume
+          hostPath:
+            path: /mnt/ssd/home/yaozhi/images/  # 宿主机本地路径
+            type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: image2text-x-service
+  namespace: vllm-k8s-operator-system  # 指定命名空间
+spec:
+  type: NodePort
+  ports:
+    - port: 23333
+      targetPort: 23333
+      nodePort: 31213 # 根据需要调整 NodePort
+  selector:
+    app: image2text-x
