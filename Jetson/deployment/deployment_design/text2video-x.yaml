@@ -1,0 +1,71 @@
+apiVersion: apps/v1  
+kind: Deployment  
+metadata:  
+  name: text2video-x
+  namespace: vllm-k8s-operator-system  # 指定命名空间   
+spec:  
+  replicas: 1  
+  selector:  
+    matchLabels:  
+      app: text2video-x
+  template:  
+    metadata:  
+      labels:  
+        app: text2video-x
+    spec:  
+      containers:  
+      - name: text2video-x
+        image: docker.io/library/cogvideo-jetson:latest
+        imagePullPolicy: IfNotPresent 
+        ports:  
+          - containerPort: 8190  
+        env:
+          - name: NCCL_P2P_DISABLE
+            value: "1"
+          - name: NCCL_IB_DISABLE
+            value: "1"
+          - name: NCCL_NET_GDR_LEVEL
+            value: "0"
+          - name: CUDA_VISIBLE_DEVICES
+            value: "0"
+        volumeMounts:
+          - name: cogvideo-model-volume
+            mountPath: /app/CogVideo-1.0/CogVideoX-2b-sat
+            subPath: CogVideo-1.0-jetson/CogVideoX-2b-sat
+          - name: cogvideo-model-volume
+            mountPath: /app/CogVideo-1.0/t5-v1_1-xxl
+            subPath: CogVideo-1.0-jetson/t5-v1_1-xxl
+          - name: cogvideo-model-volume
+            mountPath: /app/CogVideo-1.0/outputs
+            subPath: CogVideo-1.0-jetson/outputs
+          - name: cogvideo-model-volume
+            mountPath: /app/CogVideo-1.0/sat
+            subPath: CogVideo-1.0-jetson/sat
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            cd /app && \
+            python3 CogVideo-1.0/sat/app.py
+      dnsPolicy: ClusterFirst
+      nodeName: b410-jetson-1  # 指定节点名称
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      volumes:
+        - name: cogvideo-model-volume
+          persistentVolumeClaim:
+            claimName: model-pvc  # PVC 名称
+
+---  
+apiVersion: v1  
+kind: Service  
+metadata:  
+  name: text2video-x-service 
+  namespace: vllm-k8s-operator-system  # 指定命名空间  
+spec:  
+  type: NodePort  
+  ports:  
+  - port: 8190  
+    targetPort: 8190  
+    nodePort: 31504 # 可以根据需要调整 NodePort  
+  selector:  
+    app: text2video-x 
