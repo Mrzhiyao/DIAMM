@@ -1,0 +1,53 @@
+apiVersion: apps/v1  
+kind: Deployment  
+metadata:  
+  name: text2text-x
+  namespace: vllm-k8s-operator-system  # 指定命名空间   
+  
+spec:  
+  replicas: 1  
+  selector:  
+    matchLabels:  
+      app: text2text-x
+  template:  
+    metadata:  
+      labels:  
+        app: text2text-x
+    spec:  
+      containers:  
+      - name: text2text-x
+        image: docker.io/library/lmdeploy-jetson-test:v1.1
+        imagePullPolicy: IfNotPresent 
+        ports:  
+        - containerPort: 23333  
+        # resources:  
+        #   limits:  
+        #     nvidia.com/gpu: 1 # 根据需要调整 GPU 数量  
+        volumeMounts:
+            - name: qwen7b-volume
+              mountPath: /root/.cache/modelscope/Qwen2.5-7B-Instruct  # 挂载路径
+              subPath: Qwen2.5-7B-Instruct
+        command: ["/bin/bash", "-c", "lmdeploy serve api_server /root/.cache/modelscope/Qwen2.5-7B-Instruct --model-name=\"qwen15-7b\" --tp=1 --cache-max-entry-count=0.1"]
+        # command: ["/bin/bash", "-c", "python /workspace/code/api/server.py"] # 保持容器运行 
+      dnsPolicy: ClusterFirst
+      nodeName: b410-jetson-1
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      volumes:
+          - name: qwen7b-volume
+            persistentVolumeClaim:
+              claimName: model-pvc  # PVC 名称
+---  
+apiVersion: v1  
+kind: Service  
+metadata:  
+  name: text2text-x-service
+  namespace: vllm-k8s-operator-system  # 指定命名空间  
+spec:  
+  type: NodePort  
+  ports:  
+  - port: 23333  
+    targetPort: 23333  
+    nodePort: 31113 # 可以根据需要调整 NodePort  
+  selector:  
+    app: text2text-x
