@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: text2text-x
+  namespace: vllm-k8s-operator-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: text2text-x
+  template:
+    metadata:
+      labels:
+        app: text2text-x
+    spec:
+      containers:
+      - name: text2text-x
+        image: docker.io/dustynv/ollama:0.6.8-r36.4
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: OLLAMA_KEEP_ALIVE
+          value: "-1"
+        - name: OLLAMA_NUM_PARALLEL
+          value: "8"
+        - name: OLLAMA_MAX_LOADED_MODELS
+          value: "1"
+        ports:
+        - containerPort: 11434
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            /start_ollama && 
+            until curl -s http://localhost:11434/api/tags > /dev/null 2>&1; do 
+              echo '等待 ollama 服务启动...'; 
+              sleep 2; 
+            done && 
+            echo 'ollama 服务已就绪，激活模型...' && 
+            echo 'exit' | ollama run llama3.1:8b && 
+            tail -f /dev/null
+        volumeMounts:
+          - name: local-model-volume
+            mountPath: /data/models/ollama
+      dnsPolicy: ClusterFirst
+      nodeName: b410-jetson-1
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      volumes:
+        - name: local-model-volume
+          hostPath:
+            path: /mnt/ssd/home/yaozhi/images/
+            type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: text2text-x-service
+  namespace: vllm-k8s-operator-system
+spec:
+  type: NodePort
+  ports:
+  - port: 11434
+    targetPort: 11434
+    nodePort: 32113  
+  selector:
+    app: text2text-x
+
