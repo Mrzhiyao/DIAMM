@@ -89,7 +89,7 @@ DIAMM (Distributed Intelligent Multimodal Management) 是一个企业级的多�
 
 - Kubernetes 集群（推荐 1.24+）
 - Docker 或容器运行时
-- Python 3.8+
+- Python 3.12+
 - 至少 1 个 GPU 节点（用于模型推理）
   - 支持 x86 架构（Intel/AMD CPU + NVIDIA GPU）
   - 支持 ARM 架构（NVIDIA Jetson 系列设备）
