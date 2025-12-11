@@ -36,7 +36,7 @@ DIAMM (Distributed Intelligent Multimodal Management) 是一个企业级的多�
 
 - 🔄 **多模态任务调度**：支持文本生成、图像生成、视频生成等多种任务类型
 - ⚡ **高性能推理**：基于 vLLM 和优化的推理引擎
-- 📊 **资源监控**：集成 Prometheus 和 DCGM，实时监控 GPU 使用情况
+- 📊 **资源监控**：集成 Prometheus、DCGM、Jtop 和 Tegrastats，实时监控 GPU 使用情况
 - 🔐 **模型管理**：支持模型权重完整性检查、分布式部署
 - 🌐 **Web 界面**：提供友好的 Web UI 进行任务提交和结果查看
 
