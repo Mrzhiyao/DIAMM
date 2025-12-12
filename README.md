@@ -18,9 +18,9 @@
 - [核心特性](#-核心特性)
 - [系统架构](#-系统架构)
 - [快速开始](#-快速开始)
-  - [环境要求](#环境要求)
-  - [依赖安装](#依赖安装)
-  - [服务启动](#服务启动)
+  - [环境要求](#环境要求)
+  - [依赖安装](#依赖安装)
+  - [服务启动](#服务启动)
 - [使用指南](#-使用指南)
 - [示例展示](#-示例展示)
 - [项目结构](#-项目结构)
@@ -59,26 +59,26 @@ DIAMM (Distributed Intelligent Multimodal Management) 是一个企业级的多�
 
 ```
 ┌─────────────────┐
-│   Web Frontend  │
+│   Web Frontend  │
 └────────┬────────┘
-         │
-┌────────▼────────┐     ┌──────────────┐
-│   FastAPI       │────▶│   Celery     │
-│   Service       │     │   Workers    │
-└────────┬────────┘     └──────┬───────┘
-         │                      │
+         │
+┌────────▼────────┐     ┌──────────────┐
+│   FastAPI       │────▶│   Celery     │
+│   Service       │     │   Workers    │
+└────────┬────────┘     └──────┬───────┘
+         │                      │
 ┌────────▼──────────────────────▼───────┐
-│      Kubernetes Cluster               │
-│  ┌──────────┐  ┌──────────┐          │
-│  │  vLLM    │  │ Multimodal│         │
-│  │  Models  │  │  Models   │         │
-│  └──────────┘  └──────────┘          │
+│      Kubernetes Cluster               │
+│  ┌──────────┐  ┌──────────┐          │
+│  │  vLLM    │  │ Multimodal│         │
+│  │  Models  │  │  Models   │         │
+│  └──────────┘  └──────────┘          │
 └───────────────────────────────────────┘
-         │
-┌────────▼────────┐     ┌──────────────┐
-│   PostgreSQL    │     │    Redis     │
-│   (PGVector)    │     │   (Cache)    │
-└─────────────────┘     └──────────────┘
+         │
+┌────────▼────────┐     ┌──────────────┐
+│   PostgreSQL    │     │    Redis     │
+│   (PGVector)    │     │   (Cache)    │
+└─────────────────┘     └──────────────┘
 ```
 
 ---
@@ -91,8 +91,8 @@ DIAMM (Distributed Intelligent Multimodal Management) 是一个企业级的多�
 - Docker 或容器运行时
 - Python 3.12+
 - 至少 1 个 GPU 节点（用于模型推理）
-  - 支持 x86 架构（Intel/AMD CPU + NVIDIA GPU）
-  - 支持 ARM 架构（NVIDIA Jetson 系列设备）
+  - 支持 x86 架构（Intel/AMD CPU + NVIDIA GPU）
+  - 支持 ARM 架构（NVIDIA Jetson 系列设备）
 - NFS 服务器（用于模型权重共享）
 
 ### 依赖安装
@@ -326,31 +326,31 @@ python send_task.py
 
 ```
 DIAMM/
-├── vLLM-k8s-operator/          # 核心服务模块
-│   ├── program/                # FastAPI 主程序
-│   ├── deployment/             # 部署相关
-│   │   ├── deployment_design/  # QMSD 调度算法
-│   │   └── service_drop/       # 服务预热
-│   ├── models/                 # 模型相关
-│   │   └── embedding/          # 向量嵌入服务
-│   ├── check_weight/           # 权重检查
-│   └── user_tasks/             # 任务管理
-├── NFS_server/                 # NFS 服务器
-│   ├── send_weight/            # 权重分发
-│   └── show.py                 # 文件服务
-├── Multimodal_files/           # 多模态模型文件
-│   ├── CogVideoX/              # 视频生成模型
-│   └── Stable-diffusion/       # 图像生成模型
-├── Jetson/                     # Jetson ARM 架构支持
-│   ├── Dockerfiles/             # ARM 架构镜像构建文件
-│   └── deployment/                   # 存储资源查询工具
-├── prometheus/                 # Prometheus 配置
-├── test/                       # 测试工具
-│   ├── send_task.py           # 并发测试
-│   └── source_datasets/       # 测试数据集
-├── web-end.py                  # Web 前端服务
-├── celery.conf                 # Celery 配置
-└── environment.yml             # Python 环境配置
+├── vLLM-k8s-operator/          # 核心服务模块
+│   ├── program/                # FastAPI 主程序
+│   ├── deployment/             # 部署相关
+│   │   ├── deployment_design/  # QMSD 调度算法
+│   │   └── service_drop/       # 服务预热
+│   ├── models/                 # 模型相关
+│   │   └── embedding/          # 向量嵌入服务
+│   ├── check_weight/           # 权重检查
+│   └── user_tasks/             # 任务管理
+├── NFS_server/                 # NFS 服务器
+│   ├── send_weight/            # 权重分发
+│   └── show.py                 # 文件服务
+├── Multimodal_files/           # 多模态模型文件
+│   ├── CogVideoX/              # 视频生成模型
+│   └── Stable-diffusion/       # 图像生成模型
+├── Jetson/                     # Jetson ARM 架构支持
+│   ├── Dockerfiles/             # ARM 架构镜像构建文件
+│   └── deployment/                   # 存储资源查询工具
+├── prometheus/                 # Prometheus 配置
+├── test/                       # 测试工具
+│   ├── send_task.py           # 并发测试
+│   └── source_datasets/       # 测试数据集
+├── web-end.py                  # Web 前端服务
+├── celery.conf                 # Celery 配置
+└── environment.yml             # Python 环境配置
 ```
 
 ---
@@ -368,4 +368,3 @@ DIAMM/
 Made with ❤️ by DIAMM Team
 
 </div>
-
