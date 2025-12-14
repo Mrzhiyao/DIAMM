@@ -30,7 +30,7 @@
 
 ## 🚀 项目简介
 
-DIAMM (Distributed Intelligent Multimodal Management) 是一个企业级的多模态 AI 服务管理平台，支持文本、图像、视频等多种模态的 AI 模型统一调度与管理。系统基于 Kubernetes 构建，提供高可用、可扩展的分布式服务架构。
+DIAMM (Distributed Inference Acceleration Framework for Multimodal Edge Applications) 是一个企业级的多模态 AI 服务管理平台，支持文本、图像、视频等多种模态的 AI 模型统一调度与管理。系统基于 Kubernetes 构建，提供高可用、可扩展的分布式服务架构。
 
 ### 主要功能
 
