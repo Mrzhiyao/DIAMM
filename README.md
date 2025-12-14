@@ -2,9 +2,9 @@
 
 <div align="center">
 
-**分布式智能多模态管理系统**
+**面向多模态边缘应用的分布式推理加速框架**
 
-一个基于 Kubernetes 的多模态 AI 服务编排与管理平台
+一个基于 Kubernetes 的多模态 AI 服务编排与任务管理平台
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -30,7 +30,7 @@
 
 ## 🚀 项目简介
 
-DIAMM (Distributed Inference Acceleration Framework for Multimodal Edge Applications) 是一个企业级的多模态 AI 服务管理平台，支持文本、图像、视频等多种模态的 AI 模型统一调度与管理。系统基于 Kubernetes 构建，提供高可用、可扩展的分布式服务架构。
+DIAMM (Distributed Inference Acceleration Framework for Multimodal Edge Applications) 是一个多模态 AI 服务管理平台，支持文本、图像、视频等多种模态的 AI 模型统一调度与管理。系统基于 Kubernetes 构建，提供高可用、可扩展的分布式服务架构。
 
 ### 主要功能
 
