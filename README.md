@@ -215,10 +215,10 @@ cd vLLM-k8s-operator
 python -m program.fastapi_app
 ```
 
-##### 4. QMSD 调度算法服务
+##### 4. QMSD 任务队列管理，服务部署与调度算法服务
 ```bash
 cd vLLM-k8s-operator/deployment/deployment_design
-python algorithm_proposed.py
+python DIAMM.py
 ```
 
 ##### 5. DIAMM 多模态预热服务
