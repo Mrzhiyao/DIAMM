@@ -334,7 +334,7 @@ python send_task.py
 
 ![多模态高并发服务](./test/img/show1.png)
 
-![多模态数据检索查看服务](./test/img/show2.png)
+![多模态数据检索查看服务](./test/img/show2.jpg)
 
 ---
 
