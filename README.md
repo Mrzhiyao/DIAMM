@@ -330,6 +330,12 @@ python send_task.py
 
 ![任务执行结果](./test/img/webui.jpg)
 
+### 我们还在本地的边缘智能系统中集成了DIAMM服务，持续维护更新中...
+
+![多模态高并发服务](./test/img/show1.png)
+
+![多模态数据检索查看服务](./test/img/show2.png)
+
 ---
 
 ## 📁 项目结构
