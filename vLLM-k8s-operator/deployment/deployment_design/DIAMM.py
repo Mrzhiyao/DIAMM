@@ -34,7 +34,7 @@ from chech_filtered_subitems_error import filter_duplicate_pods, remove_duplicat
 
 
 REDIS_POOL = redis.ConnectionPool(
-    host='192.168.2.75',
+    host='node1_ip',
     port=6379,
     db=1,
     password='123456',
@@ -49,22 +49,22 @@ weight_image2image_params = [4000]
 weight_text2video_params = [19000]
 
 param_path = {
-    'text2text':{weight_text2text_params[0]:'/nfs/ai/ai-model/Qwen2.5-3B-Instruct',
-                    weight_text2text_params[1]:'/nfs/ai/ai-model/Qwen2.5-7B-Instruct',
-                    weight_text2text_params[2]:'/nfs/ai/ai-model/Meta-Llama-3.1-8B-Instruct',
-                    weight_text2text_params[3]:'/nfs/ai/ai-model/glm-4-9b-chat',
-                    weight_text2text_params[0]/2:'/nfs/ai/ai-model/Qwen2.5-3B-ollama',
-                    weight_text2text_params[1]/2:'/nfs/ai/ai-model/Qwen2.5-7B-ollama',
-                    weight_text2text_params[2]/2:'/nfs/ai/ai-model/llama31-8b-ollama',
-                    weight_text2text_params[3]/2:'/nfs/ai/ai-model/glm4-9b-ollama'
+    'text2text':{weight_text2text_params[0]:'/Qwen2.5-3B-Instruct',
+                    weight_text2text_params[1]:'/Qwen2.5-7B-Instruct',
+                    weight_text2text_params[2]:'/Meta-Llama-3.1-8B-Instruct',
+                    weight_text2text_params[3]:'/glm-4-9b-chat',
+                    weight_text2text_params[0]/2:'/Qwen2.5-3B-ollama',
+                    weight_text2text_params[1]/2:'/Qwen2.5-7B-ollama',
+                    weight_text2text_params[2]/2:'/llama31-8b-ollama',
+                    weight_text2text_params[3]/2:'/glm4-9b-ollama'
                     },
-    'image2text':{weight_image2text_params[0]:'/nfs/ai/ai-model/Qwen2-VL-2B-Instruct', 
-                    weight_image2text_params[1]:'/nfs/ai/ai-model/Qwen2-VL-7B-Instruct'
+    'image2text':{weight_image2text_params[0]:'/Qwen2-VL-2B-Instruct', 
+                    weight_image2text_params[1]:'/Qwen2-VL-7B-Instruct'
                     },
-    'text2image':{weight_text2image_params[0]:'/nfs/ai/ai-model/yz_diffusion'},
-    'image2image':{weight_text2image_params[0]:'/nfs/ai/ai-model/yz_diffusion'},
-    'text/image2image':{weight_text2image_params[0]:'/nfs/ai/ai-model/yz_diffusion'},
-    'text2video':{weight_text2video_params[0]: '/nfs/ai/ai-model/CogVideo-1.0'}
+    'text2image':{weight_text2image_params[0]:'/diffusion'},
+    'image2image':{weight_text2image_params[0]:'/diffusion'},
+    'text/image2image':{weight_text2image_params[0]:'/diffusion'},
+    'text2video':{weight_text2video_params[0]: '/CogVideo-1.0'}
     }
 
 
@@ -74,13 +74,8 @@ def sync_save_tasks(tasks_data: dict, expire_seconds: int = 300):
     :param tasks_data: 嵌套字典结构任务数据
     :param expire_seconds: 过期时间（秒），默认 600 秒=10 分钟
     """
-    # print('tasks_data', tasks_data)
-    # 从连接池获取连接
     r = redis.Redis(connection_pool=REDIS_POOL)
     try:
-        # for task_type, task_info in tasks_data.items():
-        #     print(task_type, task_info)
-
         for task_type, task_info in tasks_data.items():
             for task in task_info:
                 # print('task_info', task)
@@ -108,8 +103,6 @@ def sync_save_tasks(tasks_data: dict, expire_seconds: int = 300):
                     print(f"Redis 操作失败（{task_id}）: {str(e)}")
     finally:
         r.close()  # 将连接归还连接池
-
-
 
 # 模型配置（保持不变）
 MODEL_CONFIG = {
@@ -149,68 +142,61 @@ MODEL_CONFIG = {
 }
 
 NODES_INI = {
-    '192.168.2.75': {'Name': 'b410-4090d-1', 'GPU': 24500}, 
-    '192.168.2.78': {'Name': 'b410-4090d-3', 'GPU': 24500}, 
-    '192.168.2.80': {'Name': 'b410-3090-1', 'GPU': 24500},
-    '192.168.2.5': {'Name': 'b410-2070s-1', 'GPU': 8000},
-    '192.168.2.6': {'Name': 'b410-2070s-2', 'GPU': 8000},
-    '192.168.2.7': {'Name': 'b410-2070s-3', 'GPU': 8000}
+    'node1_ip': {'Name': '4090d-1', 'GPU': 24500}, 
+    'node2_ip': {'Name': '4090d-3', 'GPU': 24500}, 
+    'node3_ip': {'Name': '3090-1', 'GPU': 24500},
+    'node4_ip': {'Name': '2070s-1', 'GPU': 8000},
+    'node5_ip': {'Name': '2070s-2', 'GPU': 8000},
+    'node6_ip': {'Name': '2070s-3', 'GPU': 8000}
 }
 
 # 集群节点信息（新增）
 NODES = {
-    '192.168.2.75': {
-        'Name': 'b410-4090d-1', 
+    'node1_ip': {
+        'Name': '4090d-1', 
         'Memory': 64, 
         'GPU': 24000, 
         'Memory_Used': 20.33, 
         'Memory_Available': 43.67, 
         'GPU_Available': '16144'}, 
     '192.168.2.190': {
-        'Name': 'b410-4090d-2', 
+        'Name': '4090d-2', 
         'Memory': 64, 
         'GPU': 24000, 
         'Memory_Used': 13.85, 
         'Memory_Available': 50.15, 
         'GPU_Available': '7167'}, 
-    '192.168.2.78': {
-        'Name': 'b410-4090d-3', 
+    'node2_ip': {
+        'Name': '4090d-3', 
         'Memory': 64, 
         'GPU': 24000, 
         'Memory_Used': 12.49, 
         'Memory_Available': 51.51, 
         'GPU_Available': '24072'}, 
-    '192.168.2.80': {
-        'Name': 'b410-3090-1', 
+    'node3_ip': {
+        'Name': '3090-1', 
         'Memory': 32, 
         'GPU': 24000, 
         'Memory_Used': 7.11, 
         'Memory_Available': 24.89, 
         'GPU_Available': '18555'},
-    # '192.168.2.133': {
-    #     'Name': 'b410-2070s-4', 
-    #     'Memory': 64, 
-    #     'GPU': 8000, 
-    #     'Memory_Used': 3.84, 
-    #     'Memory_Available': 60.16, 
-    #     'GPU_Available': '7883'},
 
-    '192.168.2.5': {
-        'Name': 'b410-2070s-1', 
+    'node4_ip': {
+        'Name': '2070s-1', 
         'Memory': 32, 
         'GPU': 8000, 
         'Memory_Used': 3.84, 
         'Memory_Available': 60.16, 
         'GPU_Available': '7883'},
-    '192.168.2.6': {
-        'Name': 'b410-2070s-2', 
+    'node5_ip': {
+        'Name': '2070s-2', 
         'Memory': 32, 
         'GPU': 8000, 
         'Memory_Used': 3.84, 
         'Memory_Available': 60.16, 
         'GPU_Available': '7883'},
-    '192.168.2.7': {
-        'Name': 'b410-2070s-3', 
+    'node6_ip': {
+        'Name': '2070s-3', 
         'Memory': 32, 
         'GPU': 8000, 
         'Memory_Used': 3.84, 
@@ -219,45 +205,40 @@ NODES = {
 }
 
 NODES_IP = {
-    'b410-4090d-1': '192.168.2.75',
-    'b410-4090d-2': '192.168.2.190',
-    'b410-4090d-3': '192.168.2.78',
-    'b410-3090-1': '192.168.2.80',
-    'b410-2070s-1': '192.168.2.5',
-    'b410-2070s-2': '192.168.2.6',
-    'b410-2070s-3': '192.168.2.7',
-    # 'b410-2070s-4': '192.168.2.133',
+    '4090d-1': 'node1_ip',
+    '4090d-2': '192.168.2.190',
+    '4090d-3': 'node2_ip',
+    '3090-1': 'node3_ip',
+    '2070s-1': 'node4_ip',
+    '2070s-2': 'node5_ip',
+    '2070s-3': 'node6_ip',
 }
 
 local_weight_paths = {
     'text2text':{
-                '/home/yaozhi/images/glm-4-9b-chat',
-                '/home/yaozhi/images/glm4-9b-ollama',
-                '/home/yaozhi/images/Meta-Llama-3.1-8B-Instruct',
-                '/home/yaozhi/images/llama31-8b-ollama',
-                '/home/yaozhi/images/Qwen2.5-7B-Instruct',
-                '/home/yaozhi/images/Qwen2.5-7B-ollama',
-                '/home/yaozhi/images/Qwen2.5-3B-Instruct',
-                '/home/yaozhi/images/Qwen2.5-3B-ollama',
+                '/images/glm-4-9b-chat',
+                '/images/glm4-9b-ollama',
+                '/images/Meta-Llama-3.1-8B-Instruct',
+                '/images/llama31-8b-ollama',
+                '/images/Qwen2.5-7B-Instruct',
+                '/images/Qwen2.5-7B-ollama',
+                '/images/Qwen2.5-3B-Instruct',
+                '/images/Qwen2.5-3B-ollama',
                 },
-    'image2text':{'/home/yaozhi/images/Qwen2-VL-7B-Instruct', 
-                '/home/yaozhi/images/Qwen2-VL-2B-Instruct'
+    'image2text':{'/images/Qwen2-VL-7B-Instruct', 
+                '/images/Qwen2-VL-2B-Instruct'
                 },
-    'text2image':{'/home/yaozhi/images/yz_diffusion'},
-    'image2image':{'/home/yaozhi/images/yz_diffusion'},
-    'text/image2image':{'/home/yaozhi/images/yz_diffusion'},
-    'text2video':{'/home/yaozhi/images/CogVideo-1.0'}
+    'text2image':{'/images/diffusion'},
+    'image2image':{'/images/diffusion'},
+    'text/image2image':{'/images/diffusion'},
+    'text2video':{'/images/CogVideo-1.0'}
 }
 
 ssh_key_path = os.path.expanduser("~/.ssh/id_ed25519")
-remote_full_path = '/home/yaozhi/images/'
+remote_full_path = '/images/'
 flag = 'transfer_complete.flag'
 
 task_type  = 'text2text'
-# task_tpye  = 'image2text'
-# task_tpye  = 'text2image'
-# task_tpye  = 'image2image'
-# task_tpye  = 'text2video'
 
 inference_framework = {
     'text2text': {'Turbomind', 'ollama'}, 
@@ -266,9 +247,7 @@ inference_framework = {
     'image2image': {'Xformers'}, 
     'text2video': {'SwissArmyTransformer'}, 
 }
-
 # 因为后面计算已部署模型会减这部分，所以提前加权
-# 1 1 5 10 20 40 60 80
 text2text_delay = [10.08, 5.07, 5.07, 5.08, 5.07, 5.09, 5.14, 5.33]
 text2text_delay = [x + 5 for x in text2text_delay]
 
@@ -302,20 +281,12 @@ double_text2video_params = [19000]
 
 max_text2text_nums = 100
 max_image2text_nums = 60
-# max_text2image_nums = 40
-# max_image2image_nums = 40
-# max_text2image_nums = 20
-# max_image2image_nums = 20
 max_text2image_nums = 10
 max_image2image_nums = 10
 
 
 max_text2video_nums = 1
-# max_total = 100 + 60 + (40 + 40)*2 
 max_total = 100 + 60 + (20 + 20)*2 
-# 一个任务在不同部署方式，所有并行压力（最优和最差情况）和处理途径下的平均完成时间
-# 默认4090 3090相同，2070的推理能力比：2:1
-# Turbomind和ollama的推理延迟偏好也是2:1
 
 def compute_diff_matrix(matrix1, matrix2):
     try:
@@ -390,9 +361,6 @@ def amplify_by_vote(task_type, mapscore, development_model):
 
     return mapscore
 
-
-# ASPLOS24
-
 def score_urgency(filtered, task, task_number, task_type, taskid):
     # ToGo(task) + Slack(task)
     if task_type == 'text2text':
@@ -434,17 +402,13 @@ def score_latency(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "text2text" in item.get("pod", "").lower()
         ]
-        # print(filtered_text2text_items)
         # 已经有容器的可以降低推理延迟
         if len(filtered_text2text_items) != 0:
-            # print('score_latency_pods_show', filtered_text2text_items)
             for param_index in range(len(text2text_params)):
-                # print(str(text2text_params[param_index]) + 'b')
                 for sub_container in filtered_text2text_items:
                     if str(text2text_params[param_index]) + 'b' in sub_container['container']:
                         result_delays[param_index] =  [x - 5 for x in result_delays[param_index]]
                         continue
-        # print('result_delays', result_delays)
     elif task_type == 'image2text':
         delays = copy.deepcopy(image2text_delay) 
         result_delays = [list(delays) for _ in range(len(image2text_params))]
@@ -452,11 +416,8 @@ def score_latency(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "image2text" in item.get("pod", "").lower()
         ]
-        # print(filtered_image2text_items)
         if len(filtered_image2text_items) != 0:
-            # print('score_latency_pods_show', filtered_image2text_items)
             for param_index in range(len(image2text_params)):
-                # print(str(image2text_params[param_index]) + 'b')
                 for sub_container in filtered_image2text_items:
                     if str(image2text_params[param_index]) + 'b' in sub_container['container']:
                         result_delays[param_index] =  [x - 20 for x in result_delays[param_index]]
@@ -469,9 +430,7 @@ def score_latency(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "text2image" or "image2image" in item.get("pod", "").lower()
         ]
-        # print(filtered_text2image_items)
         if len(filtered_text2image_items) != 0:
-            # print('score_latency_pods_show', filtered_text2image_items)
             for sub_container in filtered_text2image_items:
                 if 'stable' in sub_container['container']:
                     result_delays =  [x - 15 for x in result_delays]
@@ -484,9 +443,7 @@ def score_latency(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "text2image" or "image2image" in item.get("pod", "").lower()
         ]
-        # print(filtered_image2image_items)
         if len(filtered_image2image_items) != 0:
-            # print('score_latency_pods_show', filtered_image2image_items)
             for sub_container in filtered_image2image_items:
                 if 'stable' in sub_container['container']:
                     result_delays =  [x - 15 for x in result_delays]
@@ -499,9 +456,7 @@ def score_latency(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "text2video" in item.get("pod", "").lower()
         ]
-        # print(filtered_text2video_items)
         if len(filtered_text2video_items) != 0:
-            # print('score_latency_pods_show', filtered_text2video_items)
             for sub_container in filtered_text2video_items:
                 if 'cogvideox' in sub_container['container']:
                     result_delays =  [x - 8 for x in result_delays]
@@ -511,12 +466,7 @@ def score_latency(filtered, task, task_number, task_type, taskid):
     if  task_type == 'text2text' or task_type == 'image2text':
         for index_result in range(len(result_delays)):
             for scheam in range(len(result_delays[index_result])):
-                # if task_type == 'text2text':
-                #     print(sum(sum(row) for row in result_delays), accelerators_tasks[index_result][scheam] )
-                # if task_type == 'image2text':
-                #     print('sum(result_delays[0])', sum(result_delays[0]), accelerators_tasks[index_result][scheam])
                 accelerators_tasks[index_result][scheam] = sum(result_delays[0])/accelerators_tasks[index_result][scheam]
-                # accelerators_tasks[index_result][scheam] = sum(sum(row) for row in result_delays)/accelerators_tasks[index_result][scheam] 
     else:
         for index_result in range(len(result_delays)):
             accelerators_tasks[index_result] = sum(result_delays)/accelerators_tasks[index_result]
@@ -532,7 +482,6 @@ def score_starv(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "text2text" in item.get("pod", "").lower()
         ]
-        # print(filtered_text2text_items)
         if len(filtered_text2text_items) != 0:
             # 5测量的平均模型首次推理时间
             t_queue = t_queue + 5
@@ -545,7 +494,6 @@ def score_starv(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "image2text" in item.get("exported_pod", "").lower()
         ]
-        # print(filtered_image2text_items)
         if len(filtered_image2text_items) != 0:
             # 5测量的平均模型首次推理时间
             t_queue = t_queue + 20
@@ -558,7 +506,6 @@ def score_starv(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "text2image" or "image2image" in item.get("exported_pod", "").lower()
         ]
-        # print(filtered_text2image_items)
         if len(filtered_text2image_items) != 0:
             # 5测量的平均模型首次推理时间
             t_queue = t_queue + 15  
@@ -570,7 +517,6 @@ def score_starv(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "text2image" or "image2image" in item.get("exported_pod", "").lower()
         ]
-        # print(filtered_image2image_items)
         if len(filtered_image2image_items) != 0:
             # 5测量的平均模型首次推理时间
             t_queue = t_queue + 15
@@ -583,7 +529,6 @@ def score_starv(filtered, task, task_number, task_type, taskid):
             item for item in filtered
         if "text2video" in item.get("exported_pod", "").lower()
         ]
-        # print(filtered_text2video_items)
         if len(filtered_text2video_items) != 0:
             # 5测量的平均模型首次推理时间
             t_queue = t_queue + 8
@@ -595,7 +540,6 @@ def score_starv(filtered, task, task_number, task_type, taskid):
     return score_starv
 
 def score_energy(filtered, task, task_number, task_type, taskid):
-    # 切换并部署模型带来的额外延时成本，取平均吧
     accelerators_costs = []
     accelerators_pref_energy = []
     # result是cost_switch(task,acc)
@@ -624,7 +568,6 @@ def score_energy(filtered, task, task_number, task_type, taskid):
                     result[param_index] =  [x - text2text_params[param_index] for x in result[param_index]]
 
         # 检测是否要部署新的模型
-        # for x in range(len(delays)):
         if task_number/ 100 > 1 :
             for index_result in range(len(result)):
                 for scheam in range(len(result[index_result])):
@@ -632,9 +575,6 @@ def score_energy(filtered, task, task_number, task_type, taskid):
                         result[index_result][scheam] = result[index_result][scheam] + text2text_params[index_result]*2*int(task_number/ 100)
                     else:
                         result[index_result][scheam] = result[index_result][scheam] + text2text_params[index_result]*(task_number/ 100)
-        # for index_result in range(len(result)):
-        #     for scheam in range(len(result[index_result])):
-                
 
         result_gpu = [list(accelerators_costs) for _ in range(len(text2text_params))]
         for index_result in range(len(result_gpu)):
@@ -861,7 +801,6 @@ def map_models(tasks):
 
         elif task_type == 'text2image' or task_type =='image2image': 
             frame = 'default'
-            # print('col', col)
             if col<5:
                 model_number = 1 + int(counts/corr_numbers[5])
             else:
@@ -939,8 +878,6 @@ def load_latest_classified():
             for task in data[task_type]:
                 if isinstance(task.get("create_time"), str):
                     task["create_time"] = datetime.fromisoformat(task["create_time"])
-        
-        # print(f"已加载最新文件：{latest_file}")
         return data
     except Exception as e:
         print(f"加载失败：{str(e)}")
@@ -1036,23 +973,6 @@ def find_low_percentage_entries(data, input_percent):
             
     return results
 
-# def check_and_get_files(path):
-#     # 检查路径是否存在
-#     if not os.path.exists(path):
-#         return []
-    
-#     # 列出路径下所有条目（文件和子目录）
-#     all_entries = os.listdir(path)
-    
-#     # 筛选出文件（排除子目录）
-#     files = [
-#         os.path.join(path, entry) 
-#         for entry in all_entries 
-#         if os.path.isfile(os.path.join(path, entry))
-#     ]
-    
-#     return files
-
 def check_and_get_files(paths):
     """
     获取多个路径下所有文件的完整路径列表
@@ -1081,9 +1001,6 @@ def check_and_get_files(paths):
                 all_files.append(entry_path)
     
     return all_files
-
-
-
 
 import shutil
 def clear_folder(folder_path):
@@ -1129,12 +1046,7 @@ def select_and_update_machines(machines, query_value):
     # 筛选 Available_GPU 大于 query_value 的机器
     selected_machines = [m for m in machines if m['Available_GPU'] > query_value]
     return_machine = None
-    # 打印筛选结果
-    # print("符合条件的机器（更新前）:")
-    # for machine in selected_machines:
-    #     print(f"Hostname: {machine['Hostname']}, Available_GPU: {machine['Available_GPU']}")
-    
-    # 更新原列表中这些机器的 Available_GPU（减去 query_value）
+
     for machine in selected_machines:
         machine['Available_GPU'] -= query_value
         return_machine = machine
@@ -1227,7 +1139,6 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
 
     service_develpoment = query_pods_info()
     filtered_query = [item for item in service_develpoment if item['pod'] != '']
-    # print('filtered_query', filtered_query)
     # 查看容器部署时哪些数字可以用
     contain_num_text2text = [
         item for item in filtered_query
@@ -1257,10 +1168,7 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
     con_num_image2image = get_num(contain_num_image2image)
     con_num_ti2image = con_num_text2image + con_num_image2image
     con_num_text2video = get_num(contain_num_text2video)
-    
-
-    # filepath = os.path.join(directory, filename)
-    
+        
     tasks_develop = []
     
     total_task_num = file_stats['text2video'] + file_stats['image2text'] + file_stats['text2text'] + file_stats['text2image'] + file_stats['image2image'] 
@@ -1611,13 +1519,7 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
     print('check_development', filtered) 
     print(len(classified['text2video']))
     # 要进行模型部署，首先检查是否可以不变，如果不变就不需要重新部署
-    # [{'models': 'image2text', 'container': '7b', 'model_number': 1, 'frame': 'default', 'task_counts': 4},
-    # {'models': 'text2image', 'container': 'stable', 'model_number': 1, 'frame': 'default', 'task_counts': 3},
-    # {'models': 'image2image', 'container': 'stable', 'model_number': 1, 'frame': 'default', 'task_counts': 1}, 
-    # {'models': 'text2text', 'container': '3b', 'model_number': 1, 'frame': 'ollama', 'task_counts': 1}]
-    # print(filtered_query)
-    
-    # print('taskstaskstasks',tasks)
+
     # 保存因资源不足需要提前推出的模型服务
     may_drop_models = []
     wait_tasks = []
@@ -2121,7 +2023,7 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                         available_ips = available_ip(float(''.join(filter(str.isdigit, model_param)))*2*1024 + 2048)
                         available_ips = [
                             ip_info for ip_info in available_ips
-                            if ip_info['IP'] not in ['192.168.2.5', '192.168.2.6', '192.168.2.7']
+                            if ip_info['IP'] not in ['node4_ip', 'node5_ip', 'node6_ip']
                         ]
                         ti_container_num = generate_unique_number(con_num_image2text)
                     elif model_name == 'text2video':
@@ -2231,7 +2133,7 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                     available_ips = available_ip(float(''.join(filter(str.isdigit, model_param)))*2*1024 + 2048)
                     available_ips = [
                         ip_info for ip_info in available_ips
-                        if ip_info['IP'] not in ['192.168.2.5', '192.168.2.6', '192.168.2.7']
+                        if ip_info['IP'] not in ['node4_ip', 'node5_ip', 'node6_ip']
                     ]
                     # max_task = max_image2text_nums
                     if acutal_task_counts/model_number>max_image2text_nums:
@@ -2702,8 +2604,8 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
         
         # 检查本地权重存在情况
         if par_model == "stable-diffusion":
-            remote_weight_path = remote_full_path + "yz_diffusion"
-            remote_flag_path = remote_full_path + "yz_diffusion" + '_'+ flag
+            remote_weight_path = remote_full_path + "diffusion"
+            remote_flag_path = remote_full_path + "diffusion" + '_'+ flag
         elif par_model == "CogVideoX-2b-sat":
             remote_weight_path = remote_full_path + "CogVideo-1.0"
             remote_flag_path = remote_full_path + "CogVideo-1.0" + '_'+ flag
@@ -2869,7 +2771,7 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
     receiced_task_ids = []
     for sub_task in tasks:
         
-        json_folder = "/yaozhi/vLLM-k8s-operator/deployment/deployment_design/tasks_ip"  # 替换为实际路径
+        json_folder = "/vLLM-k8s-operator/deployment/deployment_design/tasks_ip"  # 替换为实际路径
         tasks_by_id = process_json_files(json_folder)
         
         check_task_id = sub_task['task_id']
@@ -2990,9 +2892,9 @@ def find_value(task_type, tasks):
 if __name__ == "__main__":
     # 当前部署状态（带节点信息）
     # current_deployment = {
-    #     "text2text": {"number": 1, "ips": ["192.168.2.78"]},
-    #     "text2image": {"number": 1, "ips": ["192.168.2.75"]},
-    #     "stable-diffusion": {"number": 2, "ips": ["192.168.2.78", "192.168.2.78"]},
+    #     "text2text": {"number": 1, "ips": ["node2_ip"]},
+    #     "text2image": {"number": 1, "ips": ["node1_ip"]},
+    #     "stable-diffusion": {"number": 2, "ips": ["node2_ip", "node2_ip"]},
     #     "cogvieo-2b": {"number": 1, "ips": ["192.168.2.190"]},
     # }
     
@@ -3109,7 +3011,7 @@ if __name__ == "__main__":
         
 
         if online_tasks :
-            json_folder = "/yaozhi/vLLM-k8s-operator/deployment/deployment_design/tasks_ip"  # 替换为实际路径
+            json_folder = "/vLLM-k8s-operator/deployment/deployment_design/tasks_ip"  # 替换为实际路径
             tasks_by_id = process_json_files(json_folder)
             # print('thread_num', thread_num)
             if len(online_tasks) <= 110 - thread_num:
@@ -3181,7 +3083,7 @@ if __name__ == "__main__":
                         service_type = item['pod'].split('-')[0]
                         
                     for node in nodes_gpu:
-                        if node['Hostname'] == 'b410-4090d-2':
+                        if node['Hostname'] == '4090d-2':
                             node['GPU'] = '1'  # 保持字符串类型
                             # break  # 找到后立即退出循环
                         # text2video在的容器提前把显存扣掉
@@ -3194,7 +3096,7 @@ if __name__ == "__main__":
                     #  过滤掉不需要的节点
                     filtered_nodes = [
                         node for node in nodes_gpu
-                        if node['Hostname'] not in ['b410-2070s-4', 'b410-4090d-2', 'b410-4090d-3']
+                        if node['Hostname'] not in ['2070s-4', '4090d-2', '4090d-3']
                     ]
 
                     # 创建节点名到总显存的映射
@@ -3246,10 +3148,10 @@ if __name__ == "__main__":
                         result = None
                         for param_index, param_value in sorted_params:
                             for host in new_sorted_nodes_gpu2:
-                                if host['Hostname'] == 'b410-2070s-1' or host['Hostname'] == 'b410-2070s-2' or host['Hostname'] == 'b410-2070s-3':
+                                if host['Hostname'] == '2070s-1' or host['Hostname'] == '2070s-2' or host['Hostname'] == '2070s-3':
                                     continue
                                 if int(host['GPU']) > param_value:
-                                    if host['Hostname'] == 'b410-4090d-3':
+                                    if host['Hostname'] == '4090d-3':
                                         # nfs服务器不需要传输
                                         continue
                                     for new_host in new_sorted_nodes_gpu2:
@@ -3286,7 +3188,7 @@ if __name__ == "__main__":
                             for host in new_sorted_nodes_gpu3:
 
                                 if int(host['GPU']) > param_value:
-                                    if host['Hostname'] == 'b410-4090d-3':
+                                    if host['Hostname'] == '4090d-3':
                                         # nfs服务器不需要传输
                                         continue
                                     for new_host in new_sorted_nodes_gpu3:
@@ -3329,7 +3231,7 @@ if __name__ == "__main__":
                         result = None
                         for param_index, param_value in sorted_params:
                             for host in new_sorted_nodes_gpu4:
-                                if host['Hostname'] == 'b410-4090d-3':
+                                if host['Hostname'] == '4090d-3':
                                     # nfs服务器不需要传输
                                     continue
                                 for new_host in new_sorted_nodes_gpu4:
@@ -3705,7 +3607,7 @@ if __name__ == "__main__":
                 develop_task(pro_online_tasks, pro_file_stats, pro_tasks, pro_classified, celery_task)
 
                 if len(pro_online_tasks) != 0:
-                    json_folder = "/yaozhi/vLLM-k8s-operator/deployment/deployment_design/tasks_ip"  # 替换为实际路径
+                    json_folder = "/vLLM-k8s-operator/deployment/deployment_design/tasks_ip"  # 替换为实际路径
                     tasks_by_id = process_json_files(json_folder)
                     for online_task_file in pro_online_tasks:  # 关键修改点：遍历文件列表
                         # 用完以后删除yaml文件
@@ -3770,7 +3672,7 @@ if __name__ == "__main__":
                         service_type = item['pod'].split('-')[0]
                         
                     for node in nodes_gpu:
-                        if node['Hostname'] == 'b410-4090d-2':
+                        if node['Hostname'] == '4090d-2':
                             node['GPU'] = '1'  # 保持字符串类型
                             # break  # 找到后立即退出循环
                         # text2video在的容器提前把显存扣掉
@@ -3801,7 +3703,7 @@ if __name__ == "__main__":
                         for param_index, param_value in sorted_params:
                             for host in sorted_nodes_gpu:
                                 if int(host['GPU']) > param_value:
-                                    if host['Hostname'] == 'b410-4090d-3':
+                                    if host['Hostname'] == '4090d-3':
                                         # nfs服务器不需要传输
                                         continue
                                     for new_host in new_sorted_nodes_gpu:
@@ -3836,10 +3738,10 @@ if __name__ == "__main__":
                         result = None
                         for param_index, param_value in sorted_params:
                             for host in new_sorted_nodes_gpu2:
-                                if host['Hostname'] == 'b410-2070s-1' or host['Hostname'] == 'b410-2070s-2' or host['Hostname'] == 'b410-2070s-3':
+                                if host['Hostname'] == '2070s-1' or host['Hostname'] == '2070s-2' or host['Hostname'] == '2070s-3':
                                     continue
                                 if int(host['GPU']) > param_value:
-                                    if host['Hostname'] == 'b410-4090d-3':
+                                    if host['Hostname'] == '4090d-3':
                                         # nfs服务器不需要传输
                                         continue
                                     for new_host in new_sorted_nodes_gpu2:
@@ -3883,7 +3785,7 @@ if __name__ == "__main__":
                         for param_index, param_value in sorted_params:
                             for host in new_sorted_nodes_gpu3:
                                 if int(host['GPU']) > param_value:
-                                    if host['Hostname'] == 'b410-4090d-3':
+                                    if host['Hostname'] == '4090d-3':
                                         # nfs服务器不需要传输
                                         continue
                                     for new_host in new_sorted_nodes_gpu3:
@@ -3901,7 +3803,7 @@ if __name__ == "__main__":
                                     remote_send_weight.append([host['Hostname'], param_path['text2text'][param_value]])
                                     break
                                 elif int(host['GPU']) > param_value/2:
-                                    if host['Hostname'] == 'b410-4090d-3':
+                                    if host['Hostname'] == '4090d-3':
                                         # nfs服务器不需要传输
                                         continue
                                     for new_host in new_sorted_nodes_gpu3:
@@ -3945,7 +3847,7 @@ if __name__ == "__main__":
                             for host in new_sorted_nodes_gpu4:
 
                                 if int(host['GPU']) > param_value:
-                                    if host['Hostname'] == 'b410-4090d-3':
+                                    if host['Hostname'] == '4090d-3':
                                         # nfs服务器不需要传输
                                         continue
                                     for new_host in new_sorted_nodes_gpu4:
