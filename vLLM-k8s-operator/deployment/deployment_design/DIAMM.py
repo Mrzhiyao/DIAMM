@@ -1,10 +1,15 @@
+from sql import get_slack_time, get_t_queue
+from generate_task import generate_task_queue
 import copy
 from collections import Counter
 from query_pods import query_pods_info
+from asplos24_generate_task import generate_task_batch
+from asplos24_read_tasks import read_tasks
 import time
 from test_main import available_ip
 from datetime import datetime
 import random
+from uxcost import UXCostOptimizer
 from collections import defaultdict
 import os 
 import json
@@ -28,7 +33,6 @@ from read_all_json import process_json_files
 from chech_filtered_subitems_error import filter_duplicate_pods, remove_duplicate_tasks
 
 
-# 复用你已有的连接池配置
 REDIS_POOL = redis.ConnectionPool(
     host='192.168.2.75',
     port=6379,
@@ -70,8 +74,12 @@ def sync_save_tasks(tasks_data: dict, expire_seconds: int = 300):
     :param tasks_data: 嵌套字典结构任务数据
     :param expire_seconds: 过期时间（秒），默认 600 秒=10 分钟
     """
+    # print('tasks_data', tasks_data)
+    # 从连接池获取连接
     r = redis.Redis(connection_pool=REDIS_POOL)
     try:
+        # for task_type, task_info in tasks_data.items():
+        #     print(task_type, task_info)
 
         for task_type, task_info in tasks_data.items():
             for task in task_info:
@@ -100,6 +108,8 @@ def sync_save_tasks(tasks_data: dict, expire_seconds: int = 300):
                     print(f"Redis 操作失败（{task_id}）: {str(e)}")
     finally:
         r.close()  # 将连接归还连接池
+
+
 
 # 模型配置（保持不变）
 MODEL_CONFIG = {
@@ -177,6 +187,13 @@ NODES = {
         'Memory_Used': 7.11, 
         'Memory_Available': 24.89, 
         'GPU_Available': '18555'},
+    # '192.168.2.133': {
+    #     'Name': 'b410-2070s-4', 
+    #     'Memory': 64, 
+    #     'GPU': 8000, 
+    #     'Memory_Used': 3.84, 
+    #     'Memory_Available': 60.16, 
+    #     'GPU_Available': '7883'},
 
     '192.168.2.5': {
         'Name': 'b410-2070s-1', 
@@ -209,6 +226,7 @@ NODES_IP = {
     'b410-2070s-1': '192.168.2.5',
     'b410-2070s-2': '192.168.2.6',
     'b410-2070s-3': '192.168.2.7',
+    # 'b410-2070s-4': '192.168.2.133',
 }
 
 local_weight_paths = {
@@ -236,6 +254,11 @@ remote_full_path = '/home/yaozhi/images/'
 flag = 'transfer_complete.flag'
 
 task_type  = 'text2text'
+# task_tpye  = 'image2text'
+# task_tpye  = 'text2image'
+# task_tpye  = 'image2image'
+# task_tpye  = 'text2video'
+
 inference_framework = {
     'text2text': {'Turbomind', 'ollama'}, 
     'image2text': {'Turbomind'}, 
@@ -270,6 +293,7 @@ text2image_params = [3]
 image2image_params = [3]
 text2video_params = [18]
 
+# double_text2text_params = [18000+1000, 16000+1000, 14000+1000, 6000+1000]
 double_text2text_params = [20000+1000, 20000+500, 18000+2000, 8000+1000]
 double_image2text_params = [16000, 6000]
 double_text2image_params = [4000]
@@ -278,6 +302,10 @@ double_text2video_params = [19000]
 
 max_text2text_nums = 100
 max_image2text_nums = 60
+# max_text2image_nums = 40
+# max_image2image_nums = 40
+# max_text2image_nums = 20
+# max_image2image_nums = 20
 max_text2image_nums = 10
 max_image2image_nums = 10
 
@@ -285,7 +313,9 @@ max_image2image_nums = 10
 max_text2video_nums = 1
 # max_total = 100 + 60 + (40 + 40)*2 
 max_total = 100 + 60 + (20 + 20)*2 
-
+# 一个任务在不同部署方式，所有并行压力（最优和最差情况）和处理途径下的平均完成时间
+# 默认4090 3090相同，2070的推理能力比：2:1
+# Turbomind和ollama的推理延迟偏好也是2:1
 
 def compute_diff_matrix(matrix1, matrix2):
     try:
@@ -332,6 +362,37 @@ def find_max_value_and_position(matrix):
     
     return max_value, (max_row, max_col)
 
+
+def amplify_by_vote(task_type, mapscore, development_model):
+    # 论文 Eq. (8)：对质量投票选中的配置逐元素放大 2 倍。
+    # 必须保持 mapscore 每行长度不变，否则列下标与候选配置的对应关系会错位。
+    value = next((item[1] for item in development_model if item[0] == task_type), None)
+
+    if task_type == 'image2text':
+        row = 0 if value == double_image2text_params[1] else 1
+        mapscore[row] = [2.0 * element for element in mapscore[row]]
+    elif task_type == 'text2text':
+        boost_map = (
+            (double_text2text_params[0], 3, 0, 8),
+            (double_text2text_params[0] / 2, 3, 8, None),
+            (double_text2text_params[1], 2, 0, 8),
+            (double_text2text_params[1] / 2, 2, 8, None),
+            (double_text2text_params[2], 1, 0, 8),
+            (double_text2text_params[2] / 2, 1, 8, None),
+            (double_text2text_params[3], 0, 0, 8),
+            (double_text2text_params[3] / 2, 0, 8, None),
+        )
+        _, row, start, stop = next(
+            (item for item in boost_map if value == item[0]), (None, 0, 8, None)
+        )
+        end = len(mapscore[row]) if stop is None else stop
+        mapscore[row][start:end] = [2.0 * element for element in mapscore[row][start:end]]
+
+    return mapscore
+
+
+# ASPLOS24
+
 def score_urgency(filtered, task, task_number, task_type, taskid):
     # ToGo(task) + Slack(task)
     if task_type == 'text2text':
@@ -356,6 +417,8 @@ def score_urgency(filtered, task, task_number, task_type, taskid):
         avg_delay = (45 + 45 + 45*2 + 45*3 + 45*4 + 45*5 + 45*6 + 45*7) /8 + 8  
     # 默认30s最初刚拿到任务的时候
     slack = 30
+    # print(avg_delay, slack)
+
     return avg_delay/float(slack)
 
 def score_latency(filtered, task, task_number, task_type, taskid):
@@ -535,6 +598,9 @@ def score_energy(filtered, task, task_number, task_type, taskid):
     # 切换并部署模型带来的额外延时成本，取平均吧
     accelerators_costs = []
     accelerators_pref_energy = []
+    # result是cost_switch(task,acc)
+    # service_develpoment = query_pods_info()
+    # filtered = [item for item in service_develpoment if item['pod'] != '']
     if task_type == 'text2text':
         delays = copy.deepcopy(text2text_delay) + copy.deepcopy(text2text_delay_ollama)
         for x in range(len(delays)):
@@ -709,7 +775,18 @@ def score_energy(filtered, task, task_number, task_type, taskid):
         for index_result in range(len(accelerators_pref_energy)):
             accelerators_pref_energy[index_result] = total_gpu/accelerators_pref_energy[index_result]
 
+    # Eq. (5) 非负截断 [x]^+：已部署副本已满足需求时增量部署成本记 0，
+    # 不允许负成本变成复用加成；多余副本由 eviction 机制回收。
+    if result and isinstance(result[0], list):
+        result = [[element if element > 0 else 0 for element in row] for row in result]
+    else:
+        result = [element if element > 0 else 0 for element in result]
     return compute_diff_matrix(accelerators_pref_energy, result)
+
+def quality_comprehasive(tasks):
+    print('quality_comprehasive', tasks)
+    print(len(tasks))
+
 
 def deduplicate_and_count_tasks(tasks):
     seen = {}  # 结构：{task_type: {"row": int, "col": int, "count": int}}
@@ -910,6 +987,7 @@ def calculate_non_pending_percentage(all_data):
             if task["status"] != "Pending":
                 stats[task_type][key]["non_pending"] += 1
 
+    # 结果结构：task_type → {"service_ip": ..., "container": ..., "frame": ..., "percentage": ...}
     result = defaultdict(list)
     for task_type, keys in stats.items():
         for key in keys:
@@ -958,6 +1036,23 @@ def find_low_percentage_entries(data, input_percent):
             
     return results
 
+# def check_and_get_files(path):
+#     # 检查路径是否存在
+#     if not os.path.exists(path):
+#         return []
+    
+#     # 列出路径下所有条目（文件和子目录）
+#     all_entries = os.listdir(path)
+    
+#     # 筛选出文件（排除子目录）
+#     files = [
+#         os.path.join(path, entry) 
+#         for entry in all_entries 
+#         if os.path.isfile(os.path.join(path, entry))
+#     ]
+    
+#     return files
+
 def check_and_get_files(paths):
     """
     获取多个路径下所有文件的完整路径列表
@@ -986,6 +1081,8 @@ def check_and_get_files(paths):
                 all_files.append(entry_path)
     
     return all_files
+
+
 
 
 import shutil
@@ -1332,11 +1429,13 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
             # 优先找已部署的，没有就部署小参数
             if len(contain_num_text2text) != 0:
                 data_text2text = copy.deepcopy(contain_num_text2text)
+                print('data_text2text', data_text2text)
                 sorted_data_text2text = sorted(
                     data_text2text,
                     key=lambda x: int(re.search(r'(\d+)b', x['container']).group(1)),
                     reverse=False  # 改为 True 可降序
                 )
+                print('sorted_data_text2text', sorted_data_text2text)
                 if 'ollama' in sorted_data_text2text[0]['container']:
                     if '3b' in sorted_data_text2text[0]['container'] or '3B' in  sorted_data_text2text[0]['container']:
                         development_model.append(['text2text', double_text2text_params[3]/2])
@@ -1386,6 +1485,11 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                 elif '9b' in remote_weight_path or '9B' in  remote_weight_path:
                                     development_model.append(['text2text', double_text2text_params[0]])
                             break
+                            # if '2b' in remote_weight_path or '2B' in remote_weight_path:
+                            #     development_model.append(['image2text', double_image2text_params[1]])
+                            # elif '7b' in remote_weight_path or '7B' in remote_weight_path:
+                            #     development_model.append(['image2text', double_image2text_params[0]])
+                            # break
                 
                 if development_model == []:
                     for params_index in range(len(double_text2text_params)):
@@ -1413,6 +1517,10 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                 development_model.append(['text2image', double_text2image_params[params_index]])
                 break
 
+    
+    print('error_check1', development_model)
+    print('file_statsfile_stats', file_stats)
+    # 局部分析
     for typ, cnt in sorted(file_stats.items(), key=lambda x: x[1], reverse=True):
         # 按任务类型顺序处理
         for task in tasks:
@@ -1442,62 +1550,36 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                         [element * b for element in row] 
                         for row in accelerators_tasks_score
                     ]
+                    print('check1check0')
                     mapscore_2 = [
                         [element + (a * task_score_starv) for element in row] 
                         for row in baccelerators_tasks_score
                     ]
+                    # if typ == 'image2text':
+                    #     print('mappp', mapscore_1, mapscore_2)
 
                     mapscore =  matrix_add(mapscore_1, mapscore_2)
-                    if typ == 'image2text':
-                        try:
-                            for sub_develop in development_model:
-                                if typ == sub_develop[0]:
-                                    value = sub_develop[1]
-                                    break
-                            if value == double_image2text_params[0]:
-                                mapscore[1] = mapscore[1]*2
-                            elif value == double_image2text_params[1]:
-                                mapscore[0] = mapscore[0]*2
-                        except:
-                            print('资源判断出错')
-                            mapscore[1] = mapscore[1]*2
-                    elif typ == 'text2text':
-                        try:
-                            for sub_develop in development_model:
-                                if typ == sub_develop[0]:
-                                    value = sub_develop[1]
-                                    break
-                            if value == double_text2text_params[0]:
-                                mapscore[3][:8] = mapscore[3][:8]*2
-                            elif value == double_text2text_params[0]/2:
-                                mapscore[3][8:] = mapscore[3][8:]*2
-
-                            elif value == double_text2text_params[1]:
-                                mapscore[2][:8] = mapscore[2][:8]*2
-                            elif value == double_text2text_params[1]/2:
-                                mapscore[2][8:] = mapscore[2][8:]*2
-
-                            elif value == double_text2text_params[2]:
-                                mapscore[1][:8] = mapscore[1][:8]*2
-                            elif value == double_text2text_params[2]/2:
-                                mapscore[1][8:] = mapscore[1][8:]*2
-
-                            elif value == double_text2text_params[3]:
-                                mapscore[0][:8] = mapscore[0][:8]*2
-                            elif value == double_text2text_params[3]/2:
-                                mapscore[0][8:] = mapscore[0][8:]*2     
-                        except:
-                            print('资源判断出错')
-                            mapscore[0][8:] = mapscore[0][8:]*2      
-                            
-                        development_model
-
+                    print('check1check1')
+                    print('mapscore', mapscore)
+                    print('check_development_model', development_model)
+                    mapscore = amplify_by_vote(typ, mapscore, development_model)
+                    print('check1check2')
+                    # print(len(mapscore))
 
                     max_val, (row, col) = find_max_value_and_position(mapscore)
 
+                    # print(f"最大值: {max_val}, 位置: 第{row+1}行 第{col+1}列")
+                # except:
                 except Exception as e:
                     print(f"加载失败：{str(e)}")
                     # 非多参数版本的模型
+                    # print(len(accelerators_tasks_latency))
+                    # for i in accelerators_tasks_latency:
+                    #     print(task_score_urgency, i)
+                    #     print(task_score_urgency*i)
+                    print('typ任务类型', typ)
+                    print('accelerators_tasks_latency', accelerators_tasks_latency)
+                    print('task_score_urgency', task_score_urgency)
                     mapscore_1 = [x * task_score_urgency for x in accelerators_tasks_latency]
         
                     baccelerators_tasks_score = [x * b for x in accelerators_tasks_score]
@@ -1519,11 +1601,24 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                     'col': col
                 })
 
+    print('tasks_developtasks_develop', tasks_develop)
+    # 统计模型部署决策
     dedup_tasks = deduplicate_and_count_tasks(tasks_develop)
+    # print('dedup_tasks', dedup_tasks)
     time.sleep(1)
     # 模型部署方案：
     filtered = map_models(dedup_tasks)
-
+    print('check_development', filtered) 
+    print(len(classified['text2video']))
+    # 要进行模型部署，首先检查是否可以不变，如果不变就不需要重新部署
+    # [{'models': 'image2text', 'container': '7b', 'model_number': 1, 'frame': 'default', 'task_counts': 4},
+    # {'models': 'text2image', 'container': 'stable', 'model_number': 1, 'frame': 'default', 'task_counts': 3},
+    # {'models': 'image2image', 'container': 'stable', 'model_number': 1, 'frame': 'default', 'task_counts': 1}, 
+    # {'models': 'text2text', 'container': '3b', 'model_number': 1, 'frame': 'ollama', 'task_counts': 1}]
+    # print(filtered_query)
+    
+    # print('taskstaskstasks',tasks)
+    # 保存因资源不足需要提前推出的模型服务
     may_drop_models = []
     wait_tasks = []
     plan_tasks = []
@@ -1532,11 +1627,13 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
     # 先从里面找到当前模型上已经运行的任务数，准备部署的模型数，应该是算上这部分的，因为有可能会继续用这些模型
     if celery_task != None:
         used_task_number = get_container_online_counts(celery_task)
+        print('used_task_number', used_task_number)
     else:
         used_task_number = {}
 
     if celery_task != None:
         used_container_task_number = get_container_online_new(celery_task)
+        print('used_container_task_number', used_container_task_number)
     else:
         used_container_task_number = {}
 
@@ -1562,6 +1659,10 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
     else:
         used_task_number_text2video = 0
 
+
+
+
+
     # stable模型因为共享模型，所以提前计数
     model_diffusion_number = 0
     model_diffusion_number_m = 0
@@ -1574,6 +1675,9 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
     for task_type, items in classified.items():
         if  task_type =='text2image' or task_type =='image2image':
             model_diffusion_number_t = model_diffusion_number_t + len(items)
+
+    print('len(model_diffusion_number_t)', model_diffusion_number_t)
+    # model_diffusion_number = min(model_diffusion_number_m, int(model_diffusion_number_t/max_text2image_nums)+1)
     model_diffusion_number = int((model_diffusion_number_t + used_task_number_text2image 
                                   + used_task_number_image2image)/max_text2image_nums)+1
  
@@ -1586,6 +1690,7 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
     if "image2image"  in item.get("models", "").lower()
     ]
 
+    print('develop_text2image_items', develop_text2image_items)
     if len(develop_text2image_items) != 0 and len(develop_image2image_items) != 0:
         gen_img_tasks_number = develop_text2image_items[0]['task_counts'] + develop_image2image_items[0]['task_counts'] 
         acutal_task_counts = gen_img_tasks_number
@@ -1595,7 +1700,12 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
     elif len(develop_text2image_items) == 0 and len(develop_image2image_items) != 0:
         gen_img_tasks_number = develop_image2image_items[0]['task_counts']    
         acutal_task_counts = gen_img_tasks_number
-
+    else:
+        print('sss')
+        # gen_img_tasks_number = 0 
+        # acutal_task_counts = gen_img_tasks_number
+    print('model_diffusion_number', model_diffusion_number)
+    # 如果只需要一个stable_diffusion
     if model_diffusion_number == 1 and model_diffusion_number_t != 0:
         filtered_subitems = [
             item for item in filtered_query
@@ -1605,25 +1715,46 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
 
         if len(filtered_subitems) == 0:
             # 当前集群无法提供该服务，需要部署
+            # 在集群找能够满足该服务的服务器，优先推理速度更快的
             available_ips = available_ip(float(3)*1024 + 1000)
             sorted_available_ips = sorted(available_ips, key=lambda x: x['Total_GPU'], reverse=True)
             try:
+                print('nodes', sorted_available_ips[0]['Hostname'])
+                # 添加需要的服务列表
+                # development_plan.append(sorted_available_ips[0])
+                # 任务分配服务ip
                 ti_container_num = generate_unique_number(con_num_ti2image)
                 for task_type, items in classified.items():
                     if  task_type == 'text2image' or task_type == 'image2image':
                             
                         for task in items:
                             task['service_ip'] = sorted_available_ips[0]['Hostname']
+                            # try:
+                            #     task['container'] = develop_text2image_items[0]['container']
+                            #     task['container_num'] = ti_container_num
+                            #     task['frame'] = develop_text2image_items[0]['frame']
+                            # except:
+                            #     task['container'] = develop_image2image_items[0]['container']
+                            #     task['container_num'] = ti_container_num
+                            #     task['frame'] = develop_image2image_items[0]['frame']
                             try:
+                                # task['container'] = develop_text2image_items[0]['container']
+                                # task['container_num'] = ti_container_num
+                                # task['frame'] = develop_text2image_items[0]['frame']
                                 task['container_num'] = ti_container_num
                                 task['frame'] = develop_text2image_items[0]['frame']
                                 task['container'] = get_container_name('default', develop_text2image_items[0]['container'], task_type, ti_container_num) + '-' + str(ti_container_num)
-  
+                                # task['container'] = get_container_name('default', develop_text2image_items[0]['container'], task_type, ti_container_num) 
+                                print('ccc1', develop_text2image_items[0]['container'], task_type, str(ti_container_num)) 
                             except:
-
+                                # task['container'] = develop_image2image_items[0]['container']
+                                # task['container_num'] = ti_container_num
+                                # task['frame'] = develop_image2image_items[0]['frame'] 
                                 task['container_num'] = ti_container_num
                                 task['frame'] = develop_image2image_items[0]['frame'] 
                                 task['container'] = get_container_name('default', develop_image2image_items[0]['container'], task_type, ti_container_num) + '-' + str(ti_container_num) 
+                                # task['container'] = get_container_name('default', develop_image2image_items[0]['container'], task_type, ti_container_num)
+                                print('ccc2', develop_image2image_items[0]['container'], task_type, str(ti_container_num)) 
                             plan_tasks.append(task)
             except:
                 print('没有空闲的计算机可以部署这个模型')
@@ -1689,13 +1820,18 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                             plan_tasks.append(task)
                             task['service_ip'] = develop_sorted_available_ips[int(task_iter/max_task)]['Hostname']
                             try:
+                                # task['container'] = develop_text2image_items[0]['container']
                                 task['container_num'] = ti_container_nums[int(task_iter/max_task)]
                                 task['frame'] = develop_text2image_items[0]['frame']
-                                task['container'] = get_container_name('default', develop_text2image_items[0]['container'] ,task_type, ti_container_nums[int(task_iter/max_task)]) + '-' + str(ti_container_nums[int(task_iter/max_task)])   
+                                task['container'] = get_container_name('default', develop_text2image_items[0]['container'] ,task_type, ti_container_nums[int(task_iter/max_task)]) + '-' + str(ti_container_nums[int(task_iter/max_task)]) 
+                                # task['container'] = get_container_name('default', develop_text2image_items[0]['container'] ,task_type, ti_container_nums[int(task_iter/max_task)]) 
+                                print('ccc3', develop_text2image_items[0]['container'], task_type, str(ti_container_nums[int(task_iter/max_task)]))     
                             except:
                                 task['container_num'] = ti_container_nums[int(task_iter/max_task)]
                                 task['frame'] = develop_image2image_items[0]['frame']
                                 task['container'] = get_container_name('default', develop_image2image_items[0]['container'] ,task_type, ti_container_nums[int(task_iter/max_task)]) + '-' + str(ti_container_nums[int(task_iter/max_task)])
+                                # task['container'] = get_container_name('default', develop_image2image_items[0]['container'] ,task_type, ti_container_nums[int(task_iter/max_task)]) 
+                                print('ccc4', develop_image2image_items[0]['container'], task_type, str(ti_container_nums[int(task_iter/max_task)])) 
 
                             task_iter = task_iter + 1 
             else:
@@ -1710,16 +1846,22 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                         for task in items:
                             if task_iter < len(develop_sorted_available_ips) * max_task :
                                 plan_tasks.append(task)
+                                print('develop_sorted_available_ips', develop_sorted_available_ips)
+                                print('int(task_iter/max_task)', int(task_iter/max_task))
                                 task['service_ip'] = develop_sorted_available_ips[int(task_iter/max_task)]['Hostname']
                                 try:
                                     task['container_num'] = ti_container_nums[int(task_iter/max_task)]
                                     task['frame'] = develop_text2image_items[0]['frame']
                                     task['container'] = get_container_name('default', develop_text2image_items[0]['container'] ,task_type, ti_container_nums[int(task_iter/max_task)]) + '-' + str(ti_container_nums[int(task_iter/max_task)])  
+                                    # task['container'] = get_container_name('default', develop_text2image_items[0]['container'] ,task_type, ti_container_nums[int(task_iter/max_task)]) 
+                                    print('ccc5', develop_text2image_items[0]['container'], task_type, str(ti_container_nums[int(task_iter/max_task)])) 
+
                                 except:
                                     task['container_num'] = ti_container_nums[int(task_iter/max_task)]
                                     task['frame'] = develop_image2image_items[0]['frame']
                                     task['container'] = get_container_name('default', develop_image2image_items[0]['container'] ,task_type, ti_container_nums[int(task_iter/max_task)]) + '-' + str(ti_container_nums[int(task_iter/max_task)])
-
+                                    # task['container'] = get_container_name('default', develop_image2image_items[0]['container'] ,task_type, ti_container_nums[int(task_iter/max_task)]) 
+                                    print('ccc6', develop_image2image_items[0]['container'], task_type, str(ti_container_nums[int(task_iter/max_task)])) 
                                 task_iter = task_iter + 1
                             else:
                                 task_iter = task_iter + 1
@@ -1741,6 +1883,8 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                         filtered_subitems_nums.append(None)  # 最后一部分不是数字
                 else:
                     filtered_subitems_nums.append(None)  # 没有 "-"
+
+            print(filtered_subitems[0]['Hostname'])
             ti_container_nums = []
             for index_num in range(0, model_diffusion_number):
                 ti_container_nums.append(generate_unique_number(con_num_ti2image))
@@ -1749,6 +1893,7 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
             
             if celery_task != None:
                 online_task_container = get_container_online_counts(celery_task)
+                print('online_task_container', online_task_container)
             else:
                 online_task_container = {}
             
@@ -1766,9 +1911,12 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                 for task_type, items in classified.items():
                     if  task_type == 'text2image' or task_type == 'image2image':
                         for task in items:
+                            print(int(task_iter/max_task), task_iter, max_task, filtered_sign, copy_used_container_task_number, filtered_subitems)
+                            print('check', len(filtered_subitems)*max_text2image_nums, total_used)
                             # 直接用已有的模型已经够了
                             if (len(filtered_subitems)*max_text2image_nums - total_used) >= gen_img_tasks_number:
                                 task['service_ip'] = filtered_subitems[filtered_sign]['Hostname']
+                                # try:
                                 task['container_num'] = filtered_subitems_nums[filtered_sign]
                                 task['container'] = filtered_subitems[filtered_sign]['container']
                                 task['frame'] = 'default'
@@ -1792,20 +1940,26 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                             filtered_sign = filtered_sign + 1
                                         temp_task_iter = task_iter
                                     except:
+                                        print('???deploy')
                                         plan_tasks.append(task)
                                         task['service_ip'] = develop_sorted_available_ips[deploy_sign]['Hostname']
                                         try:
                                             task['container_num'] = ti_container_nums[deploy_sign]
                                             task['frame'] = develop_text2image_items[0]['frame']
                                             task['container'] = get_container_name('default', develop_text2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign]) 
+                                            # task['container'] = get_container_name('default', develop_text2image_items[0]['container'], task_type, ti_container_nums[deploy_sign])   
+                                            print('ccc7', develop_text2image_items[0]['container'], task_type, str(ti_container_nums[deploy_sign])) 
                                         except:
                                             task['container_num'] = ti_container_nums[deploy_sign]
                                             task['frame'] = develop_image2image_items[0]['frame']
                                             task['container'] = get_container_name('default', develop_image2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign])
+                                            # task['container'] = get_container_name('default', develop_image2image_items[0]['container'], task_type, ti_container_nums[deploy_sign])
+                                            print('ccc8', develop_image2image_items[0]['container'], task_type, str(ti_container_nums[deploy_sign]))
                                         try:
                                             if  (task_iter - temp_task_iter) % max_text2image_nums == 0 and task_iter != temp_task_iter:
                                                 deploy_sign = deploy_sign + 1
                                         except:
+                                            print('?????????', task_iter, len(filtered_subitems)*max_text2image_nums, total_used)
                                             temp_task_iter = 0
                                             if  (task_iter - temp_task_iter) % max_text2image_nums == 0 and task_iter != temp_task_iter:
                                                 deploy_sign = deploy_sign + 1
@@ -1817,14 +1971,19 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                             task['container_num'] = ti_container_nums[deploy_sign]
                                             task['frame'] = develop_text2image_items[0]['frame']
                                             task['container'] = get_container_name('default', develop_text2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign])  
+                                            # task['container'] = get_container_name('default', develop_text2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) 
+                                            print('ccc7', develop_text2image_items[0]['container'], task_type, str(ti_container_nums[deploy_sign])) 
                                         except:
                                             task['container_num'] = ti_container_nums[deploy_sign]
                                             task['frame'] = develop_image2image_items[0]['frame']
                                             task['container'] = get_container_name('default', develop_image2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign])
+                                            # task['container'] = get_container_name('default', develop_image2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) 
+                                            print('ccc8', develop_image2image_items[0]['container'], task_type, str(ti_container_nums[deploy_sign]))
                                         try:
                                             if  (task_iter - temp_task_iter) % max_text2image_nums == 0 and task_iter != temp_task_iter:
                                                 deploy_sign = deploy_sign + 1
                                         except:
+                                            print('?????????', task_iter, len(filtered_subitems)*max_text2image_nums, total_used)
                                             temp_task_iter = 0
                                             if  (task_iter - temp_task_iter) % max_text2image_nums == 0 and task_iter != temp_task_iter:
                                                 deploy_sign = deploy_sign + 1
@@ -1834,6 +1993,8 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
             else:
                 # 资源不够全部部署
                 task_iter = 1
+                # if task_type in online_task_container:
+                #     task_iter = task_iter + online_task_container[task_type]
                 develop_sorted_available_ips = sorted_available_ips
 
                 filtered_sign = 0
@@ -1846,7 +2007,10 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                         # 赋予初值
                         temp_task_iter = len(filtered_subitems)*max_text2image_nums - total_used
                         for task in items:
+                            print('task_iter', task_iter)
                             if int(task_iter) + 1*max_text2image_nums< (len(filtered_subitems)*max_text2image_nums - total_used):
+                                print('filtered_signfiltered_sign', filtered_sign)
+                                print('filtered_subitemsfiltered_subitems', filtered_subitems, filtered_sign)
                                 task['service_ip'] = filtered_subitems[filtered_sign]['Hostname']
                                 task['container_num'] = filtered_subitems_nums[filtered_sign]
                                 task['container'] = filtered_subitems[filtered_sign]['container']
@@ -1854,6 +2018,7 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                 if filtered_subitems[filtered_sign]['container'] not in copy_used_container_task_number:
                                     copy_used_container_task_number[filtered_subitems[filtered_sign]['container']] = 0
                                 copy_used_container_task_number[filtered_subitems[filtered_sign]['container']] = copy_used_container_task_number[filtered_subitems[filtered_sign]['container']] + 1
+                                print(copy_used_container_task_number[filtered_subitems[filtered_sign]['container']])
                                 if copy_used_container_task_number[filtered_subitems[filtered_sign]['container']] > max_text2image_nums:
                                     filtered_sign = filtered_sign + 1
                                 temp_task_iter = task_iter
@@ -1865,14 +2030,19 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                         task['container_num'] = ti_container_nums[deploy_sign]
                                         task['frame'] = develop_text2image_items[0]['frame']
                                         task['container'] = get_container_name('default', develop_text2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign])  
+                                        # task['container'] = get_container_name('default', develop_text2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) 
+                                        print('ccc7', develop_text2image_items[0]['container'], task_type, str(ti_container_nums[deploy_sign])) 
                                     except:
                                         task['container_num'] = ti_container_nums[deploy_sign]
                                         task['frame'] = develop_image2image_items[0]['frame']
                                         task['container'] = get_container_name('default', develop_image2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign])
+                                        # task['container'] = get_container_name('default', develop_image2image_items[0]['container'], task_type, ti_container_nums[deploy_sign]) 
+                                        print('ccc8', develop_image2image_items[0]['container'], task_type, str(ti_container_nums[deploy_sign]))
                                     try:
                                         if  (task_iter - temp_task_iter) % max_text2image_nums == 0 and task_iter != temp_task_iter:
                                             deploy_sign = deploy_sign + 1
                                     except:
+                                        print('?????????', task_iter, len(filtered_subitems)*max_text2image_nums, total_used)
                                         temp_task_iter = 0
                                         if  (task_iter - temp_task_iter) % max_text2image_nums == 0 and task_iter != temp_task_iter:
                                             deploy_sign = deploy_sign + 1
@@ -1894,7 +2064,11 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
         model_number = sub_model['model_number']
         model_frame = sub_model['frame']
         this_task_counts = sub_model['task_counts']
-
+        
+        # max_text2text_nums = 100
+        # max_image2text_nums = 60
+        # max_text2image_nums = 10
+        # max_text2video_nums = 1
         corr_numbers = [1,1,5,10,20,40,60,80]
         # 决策要部署多少模型
         if task_type == 'text2text':
@@ -1958,7 +2132,10 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                     sorted_available_ips = sorted(available_ips, key=lambda x: x['Total_GPU'], reverse=True)
 
                     try:
-  
+                        print('ceshi_problem',sorted_available_ips[0]['Hostname'])
+                        # 添加需要的服务列表
+                        # development_plan.append(sorted_available_ips[0])
+                        # 任务分配服务ip
                         for task_type, items in classified.items():
                             if  task_type == model_name:
                                 for task in items:
@@ -2080,6 +2257,7 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                 # 查看是否有已部署的模型
                 if len(filtered_subitems) == 0:
                     # 查看当前资源能否部署全部服务
+                    print('model_number', model_number, sorted_available_ips)
                     if len(sorted_available_ips) >= model_number:
                         task_iter = 0
                         develop_sorted_available_ips = sorted_available_ips[0:model_number]
@@ -2089,11 +2267,16 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                 print('itemitem', len(items))
                                 for task in items:
                                     try:
+                                        print(task_type, 'develop_sorted_available_ips',len(develop_sorted_available_ips), task_iter, max_task )
                                         plan_tasks.append(task)
                                         task['service_ip'] = develop_sorted_available_ips[int(task_iter/max_task)]['Hostname']
+                                        # task['container'] = develop_items[0]['container']
+                                        # task['container_num'] = ti_container_nums[int(task_iter/max_task)]
+                                        # task['frame'] = develop_items[0]['frame']
                                         task['container_num'] = ti_container_nums[int(task_iter/max_task)]
                                         task['frame'] = develop_items[0]['frame']
                                         task['container'] = get_container_name(develop_items[0]['frame'], develop_items[0]['container'], task_type, ti_container_nums[int(task_iter/max_task)]) 
+                                        print('ddd2', develop_items[0]['container'], task_type, str(ti_container_nums[int(task_iter/max_task)])) 
                                         task_iter = task_iter + 1
                                     except:
                                         task_iter = task_iter + 1
@@ -2108,13 +2291,20 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                             if  task_type == model_name:
                                 # items_new = remove_duplicate_tasks(items)
                                 for task in items:
+                                    print(int(task_iter/max_task), task_iter, max_task, develop_sorted_available_ips)
+                                    print('check', task_type, len(develop_sorted_available_ips)*max_task)
                                     try:
                                         if task_iter <= len(develop_sorted_available_ips) * max_task and len(develop_sorted_available_ips) != 0:
                                             plan_tasks.append(task)
                                             task['service_ip'] = develop_sorted_available_ips[int(task_iter/max_task)]['Hostname']
+                                            # task['container'] = develop_items[0]['container']
+                                            # task['container_num'] = ti_container_nums[int(task_iter/max_task)]
+                                            # task['frame'] = develop_items[0]['frame']
+                                            
                                             task['container_num'] = ti_container_nums[int(task_iter/max_task)]
                                             task['frame'] = develop_items[0]['frame']
                                             task['container'] = get_container_name(develop_items[0]['frame'], develop_items[0]['container'], task_type, ti_container_nums[int(task_iter/max_task)])    
+                                            print('ddd3', develop_items[0]['container'], task_type, str(ti_container_nums[int(task_iter/max_task)])) 
                                             task_iter = task_iter + 1
                                         else:
                                             task_iter = task_iter + 1
@@ -2147,12 +2337,16 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                 filtered_subitems_nums.append(None)  # 最后一部分不是数字
                         else:
                             filtered_subitems_nums.append(None)  # 没有 "-"
+                    print(filtered_subitems[0]['Hostname'])
+
 
                     # 计算实际需要的实例数
                     iter_num = acutal_task_counts/max_task + 1
                     # 这些模型服务当前资源都可以部署成功
                     if len(sorted_available_ips) >= model_number - len(filtered_subitems):
                         task_iter = 1
+                        # if model_name in online_task_container:
+                        #     task_iter = task_iter + online_task_container[model_name]
                         develop_sorted_available_ips = sorted_available_ips
 
                         filtered_sign = 0
@@ -2216,12 +2410,22 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                                     task['container_num'] = ti_container_nums[deploy_sign]
                                                     task['frame'] = develop_items[0]['frame']
                                                     # task['container'] = get_container_name('default', develop_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign])  
-                                                    task['container'] = get_container_name('default', develop_items[0]['container'], task_type, ti_container_nums[deploy_sign])    
+                                                    task['container'] = get_container_name('default', develop_items[0]['container'], task_type, ti_container_nums[deploy_sign])
+                                                    print('ddd5', develop_items[0]['container'], task_type, str(ti_container_nums[deploy_sign])) 
+                                                # except:
+                                                    # task['container_num'] = ti_container_nums[deploy_sign]
+                                                    # task['frame'] = develop_items[0]['frame']
+                                                    # # task['container'] = get_container_name('default', develop_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign])
+                                                    # task['container'] = get_container_name('default', develop_items[0]['container'], task_type, ti_container_nums[deploy_sign]) 
+
+                                                    # print('ddd6', develop_items[0]['container'], task_type, str(ti_container_nums[deploy_sign]))
+
                                                     try:
                                                         if  (task_iter - temp_task_iter) % max_new_tasks == 0 and task_iter != temp_task_iter:
                                                             deploy_sign = deploy_sign + 1
                                                     except:
                                                         temp_task_iter = 0
+                                                        print('?????????max_new_tasks', task_iter, len(filtered_subitems)*max_new_tasks, total_used)
                                                         if  (task_iter - temp_task_iter) % max_new_tasks == 0 and task_iter != temp_task_iter:
                                                             deploy_sign = deploy_sign + 1
                                                 except:
@@ -2233,12 +2437,15 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                                 task['service_ip'] = develop_sorted_available_ips[deploy_sign]['Hostname']
                                                 task['container_num'] = ti_container_nums[deploy_sign]
                                                 task['frame'] = develop_items[0]['frame']
+                                                # task['container'] = get_container_name('default', develop_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign])  
                                                 task['container'] = get_container_name('default', develop_items[0]['container'], task_type, ti_container_nums[deploy_sign]) 
+                                                print('ddd5', develop_items[0]['container'], task_type, str(ti_container_nums[deploy_sign])) 
                                                 try:
                                                     if  (task_iter - temp_task_iter) % max_new_tasks == 0 and task_iter != temp_task_iter:
                                                         deploy_sign = deploy_sign + 1
                                                 except:
                                                     temp_task_iter = 0
+                                                    print('?????????max_new_tasks', task_iter, len(filtered_subitems)*max_new_tasks, total_used)
                                                     if  (task_iter - temp_task_iter) % max_new_tasks == 0 and task_iter != temp_task_iter:
                                                         deploy_sign = deploy_sign + 1
                                             except:
@@ -2270,6 +2477,9 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                 # 赋予初值
                                 temp_task_iter = len(filtered_subitems)*max_new_tasks - total_used
                                 for task in items:
+                                    print(task_iter, max_task, develop_sorted_available_ips)
+                                    print('check',temp_task_iter, task_type, len(develop_sorted_available_ips)*max_new_tasks)
+                                    print('deploy_sign', deploy_sign)
                                     models_cha = iter_num - len(filtered_subitems)
                                     if int(task_iter) + 1*max_new_tasks< (len(filtered_subitems)*max_new_tasks - total_used):
                                         task['service_ip'] = filtered_subitems[filtered_sign]['Hostname']
@@ -2303,10 +2513,24 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
                                                     task['frame'] = 'default'
                                             else:
                                                 task['frame'] = 'default'
+                                            print('ddd7', develop_items[0]['container'], task_type, str(ti_container_nums[deploy_sign])) 
+                                        # except:
+                                        #     task['container_num'] = ti_container_nums[deploy_sign]
+                                        #     # task['container'] = get_container_name('default', develop_items[0]['container'], task_type, ti_container_nums[deploy_sign]) + '-' + str(ti_container_nums[deploy_sign])
+                                        #     task['container'] = get_container_name('default', develop_items[0]['container'], task_type, ti_container_nums[deploy_sign]) 
+                                        #     if model_name == 'text2text':
+                                        #         if 'ollama' in task['container']:
+                                        #             task['frame'] = 'ollama'
+                                        #         else: 
+                                        #             task['frame'] = 'default'
+                                        #     else:
+                                        #         task['frame'] = 'default'
+                                        #     print('ddd8', develop_items[0]['container'], task_type, str(ti_container_nums[deploy_sign]))
                                             try:
                                                 if  (task_iter - temp_task_iter) % max_new_tasks == 0 and task_iter != temp_task_iter:
                                                     deploy_sign = deploy_sign + 1
                                             except:
+                                                print('?????????max_new_tasks', task_iter, len(filtered_subitems)*max_new_tasks, total_used)
                                                 temp_task_iter = 0
                                                 if  (task_iter - temp_task_iter) % max_new_tasks == 0 and task_iter != temp_task_iter:
                                                     deploy_sign = deploy_sign + 1
@@ -2666,6 +2890,13 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
             if latest_record['service_ip'] is None or latest_record['container'] is None:
                 print(f"\n最新状态: 任务未完成")
                 continue
+            # else:
+            #     print(f"\n最新状态: 任务已完成, 容器: {latest_record['container']}")
+            # task_data = tasks_by_id[check_task_id]
+            # # print(f"\n找到任务 ID '{check_task_id}':")
+            # if task_data['service_ip'] == None or task_data['container'] == None:
+            #     print(check_task_id, '未完成')
+            #     continue
 
         task_prompt = {
             "task_id": sub_task['task_id'],
@@ -2681,7 +2912,28 @@ def develop_task(online_tasks, file_stats, tasks, classified, celery_task):
     if send_task_list != []:
         send_tasks(send_task_list)
 
+    # receiced_task_ids.append(receive_task_ids)
+
+    # for task, task_id in zip(send_task_list, receiced_task_ids[0]):
+    #     task["task_id"] = task_id
+    #     task["created_time"] = get_formatted_time()
+
+    # print(send_task_list, 'send_task_list_new')
+    # saved_file = save_task_list(send_task_list)
     print('重新发送到fastapi上')
+
+    # 任务已经部署后，删除以上任务
+    # for rm_files in online_tasks:
+    #     try:
+    #         os.remove(rm_files)
+    #         print(f"文件 {rm_files} 删除成功")
+    #     except FileNotFoundError:
+    #         print(f"错误：文件 {rm_files} 不存在")
+    #     except PermissionError:
+    #         print(f"错误：无权限删除文件 {rm_files}")
+    #     except Exception as e:
+    #         print(f"删除失败，未知错误: {str(e)}")
+
 
 def find_task_by_id(data, target_task_id):
     """
@@ -2736,7 +2988,16 @@ def find_value(task_type, tasks):
     return None  # 未找到时返回 None
 
 if __name__ == "__main__":
-
+    # 当前部署状态（带节点信息）
+    # current_deployment = {
+    #     "text2text": {"number": 1, "ips": ["192.168.2.78"]},
+    #     "text2image": {"number": 1, "ips": ["192.168.2.75"]},
+    #     "stable-diffusion": {"number": 2, "ips": ["192.168.2.78", "192.168.2.78"]},
+    #     "cogvieo-2b": {"number": 1, "ips": ["192.168.2.190"]},
+    # }
+    
+    # 使用示例：生成100组不同比例
+    # base_ratios = generate_unique_ratios(3)
     directory = './task_groups'
     save_wait_dir = './task_wait'
     save_online_task_dir = './task_groups_online'
@@ -2746,7 +3007,12 @@ if __name__ == "__main__":
     # 获取目录下所有JSON文件列表
     files = [f for f in os.listdir(directory) if f.endswith('.json')]
     total_files = len(files)
-
+    # filtered = [{'models': 'text2text', 'container': '3b', 'model_numebr': 1},
+    #             {'models': 'image2text', 'container': '7b', 'model_numebr': 1},
+    #             {'models': 'text2image', 'container': 'stable', 'model_numebr': 1},
+    #             {'models': 'image2image', 'container': 'stable', 'model_numebr': 1},
+    #             {'models': 'text2video', 'container': 'cogvideox', 'model_numebr': 1},
+    #             ]
 
     classified = {
             'text2text': [],
@@ -2772,6 +3038,8 @@ if __name__ == "__main__":
         'text2video': None
     }
     
+    optimizer = UXCostOptimizer(init_alpha=1, init_beta=1)
+
     while 1:
         online_tasks = check_and_get_files([save_online_task_dir, save_wait_dir])
         # print('task_length',  len(online_tasks))
@@ -2878,7 +3146,15 @@ if __name__ == "__main__":
                                 if latest_record['service_ip'] is None or latest_record['container'] is None:
                                     print(f"\n最新状态: 任务未找到目的地，不能删除")
                                     continue
-
+                                # else:
+                                #     print(f"\n最新状态: 任务已找到目的地，可以删除, 容器: {latest_record['container']}")
+                            # if check_task_id in tasks_by_id:
+                            #     task_data = tasks_by_id[check_task_id]
+                                # print(f"\n找到任务 ID '{check_task_id}':")
+                                # if task_data['service_ip'] == None or task_data['container'] == None:
+                                #     print(check_task_id, '删除未完成')
+                                #     continue
+                            
                         try:
                             os.remove(online_task_file)
                             print(f"文件 {online_task_file} 删除成功")
@@ -3437,7 +3713,12 @@ if __name__ == "__main__":
 
                         # 有些任务没完成，不要误删没完成的任务
                         check_task_id = online_task_file.split('/')[-1].split('.')[0]
-
+                        # if check_task_id in tasks_by_id:
+                        #     task_data = tasks_by_id[check_task_id]
+                        #     # print(f"\n找到任务 ID '{check_task_id}':")
+                        #     if task_data['service_ip'] == None or task_data['container'] == None:
+                        #         print(check_task_id, 'pro未完成')
+                        #         continue
                         if check_task_id in tasks_by_id:
                             task_records = tasks_by_id[check_task_id]
                             
@@ -3713,7 +3994,5 @@ if __name__ == "__main__":
         
         
         time.sleep(5)
-   
-            
 
 
