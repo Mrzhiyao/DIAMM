@@ -24,6 +24,7 @@
 - [使用指南](#-使用指南)
 - [示例展示](#-示例展示)
 - [项目结构](#-项目结构)
+- [引用](#-引用)
 - [许可证](#-许可证)
 
 ---
@@ -368,6 +369,25 @@ DIAMM/
 ├── web-end.py                  # Web 前端服务
 ├── celery.conf                 # Celery 配置
 └── environment.yml             # Python 环境配置
+```
+
+---
+
+## 📝 引用
+
+如果本项目对您的研究有帮助，请引用：
+
+```bibtex
+@article{yao2026diamm,
+  title   = {DIAMM: A Distributed Inference Acceleration Framework for Multimodal Edge Applications},
+  author  = {Yao, Zhi and Tang, Zhiqing and Cui, Hanshuai and Jia, Weijia and Zhao, Wei},
+  journal = {IEEE Transactions on Parallel and Distributed Systems},
+  volume  = {37},
+  number  = {11},
+  pages   = {2587--2604},
+  year    = {2026},
+  doi     = {10.1109/TPDS.2026.3737245}
+}
 ```
 
 ---
