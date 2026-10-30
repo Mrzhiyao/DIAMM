@@ -10,6 +10,8 @@
 
 </div>
 
+This is an implementation of our paper [DIAMM: A Distributed Inference Acceleration Framework for Multimodal Edge Applications](https://ieeexplore.ieee.org/document/11706713), published in IEEE Transactions on Parallel and Distributed Systems (TPDS), 2026. In this repo, we implement the proposed DIAMM framework, which schedules and serves text, image and video generation models across Kubernetes-managed edge devices, together with its task scheduling, model warm-up and weight distribution services.
+
 ---
 
 ## 📋 目录
